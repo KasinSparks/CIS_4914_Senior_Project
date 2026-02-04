@@ -74,7 +74,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8159f0e303ba54446833bdc7e7d0e353, type: 2}
+  - {fileID: 2100000, guid: 307ef1291a627b94db1e6da752f24694, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   attack: 0
   play_cost: 0
   modifiers: []
-  card_image: {fileID: 0}
+  card_image: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
   card_rarity: 0
 --- !u!1 &2039974571166465571
 GameObject:
@@ -1116,7 +1116,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b4adae7273f5cd74b9203b67e402fdbf, type: 2}
+  - {fileID: 2100000, guid: 1966296015621db49b7ffd81ecfef048, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
