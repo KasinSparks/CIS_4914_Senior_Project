@@ -27,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: card_image
       value: 
-      objectReference: {fileID: 2800000, guid: b1222e14f2b649e4294a630b16062509, type: 3}
+      objectReference: {fileID: 2800000, guid: c8499ead3515bc84cb905361a84d57a1, type: 3}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: description
       value: Another test of the demo bug card.
@@ -38,15 +38,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.026398
+      value: -8.01
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 62.080482
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -103.59947
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalRotation.w

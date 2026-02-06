@@ -9,7 +9,7 @@ public class Deck : MonoBehaviour
     private Queue<Card> card_queue;
 
     public GameState gameState;
-    //public Hand hand;
+    public Hand hand;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
