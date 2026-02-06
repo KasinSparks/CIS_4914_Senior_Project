@@ -1,5 +1,6 @@
+using System.Diagnostics;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameState : MonoBehaviour
 {
     public TurnStates current_turn_state;
@@ -14,5 +15,11 @@ public class GameState : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnButtonClick()
+    {
+        UnityEngine.Debug.Log("Opponents Turn");
+        this.current_turn_state = TurnStates.OpponentTurn;
     }
 }
