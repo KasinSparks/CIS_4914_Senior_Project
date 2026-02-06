@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0022, y: 0}
+  m_AnchoredPosition: {x: 0.0009, y: 0}
   m_SizeDelta: {x: 7, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &684872345682319972
@@ -522,7 +522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.001, y: 0}
+  m_AnchoredPosition: {x: 0.0009, y: 0}
   m_SizeDelta: {x: 6, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6205591524171150914
@@ -703,7 +703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0019, y: -0.0248}
+  m_AnchoredPosition: {x: 0.0009, y: -0.0248}
   m_SizeDelta: {x: 7, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3161817641880508571
@@ -884,7 +884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0025, y: 0.0253}
+  m_AnchoredPosition: {x: 0.0009, y: 0.0253}
   m_SizeDelta: {x: 8, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8719268034290929587
@@ -1041,15 +1041,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: febf8b62e00c50249ac95eabf5334b2b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1000
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: febf8b62e00c50249ac95eabf5334b2b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1000
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: febf8b62e00c50249ac95eabf5334b2b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1000
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: febf8b62e00c50249ac95eabf5334b2b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1174,6 +1174,7 @@ MonoBehaviour:
   modifiers: []
   card_image: {fileID: 0}
   card_rarity: 0
+  card_state: 0
 --- !u!4 &6742378483838015722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: febf8b62e00c50249ac95eabf5334b2b, type: 3}
