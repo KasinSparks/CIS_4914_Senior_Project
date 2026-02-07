@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Card : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class Card : MonoBehaviour
 
     private Hand player_hand;
 
+    private bool is_in_card_creation_scene = false;
+
     private void Awake()
     {
         // Initialize the card state to the default value
@@ -43,21 +46,17 @@ public class Card : MonoBehaviour
 
         // Initialize the card ownership to the default value
         this.card_ownership = CardOwnership.None;
+
+        Scene current_scene = SceneManager.GetActiveScene();
+        if (current_scene != null && current_scene.name.Equals("CardCreator"))
+        {
+            this.is_in_card_creation_scene = true;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // TODO: error handling
-        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
-
-        // TODO: error handling
-        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
-
-        // TODO: error handling
-        this.hand_start_marker = GameObject.Find("start_mark");
-        card_hover_hand_z_offset = this.hand_start_marker.transform.position.z - 0.1f;
-
         // Card name text set
         this.SetCardTextField("card_name_text", this.card_name);
 
@@ -80,7 +79,22 @@ public class Card : MonoBehaviour
         }
 
         this.gameObject.transform.Find("card_image").gameObject.GetComponent<Renderer>().material.mainTexture = card_image;
+        
+        // Got what is needed for the card creation scene, exit early
+        if (this.is_in_card_creation_scene)
+        {
+            return;
+        }
 
+        // TODO: error handling
+        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+
+        // TODO: error handling
+        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
+
+        // TODO: error handling
+        this.hand_start_marker = GameObject.Find("start_mark");
+        card_hover_hand_z_offset = this.hand_start_marker.transform.position.z - 0.1f;
     }
 
 
@@ -92,6 +106,11 @@ public class Card : MonoBehaviour
 
     void OnMouseEnter()
     {
+        // Card Creation Scene does not require Mouse events; exit early
+        if (this.is_in_card_creation_scene)
+        {
+            return;
+        }
         //Debug.Log("Mouse entered.");
 
         if (this.card_state == CardState.InHand)
