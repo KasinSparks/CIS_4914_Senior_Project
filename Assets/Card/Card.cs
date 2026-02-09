@@ -3,9 +3,11 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Card : MonoBehaviour
 {
+
     // NOTE: Changes to these fields in the editor will only appear when the game is in a RUNNING state.
     public string card_name;
     public string description;
@@ -20,13 +22,24 @@ public class Card : MonoBehaviour
     public Texture card_image;
 
     public CardRarity card_rarity;
-
-    private CardState card_state;
+    
+    // For debuging, this is set to public for now
+    //private CardState card_state;
+    public CardState card_state;
 
     private CardOwnership card_ownership;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private GameState game_state;
+    private GameObject hand_start_marker;
+    private float card_hover_hand_z_offset;
+
+    private float card_original_z_hand_offset;
+
+    private Hand player_hand;
+
+    private bool is_in_card_creation_scene = false;
+
+    private void Awake()
     {
         // Initialize the card state to the default value
         this.card_state = CardState.None;
@@ -34,7 +47,16 @@ public class Card : MonoBehaviour
         // Initialize the card ownership to the default value
         this.card_ownership = CardOwnership.None;
 
+        Scene current_scene = SceneManager.GetActiveScene();
+        if (current_scene != null && current_scene.name.Equals("CardCreator"))
+        {
+            this.is_in_card_creation_scene = true;
+        }
+    }
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
         // Card name text set
         this.SetCardTextField("card_name_text", this.card_name);
 
@@ -57,7 +79,22 @@ public class Card : MonoBehaviour
         }
 
         this.gameObject.transform.Find("card_image").gameObject.GetComponent<Renderer>().material.mainTexture = card_image;
+        
+        // Got what is needed for the card creation scene, exit early
+        if (this.is_in_card_creation_scene)
+        {
+            return;
+        }
 
+        // TODO: error handling
+        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+
+        // TODO: error handling
+        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
+
+        // TODO: error handling
+        this.hand_start_marker = GameObject.Find("start_mark");
+        card_hover_hand_z_offset = this.hand_start_marker.transform.position.z - 0.1f;
     }
 
 
@@ -69,7 +106,18 @@ public class Card : MonoBehaviour
 
     void OnMouseEnter()
     {
-        Debug.Log("Mouse entered.");
+        // Card Creation Scene does not require Mouse events; exit early
+        if (this.is_in_card_creation_scene)
+        {
+            return;
+        }
+        //Debug.Log("Mouse entered.");
+
+        if (this.card_state == CardState.InHand)
+        {
+            // Tell the hand to handle this
+            this.player_hand.MoveCardFront(this);
+        }
     }
 
     void OnMouseOver()
@@ -84,7 +132,7 @@ public class Card : MonoBehaviour
 
     void OnMouseExit()
     {
-        Debug.Log("Mouse Exited.");
+        //Debug.Log("Mouse Exited.");
     }
 
     void OnMouseDown()
@@ -110,6 +158,11 @@ public class Card : MonoBehaviour
     public void RemoveModifier(CardModifier modifier)
     {
         throw new NotImplementedException();
+    }
+
+    public void SetState(CardState state)
+    {
+        this.card_state = state;
     }
 
     private void SetCardTextField(String text_obj_name, String text)

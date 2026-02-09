@@ -34,19 +34,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_Name
-      value: DemoCard Variant
+      value: DemoCard
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.026398
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 62.080482
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -103.59947
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalRotation.w
