@@ -4,8 +4,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour
+// NOTE(Kasin): See https://docs.unity3d.com/Packages/com.unity.ugui@1.0/api/UnityEngine.EventSystems.IPointerDownHandler.html
+//              for documentation regarding the Input EventSystem and PointerHandlers.
+
+// NOTE(Kasin): Scene must have an EventSystem object, and the camera object must have
+//              a Phisics Raycaster entity attached to it for the Input system to work.
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     // NOTE: Changes to these fields in the editor will only appear when the game is in a RUNNING state.
@@ -52,6 +58,22 @@ public class Card : MonoBehaviour
         {
             this.is_in_card_creation_scene = true;
         }
+
+        // Got what is needed for the card creation scene, exit early
+        if (this.is_in_card_creation_scene)
+        {
+            return;
+        }
+
+        // TODO: error handling
+        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+
+        // TODO: error handling
+        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
+
+        // TODO: error handling
+        this.hand_start_marker = GameObject.Find("start_mark");
+        card_hover_hand_z_offset = this.hand_start_marker.transform.position.z - 0.1f;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -80,21 +102,6 @@ public class Card : MonoBehaviour
 
         this.gameObject.transform.Find("card_image").gameObject.GetComponent<Renderer>().material.mainTexture = card_image;
         
-        // Got what is needed for the card creation scene, exit early
-        if (this.is_in_card_creation_scene)
-        {
-            return;
-        }
-
-        // TODO: error handling
-        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
-
-        // TODO: error handling
-        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
-
-        // TODO: error handling
-        this.hand_start_marker = GameObject.Find("start_mark");
-        card_hover_hand_z_offset = this.hand_start_marker.transform.position.z - 0.1f;
     }
 
 
@@ -104,7 +111,7 @@ public class Card : MonoBehaviour
         
     }
 
-    void OnMouseEnter()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         // Card Creation Scene does not require Mouse events; exit early
         if (this.is_in_card_creation_scene)
@@ -120,24 +127,29 @@ public class Card : MonoBehaviour
         }
     }
 
-    void OnMouseOver()
-    {
-        //Debug.Log("Mouse Over.");
-    }
-
-    void OnMouseDrag()
+    public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("Mouse Drag.");
     }
 
-    void OnMouseExit()
+    public void OnDrag(PointerEventData eventData)
+    {
+        //Debug.Log("Mouse Drag.");
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        //Debug.Log("Mouse Drag.");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
     {
         //Debug.Log("Mouse Exited.");
     }
 
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Mouse Down.");
+        Debug.Log("Mouse Click.");
     }
 
     public int Attack()
