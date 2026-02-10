@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System;
 
-public class Deck : MonoBehaviour
+public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public List<Card> starting_cards;
     private List<Card> cards;
@@ -44,22 +45,17 @@ public class Deck : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         
     }
 
-    void OnMouseEnter()
+    public void OnPointerExit(PointerEventData eventData)
     {
         
     }
 
-    void OnMouseExit()
-    {
-        
-    }
-
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
         // Check to see if the player is eligible to draw a card
         if (gameState.current_turn_state != TurnStates.PlayerDrawCard)
