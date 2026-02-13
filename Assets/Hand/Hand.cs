@@ -14,6 +14,9 @@ public class Hand : MonoBehaviour
     private Card front_card;
     private float front_card_original_z;
 
+    [SerializeField] private PlaceCard placeCard;
+    [SerializeField] private Playfield placefield;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -70,7 +73,7 @@ public class Hand : MonoBehaviour
             new Vector3(
                 this.front_card.transform.position.x,
                 this.front_card.transform.position.y,
-                this.card_starting_mark.transform.position.z - 0.1f),
+                this.card_starting_mark.transform.position.z - 0.2f * this.front_card.transform.parent.transform.localScale.x),
             this.front_card.transform.rotation
         );
     }
@@ -97,5 +100,11 @@ public class Hand : MonoBehaviour
         }
 
         this.front_card = this.cards[0];
+    }
+
+    public void SetSelectedCard(Card selected_card)
+    {
+        placeCard.SetSelectedCard(selected_card);
+        placefield.SetSelectedCard(selected_card);
     }
 }

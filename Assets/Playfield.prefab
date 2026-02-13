@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5976116087892140805}
   - component: {fileID: 1574207647980499384}
   m_Layer: 0
-  m_Name: cardholder (3)
+  m_Name: player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,10 +141,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3055449729618888477}
   - {fileID: 6889660654291331662}
-  - {fileID: 831087352784677360}
+  - {fileID: 3055449729618888477}
   - {fileID: 7663827406364030964}
+  - {fileID: 831087352784677360}
   m_Father: {fileID: 5829108009102598072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1154927697422768504
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 2205641073106857629}
   - component: {fileID: 7007176358171043777}
   m_Layer: 0
-  m_Name: cardholder (6)
+  m_Name: enemy3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,10 +288,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4970437399974280036}
   - {fileID: 183231911888521394}
-  - {fileID: 1371683691872866124}
+  - {fileID: 4970437399974280036}
   - {fileID: 1859551694692304015}
+  - {fileID: 1371683691872866124}
   m_Father: {fileID: 5829108009102598072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1339321296744590271
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 864499353137306261}
   - component: {fileID: 7225439132401909466}
   m_Layer: 0
-  m_Name: cardholder (5)
+  m_Name: enemy0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -435,10 +435,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3223113968208136450}
   - {fileID: 8286068685849066524}
   - {fileID: 2986830594813667198}
   - {fileID: 6954402308751608183}
+  - {fileID: 3223113968208136450}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3613316999242750295
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 1725093885313401378}
   - component: {fileID: 6584555063839752191}
   m_Layer: 0
-  m_Name: cardholder (11)
+  m_Name: queue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,10 +582,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4296023287839806129}
   - {fileID: 7270635683496410889}
-  - {fileID: 7061362281946381854}
+  - {fileID: 4296023287839806129}
   - {fileID: 2513195974757589790}
+  - {fileID: 7061362281946381854}
   m_Father: {fileID: 5829108009102598072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5619489818859449953
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 9082129646209211233}
   - component: {fileID: 5550581317216104074}
   m_Layer: 0
-  m_Name: cardholder (4)
+  m_Name: enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,7 +713,7 @@ GameObject:
   - component: {fileID: 8672459674984231833}
   - component: {fileID: 1185789424109547609}
   m_Layer: 0
-  m_Name: cardholder (8)
+  m_Name: queue1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 8753750715180129031}
   - component: {fileID: 153759657992692673}
   m_Layer: 0
-  m_Name: cardholder (7)
+  m_Name: enemy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 5784126775665016330}
   - component: {fileID: 5437732418518322508}
   m_Layer: 0
-  m_Name: cardholder (1)
+  m_Name: player0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 2064007027849922783}
   - component: {fileID: 393422903611437618}
   m_Layer: 0
-  m_Name: cardholder
+  m_Name: player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1161,7 +1161,7 @@ GameObject:
   - component: {fileID: 3890052438502150707}
   - component: {fileID: 2336340588015489782}
   m_Layer: 0
-  m_Name: cardholder (10)
+  m_Name: queue3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1273,7 +1273,7 @@ GameObject:
   - component: {fileID: 3621143660177717669}
   - component: {fileID: 1037462174321242808}
   m_Layer: 0
-  m_Name: cardholder (9)
+  m_Name: queue0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1385,7 +1385,7 @@ GameObject:
   - component: {fileID: 3796666250376602403}
   - component: {fileID: 153353657120351068}
   m_Layer: 0
-  m_Name: cardholder (2)
+  m_Name: player3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
