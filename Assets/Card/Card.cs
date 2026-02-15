@@ -426,12 +426,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Do not modifier base_modifier. It is only here to be copied.
         // Alter the copied version (attached_mod).
         CardModifier attached_mod = Instantiate(base_modifier, modifier_start_mark);
+        // TODO(KASIN): FIX this scaling
+        //Vector3 parent_scale = this.transform.lossyScale;
         Vector3 parent_scale = this.transform.localScale;
         attached_mod.transform.localScale = new Vector3(
-            1.0f / parent_scale.x,
-            1.0f / parent_scale.y,
-            1.0f / parent_scale.z 
+            (1.0f / parent_scale.x) / 10.0f,
+            (1.0f / parent_scale.y) / 10.0f,
+            (1.0f / parent_scale.z) / 10.0f 
         );
+        /*
+        attached_mod.transform.localScale = new Vector3(
+            parent_scale.x * attached_mod.transform.localScale.x,
+            parent_scale.z * attached_mod.transform.localScale.y,
+            parent_scale.y * attached_mod.transform.localScale.z 
+        );
+        */
 
         Vector3 start_mark_position = this.modifier_start_mark.position;
         attached_mod.transform.SetPositionAndRotation(
