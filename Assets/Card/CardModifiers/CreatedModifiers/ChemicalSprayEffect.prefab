@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3838307282088826404, guid: efd32be48bb1ef34284f67ba1fb237f6, type: 3}
       propertyPath: m_Name
-      value: ChemicalSprayCardModifier
+      value: ChemicalSprayEffect
       objectReference: {fileID: 0}
     - target: {fileID: 8686860867661813170, guid: efd32be48bb1ef34284f67ba1fb237f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -66,14 +66,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3838307282088826404, guid: efd32be48bb1ef34284f67ba1fb237f6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5251120163889934300}
+      addedObject: {fileID: -6886716718813732402}
   m_SourcePrefab: {fileID: 100100000, guid: efd32be48bb1ef34284f67ba1fb237f6, type: 3}
 --- !u!1 &9360476348871201 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3838307282088826404, guid: efd32be48bb1ef34284f67ba1fb237f6, type: 3}
   m_PrefabInstance: {fileID: 3847527012235273221}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-5251120163889934300
+--- !u!114 &-6886716718813732402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,14 +82,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9360476348871201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bba18921134b83429fa5bd45f733bf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 053a068b4ce5fea44863f4db60c2960c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChemicalSprayCardModifier
-  modifier_name: ChemicalSpray
-  description: Applies XXX damage to enemy card for ZZZ turns.
-  image: {fileID: 2800000, guid: 007f88fa77740d747927a7466952af99, type: 3}
-  modifier_type: 4
+  m_EditorClassIdentifier: Assembly-CSharp::ChemicalSprayEffect
+  modifier_name: Chemical Spray Effect
+  description: Make this card take XXX damge for ZZZ turns.
+  image: {fileID: 2800000, guid: d779b28212a6bc546aa11d301722a248, type: 3}
+  modifier_type: 9
   modifier_state: 0
-  damage: 1
-  num_of_turns: 4
-  sprayEffect: {fileID: -6886716718813732402, guid: 5cdec5a5702502549afdacabf38cf036, type: 3}
+  damage: 0
+  num_of_turns: 0
