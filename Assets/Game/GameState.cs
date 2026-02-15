@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class GameState : MonoBehaviour
 {
     public TurnStates current_turn_state;
@@ -32,22 +32,64 @@ public class GameState : MonoBehaviour
         }
     }
 
+    public void EndOpponetTurn()
+    {
+        if (this.current_turn_state == TurnStates.OpponentDrawCard ||
+            this.current_turn_state == TurnStates.OpponentTurn)
+        {
+            this.UpdateTurnState(TurnStates.OpponentEndTurn);
+            UnityEngine.Debug.Log("Opponents Turn");
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Wait until it is your turn again.");
+        }
+    }
+
     public void UpdateTurnState(TurnStates state)
     {
         switch (state)
         {
             case TurnStates.PlayerEndTurn:
-                // Perform attacks of player's cards
-                attack_sys.PlayerAttack();
-                // Update the state
-                this.current_turn_state = TurnStates.OpponentDrawCard;
+                {
+                    this.current_turn_state = TurnStates.PlayerEndTurn;
+                    // Perform attacks of player's cards
+                    attack_sys.PlayerAttack();
+                    // Update the state
+                    this.UpdateTurnState(TurnStates.OpponentDrawCard);
+                }
                 break;
 
             case TurnStates.OpponentEndTurn:
-                // Perform attacks of opponent's cards
-                attack_sys.OpponentAttack();
-                // Update the state
-                this.current_turn_state = TurnStates.PlayerDrawCard;
+                {
+                    this.current_turn_state = TurnStates.OpponentEndTurn;
+                    // Perform attacks of opponent's cards
+                    attack_sys.OpponentAttack();
+                    // Update the state
+                    this.UpdateTurnState(TurnStates.PlayerDrawCard);
+                }
+                break;
+
+            case TurnStates.PlayerDrawCard:
+                {
+                    this.current_turn_state = TurnStates.PlayerDrawCard;
+                    List<Card> player_cards = attack_sys.GetCards(CardOwnership.Player);
+                    for (int i = 0; i < player_cards.Count; ++i)
+                    {
+                        player_cards[i].OnTurnStart();
+                    }
+                }
+                break;
+
+            case TurnStates.OpponentDrawCard:
+                {
+                    this.current_turn_state = TurnStates.OpponentDrawCard;
+                    List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponet);
+                    for (int i = 0; i < opponent_cards.Count; ++i)
+                    {
+                        opponent_cards[i].OnTurnStart();
+                    }
+                }
                 break;
 
             default:

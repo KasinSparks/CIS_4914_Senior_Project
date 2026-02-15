@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 [Serializable]
 public struct CardHolderColumn
@@ -47,6 +48,7 @@ public class AttackSystem : MonoBehaviour
                     card_ref.transform.position.y + 0.2f,
                     card_ref.transform.position.z
                 );
+                card_ref.SetOwnership(CardOwnership.Player);
             }
 
             if (opponent_cards[i] != null)
@@ -64,6 +66,7 @@ public class AttackSystem : MonoBehaviour
                     card_ref.transform.position.y + 0.2f,
                     card_ref.transform.position.z
                 );
+                card_ref.SetOwnership(CardOwnership.Opponet);
             }
         }
         // END: FOR TESTING DELETE THIS
@@ -110,5 +113,32 @@ public class AttackSystem : MonoBehaviour
     }
     public Card GetOppositeRight() {
         throw new System.NotImplementedException();
+    }
+
+    public List<Card> GetCards()
+    {
+        return this.GetCards(CardOwnership.Player | CardOwnership.Opponet);
+    }
+
+    public List<Card> GetCards(CardOwnership owner)
+    {
+        List<Card> ret = new List<Card>();
+
+        for (int i = 0; i < NUM_OF_CARDS_IN_ROW; ++i)
+        {
+            Card player_card_ref = this.GetCardFromHolder(this.columns[i].player_cardholder);
+            Card enemy_card_ref  = this.GetCardFromHolder(this.columns[i].enemy_cardholder);
+            if (player_card_ref != null && player_card_ref.GetOwnership() == CardOwnership.Player)
+            {
+                ret.Add(player_card_ref);
+            }
+
+            if (enemy_card_ref != null && enemy_card_ref.GetOwnership() == CardOwnership.Opponet)
+            {
+                ret.Add(enemy_card_ref);
+            }
+        }
+
+        return ret;
     }
 }

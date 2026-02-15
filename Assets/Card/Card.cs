@@ -335,6 +335,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         this.hp -= opponent_attack_amount;
 
+        // Update the Card UI elements
+        this.UpdateCardTextStats();
+
         // Check to see if the card has died
         if (this.hp <= 0)
         {
@@ -419,6 +422,24 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             mods[i].modifier_state = ModifierState.ReadyToApply;
         }
+
+
+        mods.Clear();
+        mods = this.GetModifiers(ModifierType.OnTurnStart);
+        for (int i = 0; i < mods.Count; ++i)
+        {
+            // Check to see if this modifier has already been applied
+            switch (mods[i].modifier_state)
+            {
+                case ModifierState.ReadyToApply:
+                    mods[i].ApplyModifier(this, null);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
     }
 
     public void AttachModifier(CardModifier base_modifier)
@@ -611,5 +632,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Card Cost Text set
         this.SetCardTextField("card_cost_text", this.play_cost.ToString());
+    }
+
+    public CardOwnership GetOwnership()
+    {
+        return this.card_ownership;
+    }
+
+    public void SetOwnership(CardOwnership owner)
+    {
+        this.card_ownership = owner;
     }
 }
