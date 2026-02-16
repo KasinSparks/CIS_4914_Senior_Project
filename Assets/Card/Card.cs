@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 //              for documentation regarding the Input EventSystem and PointerHandlers.
 
 // NOTE(Kasin): Scene must have an EventSystem object, and the camera object must have
-//              a Phisics Raycaster entity attached to it for the Input system to work.
+//              a Phisics RaycRaycaster entity attached to it for the Input system to work.
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
@@ -149,7 +149,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Mouse Click.");
+        //Debug.Log("Mouse Click.");
+        if (this.card_state == CardState.InHand)
+        {
+            this.player_hand.SetSelectedCard(this);
+        }
     }
 
     public int Attack()
