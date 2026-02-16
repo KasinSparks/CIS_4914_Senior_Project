@@ -49,6 +49,10 @@ public class Hand : MonoBehaviour
     public void RemoveCard(Card card)
     {
         this.cards.Remove(card);
+        if (card == this.front_card)
+        {
+            this.front_card = null;
+        }
         //card.gameObject.SetActive(false);
         card.SetState(CardState.OnPlayfield);
         //throw new System.NotImplementedException();
