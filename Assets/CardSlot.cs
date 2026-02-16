@@ -6,20 +6,23 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+
 public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
     private GameObject card_slot;
-
     private Playfield playfield;
+    private bool is_card_placed;
 
-    private bool is_card_placed = false;
+    void Awake()
+    {
+        // TODO: error handling
+        this.playfield = this.GetComponent<Playfield>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playfield = GetComponent<Playfield>();
-
-
+        this.is_card_placed = false;
     }
 
 
@@ -29,20 +32,37 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         
     }
 
+    public void SetCardSlot(GameObject card_slot)
+    {
+        this.card_slot = card_slot;
+    }
+
+    public GameObject GetCardSlot()
+    {
+        return this.card_slot;
+    }
+
+    public void SetPlayfield (Playfield playfield)
+    {
+        this.playfield = playfield;
+    }
+
+    public bool GetIsCardPlaced()
+    {
+        return this.is_card_placed;
+    }
+
+    public void SetIsCardPlaced(bool is_card_placed)
+    {
+        this.is_card_placed = is_card_placed;
+    }
+
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Selected slot");
-        this.is_card_placed = true;
+        playfield.PlaceSelectedCard(this);
     }
 
-    private void AddPhysics2DRaycaster()
-    {
-        //Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
-        //if (physicsRaycaster == null)
-        //{
-        //    Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
-        //}
-    }
 
 }
