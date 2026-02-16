@@ -3,18 +3,31 @@ using System.Collections.Generic;
 
 public class Playfield : MonoBehaviour
 {
-    public List<CardSlot> cardslot;
+    public List<CardSlot> card_slot;
     private Card selected_card;
-    private int numRow;
 
-    //[SerializeField] private PlaceCard placeCard;
+    private Hand player_hand;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.cardslot = new List<CardSlot>();
+        Transform parent = this.transform.GetChild(0);
+        this.card_slot = new List<CardSlot>();
+
+        // Adds each card slot in PlayerRow to cardSlot list
+        for (int i = 0; i < 4; i++)
+        {
+            Transform slot = parent.GetChild(i);
+            CardSlot new_slot = slot.GetComponent<CardSlot>();
+
+            new_slot.SetPlayfield(this);
+            new_slot.SetCardSlot(slot.gameObject);
+
+            card_slot.Add(new_slot);
+
+        }
+
         this.selected_card = null;
-        this.numRow = 3;
     }
 
     // Update is called once per frame
@@ -23,40 +36,39 @@ public class Playfield : MonoBehaviour
         
     }
 
-    public void PlaceCard(Card card)
-    {
-        // Instantiate card and add it to the hand list
-        //Card new_card = Instantiate(card, this.transform);
-
-        //// Update the newly instantiated card's fields 
-        //new_card.gameObject.SetActive(true);
-        //new_card.SetState(CardState.InHand);
-
-        //// Add the card to the hand
-        //this.cards.Add(new_card);
-
-        //// Move card to position
-        //this.FlareCards();
-
-    }
-
     public void SetSelectedCard(Card selected_card)
     {
         this.selected_card = selected_card;
-        Debug.Log("Set selected card: " + selected_card.card_name);
+        if (selected_card != null)
+        {
+            Debug.Log("Set selected card: " + selected_card.card_name);
+        }
+        
     }
 
-    public void PlaceSelectedCard()
+    public void SetHand(Hand player_hand)
     {
-        for (int i = 0; i < numRow - 1; i++)
-        {
-            foreach (Transform child in this.transform)
-            {
-                //if child.name ==
-                //Whatever w = childTransform.GetComponent<Whatever>();
-                //w.DoThing();
-            }
-        }
+        this.player_hand = player_hand;
+    }
 
+    public void PlaceSelectedCard(CardSlot selected_slot)
+    {
+        Debug.Log("Selected slot: " + selected_slot.GetCardSlot().name);
+        if (selected_slot.GetIsCardPlaced())
+        {
+            Debug.Log("Player can not place card in occupied card slot.");
+            return;
+        } else if (this.selected_card == null)
+        {
+            Debug.Log("No card selected.");
+            return;
+        }
+        selected_slot.SetIsCardPlaced(true);
+        this.selected_card.transform.SetPositionAndRotation(
+            selected_slot.transform.position,
+            Quaternion.Euler(0, 0, 90)
+        );
+        player_hand.RemoveCard(this.selected_card);
+        SetSelectedCard(null);
     }
 }
