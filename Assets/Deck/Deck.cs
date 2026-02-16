@@ -5,6 +5,8 @@ using System;
 
 public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    public CardOwnership owner;
+
     public List<Card> starting_cards;
     private List<Card> cards;
     private Queue<Card> card_queue;
@@ -57,6 +59,11 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (this.owner != CardOwnership.Player)
+        {
+            return;
+        }
+
         // Check to see if the player is eligible to draw a card
         if (gameState.current_turn_state != TurnStates.PlayerDrawCard)
         {
@@ -65,7 +72,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         // Send a card from the deck to the Hand Handler
-        hand.AddCard(this.GetNextCard());
+        hand.AddCard(this.GetNextCard(), this.owner);
 
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
         // card this turn.
