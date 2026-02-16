@@ -73,6 +73,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.is_in_card_creation_scene = true;
         }
 
+        // TODO(KASIN): This can lead to attaching another copy of a modifier
+        //     that is already attached. For now, a simple compare is used to
+        //     prevent duplication of attached modifiers.
         this.modifier_start_mark = this.transform.Find("card_modifiers");
         for (int i = 0; i < this.modifiers.Count; ++i)
         {
@@ -224,6 +227,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
+        // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent directly
+        if (opponent_card == null)
+        {
+            switch (this.card_ownership) {
+                case CardOwnership.Player:
+                    Debug.Log("Attacked the Opponent directly!");
+                    break;
+
+                case CardOwnership.Opponet:
+                    Debug.Log("Attacked the Player directly!");
+                    break;
+            }
+            return;
+        }
+
         // Apply attack modifiers
         // NOTE: if you need a certain modifier to apply before others, use a
         //     similar structure as this to call it before this. Similarly,
@@ -323,6 +341,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             // Dodge was not successful
             this._BaseDefend(opponent_attack_amount);
+        } else
+        {
+            Debug.Log("Card " + this.card_name + " dodged an attack!");
         }
 
         // Update the Card UI elements
@@ -448,24 +469,27 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void AttachModifier(CardModifier base_modifier)
     {
+        // Do a simple compare to see if this modifier has already been attached
+        List<CardModifier> temp_mods = this.GetModifiers();
+        for (int i = 0; i < temp_mods.Count; ++i) {
+            if (base_modifier.Compare(temp_mods[i]))
+            {
+                return;
+            }
+        }
+
         // Do not modifier base_modifier. It is only here to be copied.
         // Alter the copied version (attached_mod).
         CardModifier attached_mod = Instantiate(base_modifier, modifier_start_mark);
+
         // TODO(KASIN): FIX this scaling
         //Vector3 parent_scale = this.transform.lossyScale;
         Vector3 parent_scale = this.transform.localScale;
         attached_mod.transform.localScale = new Vector3(
-            (1.0f / parent_scale.x) / 10.0f,
-            (1.0f / parent_scale.y) / 10.0f,
-            (1.0f / parent_scale.z) / 10.0f 
+            0.07f,
+            0.07f,
+            0.07f
         );
-        /*
-        attached_mod.transform.localScale = new Vector3(
-            parent_scale.x * attached_mod.transform.localScale.x,
-            parent_scale.z * attached_mod.transform.localScale.y,
-            parent_scale.y * attached_mod.transform.localScale.z 
-        );
-        */
 
         Vector3 start_mark_position = this.modifier_start_mark.position;
         attached_mod.transform.SetPositionAndRotation(
@@ -628,7 +652,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         // Card HP Text set
         this.SetCardTextField("card_health_text",
-            (this.hp + this.defense_bonus).ToString());
+            (this.hp).ToString());
 
         // Card Attack Text set
         this.SetCardTextField("card_attack_text",

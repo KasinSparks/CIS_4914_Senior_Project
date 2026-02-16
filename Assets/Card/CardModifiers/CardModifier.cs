@@ -26,8 +26,27 @@ public abstract class CardModifier : MonoBehaviour
     {
         return this.display_description;
     }
+    
+    // Compare the name, description, and modifier_type
+    public bool Compare(CardModifier other)
+    {
+        if (this.modifier_name != other.modifier_name)
+        {
+            return false;
+        }
 
-    //public abstract void ApplyModifier(Card card);
+        if (this.description != other.description)
+        {
+            return false;
+        }
+
+        if (this.modifier_type != other.modifier_type)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     public abstract void ApplyModifier(Card card, Card other);
 

@@ -8,6 +8,11 @@ public class Playfield : MonoBehaviour
 
     private Hand player_hand;
 
+    public static int NUM_OF_CARDS_IN_ROW
+    {
+        get { return 4; }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,7 +20,7 @@ public class Playfield : MonoBehaviour
         this.card_slot = new List<CardSlot>();
 
         // Adds each card slot in PlayerRow to cardSlot list
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < NUM_OF_CARDS_IN_ROW; i++)
         {
             Transform slot = parent.GetChild(i);
             CardSlot new_slot = slot.GetComponent<CardSlot>();
@@ -68,6 +73,8 @@ public class Playfield : MonoBehaviour
             selected_slot.transform.position,
             Quaternion.Euler(0, 0, 90)
         );
+        selected_slot.SetCard(this.selected_card);
+
         player_hand.RemoveCard(this.selected_card);
         SetSelectedCard(null);
     }
