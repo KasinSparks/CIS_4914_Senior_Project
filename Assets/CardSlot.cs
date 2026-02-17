@@ -12,11 +12,14 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     private GameObject card_slot;
     private Playfield playfield;
     private bool is_card_placed;
+    private Card card_in_slot;
 
     void Awake()
     {
         // TODO: error handling
         this.playfield = this.GetComponent<Playfield>();
+
+        this.card_in_slot = null;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,7 +59,22 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     {
         this.is_card_placed = is_card_placed;
     }
+    
+    public void SetCard(Card card)
+    {
+        this.card_in_slot = card;
+    }
+    
+    // Returns null if there is not a card currently in the slot
+    public Card GetCard()
+    {
+        return this.card_in_slot;
+    }
 
+    public void RemoveCard()
+    {
+        this.card_in_slot = null;
+    }
 
 
     public void OnPointerClick(PointerEventData eventData)

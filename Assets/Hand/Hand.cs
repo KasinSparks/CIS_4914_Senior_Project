@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour
         
     }
 
-    public void AddCard(Card card)
+    public void AddCard(Card card, CardOwnership owner)
     {
         // Instantiate card and add it to the hand list
         Card new_card = Instantiate(card, this.transform);
@@ -37,6 +37,7 @@ public class Hand : MonoBehaviour
         // Update the newly instantiated card's fields 
         new_card.gameObject.SetActive(true);
         new_card.SetState(CardState.InHand);
+        new_card.SetOwnership(owner);
 
         // Add the card to the hand
         this.cards.Add(new_card);

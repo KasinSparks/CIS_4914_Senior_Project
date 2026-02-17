@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7808058633619816028
+--- !u!1001 &459457018636363840
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,43 +10,47 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: hp
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: attack
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: card_name
-      value: Demo Bug Three
+      value: Demo Bug 4
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: play_cost
-      value: 11
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: card_image
       value: 
-      objectReference: {fileID: 2800000, guid: c8499ead3515bc84cb905361a84d57a1, type: 3}
+      objectReference: {fileID: 2800000, guid: 67784e87302b10b4e93c32bb50cadb52, type: 3}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: description
-      value: Another test of the demo bug card.
+      value: A test of the demo bug card.
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: modifiers.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: 'modifiers.Array.data[0]'
       value: 
-      objectReference: {fileID: 1053100887393780663, guid: 5223ed4164d066f488672ebcb1ca68a6, type: 3}
+      objectReference: {fileID: -5251120163889934300, guid: 3e252574955ff6340b04aadf970f83d4, type: 3}
     - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: 'modifiers.Array.data[1]'
+      value: 
+      objectReference: {fileID: -5749735157146628843, guid: dffa03c30ca61c549b8af00c6e164025, type: 3}
+    - target: {fileID: 1863678930309910690, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
+      propertyPath: 'modifiers.Array.data[2]'
       value: 
       objectReference: {fileID: 1053100887393780663, guid: 5223ed4164d066f488672ebcb1ca68a6, type: 3}
     - target: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_Name
-      value: DemoCardThree
+      value: DemoCardFour
       objectReference: {fileID: 0}
     - target: {fileID: 6742378483838015722, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -91,34 +95,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 8571850241850909089}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
---- !u!1 &4215834189590838284 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-  m_PrefabInstance: {fileID: 7808058633619816028}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &8571850241850909089
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4215834189590838284}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.00062435627, y: 0.08232097, z: 0.12416097}
-  m_Center: {x: 0, y: 0, z: 0}
