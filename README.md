@@ -8,3 +8,10 @@ A rogue-like deck-building card game that draws inspiration from elements relati
 1. `git clone https://github.com/KasinSparks/CIS_4914_Senior_Project`
 2. Open the project in Unity Hub
 3. Launch the project
+
+## Documentation
+### Build instuctions:
+1. `cd ./docs`
+2. `doxygen`
+### View documentation:
+In the Docs/html/ folder, open index.html in a web-browser.
