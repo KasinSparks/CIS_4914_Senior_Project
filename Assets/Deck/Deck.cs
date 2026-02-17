@@ -56,13 +56,20 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         
     }
-
+    
+    /**
+     * @brief When a user clicks on their deck, add a card from the deck to the
+     * hand.
+     * @param eventData
+     */
     public void OnPointerClick(PointerEventData eventData)
     {
         if (this.owner != CardOwnership.Player)
         {
             return;
         }
+
+        // TODO(KASIN): Change this to use the function call in gameState
 
         // Check to see if the player is eligible to draw a card
         if (gameState.current_turn_state != TurnStates.PlayerDrawCard)
@@ -76,18 +83,21 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
         // card this turn.
-        ///gameState.current_turn_state = gameState.current_turn_state ^ (~TurnStates.PlayerDrawCard);
+        // gameState.current_turn_state = gameState.current_turn_state ^ (~TurnStates.PlayerDrawCard);
         gameState.current_turn_state = TurnStates.PlayerTurn;
     }
 
-
-    // Suffles all the cards in the deck then puts the result into the card_queue
-    // TODO: Unit tests
+    /**
+     * @brief Suffles all the cards in the deck then puts the result into the
+     * card_queue
+     * 
+     * Uses the Durstenfeld's shuffle algorithm based on Fisher-Yates shuffle
+     * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+     * 
+     * @todo Unit tests
+    */
     public void Shuffle()
     {
-        // Uses the Durstenfeld's shuffle algorithm based on Fisher-Yates shuffle
-        // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-
         Card[] shuffled_array = cards.ToArray();
 
         for (int i = shuffled_array.Length - 1; i > 0; --i)
@@ -106,18 +116,33 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
     
-    // Returns the next card in the card_queue, and removes it from the queue
+    /**
+     * @brief Returns the next card in the card_queue, and removes it from the
+     * queue.
+     * @return Reference to the next card in the deck queue
+     */
     public Card GetNextCard()
     {
         return this.card_queue.Dequeue();
     }
 
-    // Returns the next card in the card_queue, but does not remove it from the queue
+    /**
+     * @brief Returns the next card in the card_queue, but does not remove it
+     * from the queue.
+     * @return Reference to the next card in the deck queue
+     */
     public Card PeekNextCard()
     {
         throw new System.NotImplementedException();
     }
 
+    /**
+     * @brief Add a card to the deck.
+     * @param card Reference to a card to be added to the deck.
+     * 
+     * Will create a new copy of the card passed then add the newly created
+     * card to the deck.
+     */
     public void AddCard(Card card)
     {
         Card new_card = Instantiate(card, this.transform);
@@ -125,7 +150,11 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         new_card.gameObject.SetActive(false);
         this.cards.Add(new_card);
     }
-
+    
+    /**
+     * @brief Removes a Card from the deck
+     * @todo Implement this function
+     */
     public void RemoveCard(Card card)
     {
         throw new System.NotImplementedException();
