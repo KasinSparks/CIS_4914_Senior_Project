@@ -235,7 +235,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     Debug.Log("Attacked the Opponent directly!");
                     break;
 
-                case CardOwnership.Opponet:
+                case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
                     break;
             }

@@ -47,7 +47,7 @@ public class AttackSystem : MonoBehaviour
                     opponent_card_holder_transform.position,
                     Quaternion.Euler(0, 180, 90)
                 );
-                card_ref.SetOwnership(CardOwnership.Opponet);
+                card_ref.SetOwnership(CardOwnership.Opponent);
                 current_opponent_cards[i] = card_ref;
             }
         }
@@ -94,7 +94,7 @@ public class AttackSystem : MonoBehaviour
 
     public List<Card> GetCards()
     {
-        return this.GetCards(CardOwnership.Player | CardOwnership.Opponet);
+        return this.GetCards(CardOwnership.Player | CardOwnership.Opponent);
     }
 
     public List<Card> GetCards(CardOwnership owner)
@@ -110,7 +110,7 @@ public class AttackSystem : MonoBehaviour
             }
 
             Card enemy_card_ref  = this.current_opponent_cards[i];
-            if (enemy_card_ref != null && enemy_card_ref.GetOwnership() == CardOwnership.Opponet)
+            if (enemy_card_ref != null && enemy_card_ref.GetOwnership() == CardOwnership.Opponent)
             {
                 ret.Add(enemy_card_ref);
             }

@@ -32,7 +32,7 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void EndOpponetTurn()
+    public void EndOpponentTurn()
     {
         if (this.current_turn_state == TurnStates.OpponentDrawCard ||
             this.current_turn_state == TurnStates.OpponentTurn)
@@ -84,7 +84,7 @@ public class GameState : MonoBehaviour
             case TurnStates.OpponentDrawCard:
                 {
                     this.current_turn_state = TurnStates.OpponentDrawCard;
-                    List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponet);
+                    List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponent);
                     for (int i = 0; i < opponent_cards.Count; ++i)
                     {
                         opponent_cards[i].OnTurnStart();
