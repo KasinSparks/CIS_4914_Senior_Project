@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5417316250d64fd479b35bc486caf505, type: 3}
+  m_Name: Beetle
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  card_name: Beetle
+  description: A common beetle
+  order: 0
+  hp: 3
+  attack: 1
+  nektar_cost: 1
+  image: {fileID: 2800000, guid: 9e8ea7e11c5b09e42959adbf193d9197, type: 3}
+  card_rarity: 1
+  starting_modifiers:
+  - {fileID: 11400000, guid: dc184778c7675d94a999295f033b13ad, type: 2}

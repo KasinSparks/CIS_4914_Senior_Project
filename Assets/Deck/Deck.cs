@@ -7,9 +7,9 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 {
     public CardOwnership owner;
 
-    public List<Card> starting_cards;
-    private List<Card> cards;
-    private Queue<Card> card_queue;
+    public List<CardData> starting_cards;
+    private List<CardData> cards;
+    private Queue<CardData> card_queue;
 
     public GameState gameState;
     public Hand hand;
@@ -17,14 +17,14 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.cards = new List<Card>();
+        this.cards = new List<CardData>();
 
-        foreach (Card c in this.starting_cards)
+        foreach (CardData c in this.starting_cards)
         {
             this.AddCard(c);
         }
 
-        this.card_queue = new Queue<Card>();
+        this.card_queue = new Queue<CardData>();
 
         if (this.cards.Count < 1)
         {
@@ -33,29 +33,14 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Copy the starting cards to the queue
         this.Shuffle();
-
-        // Update the card state to reflect they are currently in the deck.
-        foreach (Card c in this.card_queue)
-        {
-            c.SetState(CardState.InDeck);
-        }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() {}
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        
-    }
+    public void OnPointerEnter(PointerEventData eventData) {}
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        
-    }
+    public void OnPointerExit(PointerEventData eventData) {}
     
     /**
      * @brief When a user clicks on their deck, add a card from the deck to the
@@ -98,12 +83,12 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     */
     public void Shuffle()
     {
-        Card[] shuffled_array = cards.ToArray();
+        CardData[] shuffled_array = cards.ToArray();
 
         for (int i = shuffled_array.Length - 1; i > 0; --i)
         {
             int j = UnityEngine.Random.Range(0, i + 1);
-            Card temp = shuffled_array[j];
+            CardData temp = shuffled_array[j];
             shuffled_array[j] = shuffled_array[i];
             shuffled_array[i] = temp;
         }
@@ -121,7 +106,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
      * queue.
      * @return Reference to the next card in the deck queue
      */
-    public Card GetNextCard()
+    public CardData GetNextCard()
     {
         return this.card_queue.Dequeue();
     }
@@ -143,12 +128,9 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
      * Will create a new copy of the card passed then add the newly created
      * card to the deck.
      */
-    public void AddCard(Card card)
+    public void AddCard(CardData card)
     {
-        Card new_card = Instantiate(card, this.transform);
-        new_card.SetState(CardState.InDeck);
-        new_card.gameObject.SetActive(false);
-        this.cards.Add(new_card);
+        this.cards.Add(card);
     }
     
     /**

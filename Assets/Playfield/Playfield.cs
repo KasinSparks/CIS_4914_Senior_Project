@@ -241,8 +241,39 @@ public class Playfield : MonoBehaviour
                 this.opponent_selected_card.SetSlot(selected_slot);
                 break;
         }
-
+        
+        // Send the OnPlayfieldUpdate to the cards for the given owner
+        this.RegisterPlayfieldUpdate(owner);
+        
         SetSelectedCard(owner, null);
+    }
+
+    public void RegisterPlayfieldUpdate(CardOwnership owner)
+    {
+        int num_of_hymenopteras = 0;
+        List<CardSlot> slots = this.GetCardSlots(owner);
+        foreach (CardSlot slot in slots)
+        {
+            if (slot.GetCard() == null)
+            {
+                continue;
+            }
+
+            if (slot.GetCard().GetOrder() == CardOrder.Hymenoptera)
+            {
+                num_of_hymenopteras++;
+            }
+        }
+         
+        foreach (CardSlot slot in slots)
+        {
+            if (slot.GetCard() == null)
+            {
+                continue;
+            }
+
+            slot.GetCard().OnPlayfieldUpdate(num_of_hymenopteras);
+        }
     }
 
     //Below is for consumables

@@ -5,7 +5,7 @@ public class AddCardToHandConsumable : ScriptableObject //in order to add any ca
 {
     public string itemName;
     public Sprite icon;
-    public Card cardToAdd; //assign card, can be used for basic card like ant or flower card once added
+    public CardData cardToAdd; //assign card, can be used for basic card like ant or flower card once added
 
     public void Use(Hand playerHand)
     {

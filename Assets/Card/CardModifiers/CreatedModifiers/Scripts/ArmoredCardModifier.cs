@@ -1,25 +1,15 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Card/Modifier/Armored")]
 public class ArmoredCardModifier : CardModifier
 {
 
     public int damage_reduction;
 
-    void Awake()
+    public override void Initialize()
     {
         SetDisplayDescription(this.description.Replace("XXX", this.damage_reduction.ToString()));
-        this.SetImage();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //this.SetImage();
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -38,5 +28,16 @@ public class ArmoredCardModifier : CardModifier
         card._RemoveDefenseBonus(this.damage_reduction);
         this.modifier_state = ModifierState.ReadyToApply;
      
+    }
+
+    override public void SetData(CardModifier other)
+    {
+        this.SetData((ArmoredCardModifier) other);
+    }
+
+    public void SetData(ArmoredCardModifier other)
+    {
+        base.SetData(other);
+        this.damage_reduction = other.damage_reduction;
     }
 }
