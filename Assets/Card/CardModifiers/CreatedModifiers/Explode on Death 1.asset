@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efede499a792d0f468c27c9ed34838c2, type: 3}
+  m_Name: Explode on Death 1
+  m_EditorClassIdentifier: Assembly-CSharp::ExplodeOnDeathModifier
+  modifier_name: Explode on Death
+  description: Deals XXX damage to opponent on death.
+  image: {fileID: 2800000, guid: 8d5266c4f8a3d5540a03576322196eff, type: 3}
+  modifier_type: 7
+  modifier_state: 0
+  damage_on_death: 3

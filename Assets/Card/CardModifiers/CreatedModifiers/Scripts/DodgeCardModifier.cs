@@ -1,25 +1,16 @@
 using UnityEngine;
 
+
+[CreateAssetMenu(menuName = "Card/Modifier/Dodge")]
 public class DodgeCardModifier : CardModifier
 {
     [Range(0.0f, 100.0f)]
     public float dodge_chance;
 
-    void Awake()
+    public override void Initialize()
     {
         SetDisplayDescription(this.description.Replace("XXX", this.dodge_chance.ToString()));
-        this.SetImage();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //this.SetImage();
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -38,5 +29,10 @@ public class DodgeCardModifier : CardModifier
         card._RemoveDodgeChance(this.dodge_chance / 100.0f);
         this.modifier_state = ModifierState.ReadyToApply;
      
+    }
+
+    override public void SetData(CardModifier other)
+    {
+        base.SetData(other);
     }
 }

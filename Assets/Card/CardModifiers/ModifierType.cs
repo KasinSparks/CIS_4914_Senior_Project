@@ -14,5 +14,6 @@ public enum ModifierType
     OnDeath,
     OnPlace,
     OnTurnStart,
-    //OnSacrificeNektarGiver,
+    OnPlayfieldChange,
+    OnSacrificeNektarGiver,
 }

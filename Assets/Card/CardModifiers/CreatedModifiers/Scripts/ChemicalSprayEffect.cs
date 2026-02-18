@@ -1,27 +1,16 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Card/Modifier/ChemicalSprayEffect")]
 public class ChemicalSprayEffect: CardModifier
 {
     public int damage;
     public int num_of_turns;
 
-    void Awake()
+    public override void Initialize()
     {
         string display_description = this.description.Replace("XXX", this.damage.ToString());
         display_description = display_description.Replace("ZZZ", this.num_of_turns.ToString());
         SetDisplayDescription(display_description);
-        this.SetImage();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -50,5 +39,10 @@ public class ChemicalSprayEffect: CardModifier
     {
         this.modifier_state = ModifierState.ReadyToApply;
      
+    }
+
+    override public void SetData(CardModifier other)
+    {
+        base.SetData(other);
     }
 }

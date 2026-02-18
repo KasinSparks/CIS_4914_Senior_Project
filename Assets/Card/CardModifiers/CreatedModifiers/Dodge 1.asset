@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fdec829524b1d540bcaefb2ef0738ad, type: 3}
+  m_Name: Dodge 1
+  m_EditorClassIdentifier: Assembly-CSharp::DodgeCardModifier
+  modifier_name: Dodge
+  description: Gives XXX% chance to dodge incoming attacks.
+  image: {fileID: 2800000, guid: aabeb95e9ab6a9a4ba5a25cdfbc0a03e, type: 3}
+  modifier_type: 2
+  modifier_state: 0
+  dodge_chance: 33

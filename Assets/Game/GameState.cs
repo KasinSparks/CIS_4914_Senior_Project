@@ -77,6 +77,7 @@ public class GameState : MonoBehaviour
                     List<Card> player_cards = attack_sys.GetCards(CardOwnership.Player);
                     for (int i = 0; i < player_cards.Count; ++i)
                     {
+                        Debug.Log("Owner: " + player_cards[i].GetOwnership());
                         player_cards[i].OnTurnStart();
                     }
                 }

@@ -1,26 +1,28 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
 
 public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
-    [SerializeField] private List<Card> starting_cards;
-    [SerializeField] private GameState gameState;
+    [SerializeField] private List<CardData> starting_cards;
+    //[SerializeField] private GameState gameState;
+    public GameState gameState;
 
     [SerializeField] private Playfield playfield;
 
-    [SerializeField] private List<Card> cards;
-    [SerializeField] private Queue<Card> card_queue;
+    public List<Card> cards;
+    public Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
 
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         this.cards = new List<Card>();
 
-        foreach (Card c in this.starting_cards)
+        foreach (CardData c in this.starting_cards)
         {
             this.AddCard(c);
         }
@@ -35,11 +37,13 @@ public class Opponent : MonoBehaviour
         // Copy the starting cards to the queue
         this.Shuffle();
 
+        /*
         // Update the card state to reflect they are currently in the deck.
-        foreach (Card c in this.card_queue)
+        foreach (CardData c in this.card_queue)
         {
             c.SetState(CardState.InDeck);
         }
+        */
     }
 
     /**
@@ -167,11 +171,14 @@ public class Opponent : MonoBehaviour
      * Will create a new copy of the card passed then add the newly created
      * card to the deck.
      */
-    private void AddCard(Card card)
+    private void AddCard(CardData card)
     {
-        Card new_card = Instantiate(card, this.transform);
-        new_card.SetState(CardState.InDeck);
+        Card card_prefab = AssetDatabase.LoadAssetAtPath<Card>("Assets/Card/Card.prefab");
+        Card new_card = Instantiate(card_prefab, this.transform);
+        new_card.SetCardData(card);
         new_card.gameObject.SetActive(false);
+        new_card.SetState(CardState.InHand);
+        new_card.SetOwnership(CardOwnership.Opponent);
         this.cards.Add(new_card);
     }
 

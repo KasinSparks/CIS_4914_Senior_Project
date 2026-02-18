@@ -1,25 +1,15 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Card/Modifier/Attack Speed")]
 public class AttackSpeedCardModifier : CardModifier
 {
 
     public int num_of_additional_attacks;
 
-    void Awake()
+    public override void Initialize()
     {
         SetDisplayDescription(this.description.Replace("XXX", (this.num_of_additional_attacks + 1).ToString()));
-        this.SetImage();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //this.SetImage();
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -41,5 +31,15 @@ public class AttackSpeedCardModifier : CardModifier
             - this.num_of_additional_attacks);
 
         this.modifier_state = ModifierState.ReadyToApply;
+    }
+
+    override public void SetData(CardModifier other)
+    {
+        base.SetData(other);
+    }
+
+    public void SetData(AttackSpeedCardModifier other)
+    {
+
     }
 }

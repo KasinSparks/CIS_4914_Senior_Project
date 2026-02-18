@@ -420,10 +420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -992,11 +992,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Opponent
   attack_style: 0
   starting_cards:
-  - {fileID: 2287071758175566050, guid: c33f4e40e8df8aa4d94eb8db07f8d7bc, type: 3}
-  - {fileID: 2287071758175566050, guid: c4044a3c454176a44a8713f3d1b630bc, type: 3}
-  - {fileID: 8468691349021142782, guid: 500c24bf80533a54b9032e5215e7c5c6, type: 3}
-  - {fileID: 8468691349021142782, guid: 75e2c56849a76fe4aa9a9ead5baead0e, type: 3}
-  - {fileID: 2287071758175566050, guid: c33f4e40e8df8aa4d94eb8db07f8d7bc, type: 3}
+  - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
+  - {fileID: 11400000, guid: b61b23b3467ae1e4faa6ab607de49ed3, type: 2}
+  - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
+  - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
+  - {fileID: 11400000, guid: 93bd8af31692fbb4a8accb6351310847, type: 2}
+  - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
+  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
+  - {fileID: 11400000, guid: 94444e15942938943bad1531709bc8f0, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 1460760515}
   cards: []
@@ -3915,11 +3919,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Deck
   owner: 1
   starting_cards:
-  - {fileID: 2287071758175566050, guid: c33f4e40e8df8aa4d94eb8db07f8d7bc, type: 3}
-  - {fileID: 8468691349021142782, guid: 75e2c56849a76fe4aa9a9ead5baead0e, type: 3}
-  - {fileID: 8468691349021142782, guid: 500c24bf80533a54b9032e5215e7c5c6, type: 3}
-  - {fileID: 8468691349021142782, guid: 75e2c56849a76fe4aa9a9ead5baead0e, type: 3}
-  - {fileID: 2287071758175566050, guid: c33f4e40e8df8aa4d94eb8db07f8d7bc, type: 3}
+  - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
+  - {fileID: 11400000, guid: b61b23b3467ae1e4faa6ab607de49ed3, type: 2}
+  - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
+  - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
+  - {fileID: 11400000, guid: 93bd8af31692fbb4a8accb6351310847, type: 2}
+  - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
+  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
+  - {fileID: 11400000, guid: 94444e15942938943bad1531709bc8f0, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!64 &2127430192
