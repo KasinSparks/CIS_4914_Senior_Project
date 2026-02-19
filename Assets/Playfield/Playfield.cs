@@ -7,14 +7,14 @@ public class Playfield : MonoBehaviour
     [SerializeField] private Opponent opponent;
 
     // Player variables
-    private List<CardSlot> player_card_slots;
-    private Hand player_hand;
-    private Card player_selected_card;
+    public List<CardSlot> player_card_slots;
+    public Hand player_hand;
+    public Card player_selected_card;
 
     // Opponent variables
-    private List<CardSlot> opponent_card_slots;
+    public List<CardSlot> opponent_card_slots;
     public Card opponent_selected_card;
-    private List<CardSlot> queue_card_slots;
+    public List<CardSlot> queue_card_slots;
 
     private const int NUM_ROWS = 3;
 
@@ -180,20 +180,21 @@ public class Playfield : MonoBehaviour
 
     public void PlaceSelectedCard(CardOwnership owner, CardSlot selected_slot)
     {
-        float scale = .01f;
+        UnityEngine.Debug.Log(owner);
+        
         if (owner != CardOwnership.Player && owner != CardOwnership.Opponent)
         {
-            Debug.Log("Non-Player/Opponent: Can not place card.");
+            UnityEngine.Debug.Log("Non-Player/Opponent: Can not place card.");
             return;
         }
         else if (selected_slot.GetIsCardPlaced())
         {
-            Debug.Log("Can not place card in occupied card slot.");
+            UnityEngine.Debug.Log("Can not place card in occupied card slot.");
             return;
         }
-        else if (this.player_selected_card == null)
+        else if (this.player_selected_card == null && this.opponent_selected_card == null)
         {
-            Debug.Log("No card selected.");
+            UnityEngine.Debug.Log("No card selected.");
             return;
         }
         //else if (owner != selected_slot.GetCardOwnership())
@@ -203,10 +204,11 @@ public class Playfield : MonoBehaviour
         //}
 
         selected_slot.SetIsCardPlaced(true);
-        
+
         switch (owner)
         {
             case (CardOwnership.Player):
+                UnityEngine.Debug.Log("Player Card");
                 this.player_selected_card.SetState(CardState.OnPlayfield);
                 this.player_selected_card.transform.SetPositionAndRotation(
                     selected_slot.transform.position,
@@ -218,12 +220,12 @@ public class Playfield : MonoBehaviour
                 break;
 
             case (CardOwnership.Opponent):
+                UnityEngine.Debug.Log("Opponent Card");
                 this.opponent_selected_card.SetState(CardState.OnPlayfield);
                 this.opponent_selected_card.transform.SetPositionAndRotation(
                     selected_slot.transform.position,
                     Quaternion.Euler(0, 0, 90)
                 );
-                this.opponent_selected_card.transform.localScale = new Vector3(scale, scale, scale);
                 selected_slot.SetCard(this.opponent_selected_card);
                 opponent.RemoveCard(this.opponent_selected_card);
                 break;

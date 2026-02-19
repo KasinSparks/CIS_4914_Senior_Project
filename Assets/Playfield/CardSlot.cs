@@ -9,11 +9,11 @@ using UnityEngine.EventSystems;
 
 public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
-    private GameObject card_slot;
-    private Playfield playfield;
-    private bool is_card_placed;
-    private Card card_in_slot;
-    private CardOwnership card_ownership;
+    public GameObject card_slot;
+    public Playfield playfield;
+    public bool is_card_placed;
+    public Card card_in_slot;
+    public CardOwnership card_ownership;
 
     void Awake()
     {

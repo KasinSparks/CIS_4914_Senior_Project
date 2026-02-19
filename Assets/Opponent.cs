@@ -9,8 +9,8 @@ public class Opponent : MonoBehaviour
     [SerializeField] private GameState gameState;
     [SerializeField] private Playfield playfield;
 
-    private List<Card> cards;
-    private Queue<Card> card_queue;
+    public List<Card> cards;
+    public Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
 
     
@@ -87,7 +87,7 @@ public class Opponent : MonoBehaviour
         // Check to see if the player is eligible to draw a card
         //if (gameState.current_turn_state != TurnStates.OpponentTurn)
         //{
-        //    Debug.Log("Opponent palce a card if the game is not in the OpponentTurn.");
+        //    Debug.Log("Opponent place a card if the game is not in the OpponentTurn.");
         //    return;
         //}
 
@@ -188,7 +188,9 @@ public class Opponent : MonoBehaviour
 
     private void TempLogic()
     {
+
         // set selected card to first card in hand
+
         this.SetSelectedCard(hand[0]);
         hand[0].gameObject.SetActive(true);
         hand[0].SetState(CardState.InHand);
