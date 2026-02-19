@@ -5,6 +5,7 @@ public class GameState : MonoBehaviour
 {
     public TurnStates current_turn_state;
     public AttackSystem attack_sys;
+    public Opponent opponent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -83,8 +84,9 @@ public class GameState : MonoBehaviour
 
             case TurnStates.OpponentDrawCard:
                 {
+                    opponent.DrawCards();
                     this.current_turn_state = TurnStates.OpponentDrawCard;
-                    List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponet);
+                    List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponent);
                     for (int i = 0; i < opponent_cards.Count; ++i)
                     {
                         opponent_cards[i].OnTurnStart();

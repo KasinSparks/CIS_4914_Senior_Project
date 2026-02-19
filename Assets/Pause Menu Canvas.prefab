@@ -1081,7 +1081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4178f4fe0e8d2446b02c0a0288e3a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadGameScene
-  sceneName: SampleScene
 --- !u!222 &5772349332830015557
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1132,7 +1131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4178f4fe0e8d2446b02c0a0288e3a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadGameScene
-  sceneName: 
 --- !u!1 &7017711157678242853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,9 +1252,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3616770490383642101}
+      - m_Target: {fileID: 8565040955751963704}
         m_TargetAssemblyTypeName: LoadGameScene, Assembly-CSharp
-        m_MethodName: load
+        m_MethodName: Load
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1531,7 +1529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4178f4fe0e8d2446b02c0a0288e3a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadGameScene
-  sceneName: SampleScene
 --- !u!222 &5438155299353324715
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1828,9 +1825,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3616770490383642101}
+      - m_Target: {fileID: 8565040955751963704}
         m_TargetAssemblyTypeName: LoadGameScene, Assembly-CSharp
-        m_MethodName: quit
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

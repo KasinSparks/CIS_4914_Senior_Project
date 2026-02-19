@@ -13,6 +13,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     private Playfield playfield;
     private bool is_card_placed;
     private Card card_in_slot;
+    private CardOwnership card_ownership;
 
     void Awake()
     {
@@ -20,6 +21,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         this.playfield = this.GetComponent<Playfield>();
 
         this.card_in_slot = null;
+
+        this.card_ownership = CardOwnership.None;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +35,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetCardSlot(GameObject card_slot)
@@ -45,7 +48,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         return this.card_slot;
     }
 
-    public void SetPlayfield (Playfield playfield)
+    public void SetPlayfield(Playfield playfield)
     {
         this.playfield = playfield;
     }
@@ -59,27 +62,39 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     {
         this.is_card_placed = is_card_placed;
     }
-    
+
     public void SetCard(Card card)
     {
         this.card_in_slot = card;
     }
-    
+
     // Returns null if there is not a card currently in the slot
     public Card GetCard()
     {
         return this.card_in_slot;
     }
 
-    public void RemoveCard()
+    public void ResetCardSlot()
     {
+        this.card_slot = null;
+        this.is_card_placed = false;
         this.card_in_slot = null;
     }
 
+    public void SetCardOwnership(CardOwnership owner)
+    {
+        this.card_ownership = owner;
+    }
+
+    public CardOwnership GetCardOwnership()
+    {
+        return this.card_ownership;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        playfield.PlaceSelectedCard(this);
+        if (this.card_ownership != CardOwnership.Player) return;
+        playfield.PlaceSelectedCard(this.card_ownership, this);
     }
 
 

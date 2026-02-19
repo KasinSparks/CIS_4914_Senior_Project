@@ -5,17 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class LoadGameScene : MonoBehaviour
 {
-    public string sceneName;
 
-    public void load(string sceneName)
+    public void Load(string scene_name)
     {
-        if (!string.IsNullOrEmpty(sceneName))
+        if (!string.IsNullOrEmpty(scene_name))
         {
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(scene_name);
         }
     }
 
-    public void quit()
+    public void Quit()
     {
         Application.Quit();
     }

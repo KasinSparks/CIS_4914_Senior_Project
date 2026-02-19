@@ -195,7 +195,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         //Debug.Log("Mouse Click.");
         if (this.card_state == CardState.InHand)
         {
-            this.player_hand.SetSelectedCard(this);
+            this.player_hand.SetSelectedCard(this.card_ownership, this);
         }
 
         if (this.card_state == CardState.OnPlayfield) //for consumables, check if there is a consumable waiting to be used
@@ -244,7 +244,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     Debug.Log("Attacked the Opponent directly!");
                     break;
 
-                case CardOwnership.Opponet:
+                case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
                     break;
             }
