@@ -75,6 +75,7 @@ public class AttackSystem : MonoBehaviour
                 // After player attacks, check for enemy card death and resets cardslot
                 if (opponent_card_ref != null && opponent_card_ref.hp <= 0)
                 {
+                    Debug.Log("Opponent card dided");
                     opponent_card_slot_ref.ResetCardSlot();
                 }
             }

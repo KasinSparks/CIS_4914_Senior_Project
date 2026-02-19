@@ -93,7 +93,7 @@ public class Opponent : MonoBehaviour
 
         // TODO update with loop and random numbers and Logic
         // Send a card from the deck to the hand list
-        this.hand.Add(this.GetNextCard());
+        //this.hand.Add(this.GetNextCard());
         this.TempLogic();
 
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
@@ -120,6 +120,7 @@ public class Opponent : MonoBehaviour
 
             SetSelectedCard(queue_card_slot_ref.GetCard());
             playfield.PlaceSelectedCard(CardOwnership.Opponent, opponent_card_slot_ref);
+            Debug.Log("updated row");
             queue_card_slot_ref.ResetCardSlot();
 
         }
@@ -188,13 +189,15 @@ public class Opponent : MonoBehaviour
 
     private void TempLogic()
     {
+        if (hand.Count == 0) return;
 
         // set selected card to first card in hand
 
         this.SetSelectedCard(hand[0]);
         hand[0].gameObject.SetActive(true);
         hand[0].SetState(CardState.InHand);
-        hand[0].SetOwnership(CardOwnership.Player);
+        hand[0].SetOwnership(CardOwnership.Opponent);
+        hand.RemoveAt(0);
 
         // place card at first available slot
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)

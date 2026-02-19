@@ -180,7 +180,7 @@ public class Playfield : MonoBehaviour
 
     public void PlaceSelectedCard(CardOwnership owner, CardSlot selected_slot)
     {
-        UnityEngine.Debug.Log(owner);
+        int scale = 3;
         
         if (owner != CardOwnership.Player && owner != CardOwnership.Opponent)
         {
@@ -226,6 +226,7 @@ public class Playfield : MonoBehaviour
                     selected_slot.transform.position,
                     Quaternion.Euler(0, 0, 90)
                 );
+                this.opponent_selected_card.transform.localScale = new Vector3(scale, scale, scale);
                 selected_slot.SetCard(this.opponent_selected_card);
                 opponent.RemoveCard(this.opponent_selected_card);
                 break;
