@@ -192,7 +192,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         //Debug.Log("Mouse Click.");
         if (this.card_state == CardState.InHand)
         {
-            this.player_hand.SetSelectedCard(this);
+            this.player_hand.SetSelectedCard(this.card_ownership, this);
         }
     }
     
@@ -224,6 +224,24 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
+<<<<<<< Updated upstream
+=======
+        // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent directly
+        if (opponent_card == null)
+        {
+            switch (this.card_ownership) {
+                case CardOwnership.Player:
+                    Debug.Log("Attacked the Opponent directly!");
+                    break;
+
+                case CardOwnership.Opponent:
+                    Debug.Log("Attacked the Player directly!");
+                    break;
+            }
+            return;
+        }
+
+>>>>>>> Stashed changes
         // Apply attack modifiers
         // NOTE: if you need a certain modifier to apply before others, use a
         //     similar structure as this to call it before this. Similarly,
