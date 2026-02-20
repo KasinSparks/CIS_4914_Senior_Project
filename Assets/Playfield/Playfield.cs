@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 public class Playfield : MonoBehaviour
 {
-    //[SerializeField] private GameState gameState;
-    [SerializeField] private Opponent opponent;
+    //[SerializeField] private Opponent opponent;
+    public Opponent opponent;
+
 
     // Player variables
     public List<CardSlot> player_card_slots;

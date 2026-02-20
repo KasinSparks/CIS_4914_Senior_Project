@@ -17,7 +17,6 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
     void Awake()
     {
-        // TODO: error handling
         this.playfield = this.GetComponent<Playfield>();
 
         this.card_in_slot = null;
@@ -71,12 +70,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     // Returns null if there is not a card currently in the slot
     public Card GetCard()
     {
+        if (this.card_in_slot == null)
+        {
+            return null;
+        }
         return this.card_in_slot;
     }
 
     public void ResetCardSlot()
     {
-        this.card_slot = null;
+        Debug.Log("Card reset");
         this.is_card_placed = false;
         this.card_in_slot = null;
     }
@@ -93,7 +96,9 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (this.card_ownership != CardOwnership.Player) return;
+        if (this.card_ownership != CardOwnership.Player
+            || !(playfield.opponent.gameState.current_turn_state == TurnStates.PlayerTurn
+            || playfield.opponent.gameState.current_turn_state == TurnStates.PlayerDrawCard)) return;
         playfield.PlaceSelectedCard(this.card_ownership, this);
     }
 

@@ -2,56 +2,15 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-//[Serializable]
-//public struct CardHolderColumn
-//{
-//    public CardSlot player_cardholder;
-//    public GameObject opponent_cardholder;
-//}
 
 public class AttackSystem : MonoBehaviour
 {
-    // TODO(KASIN): get the cards currently on the playfield.
-    // NOTE(KASIN): This may need to be changed once the code for the placement
-    //     of cards gets pushed.
-
     public Playfield playfield;
-
-    // (Player cardholder, Enemy cardholder)
-    //public (GameObject, GameObject)[] columns =
-    //    new (GameObject, GameObject)[NUM_OF_CARDS_IN_ROW];
-    //public CardHolderColumn[] columns;
-
-    // BEGIN: FOR TESTING DELETE THIS
-    //public Card[] opponent_cards = new Card[Playfield.NUM_OF_CARDS_IN_ROW];
-    //public Card[] current_opponent_cards = new Card[Playfield.NUM_OF_CARDS_IN_ROW];
-    // END: FOR TESTING DELETE THIS
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // BEGIN: FOR TESTING DELETE THIS
-        //for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
-        //{
-        //    if (opponent_cards[i] != null)
-        //    {
-        //        Transform opponent_card_holder_transform = columns[i].enemy_cardholder.transform;
-        //        Card card_ref = Instantiate(opponent_cards[i]);
-        //        card_ref.transform.localScale = new Vector3(
-        //            0.1f * card_ref.transform.localScale.x,
-        //            0.1f * card_ref.transform.localScale.y,
-        //            0.1f * card_ref.transform.localScale.z
-        //        );
-        //        card_ref.transform.SetPositionAndRotation(
-        //            opponent_card_holder_transform.position,
-        //            Quaternion.Euler(0, 180, 90)
-        //        );
-        //        card_ref.SetOwnership(CardOwnership.Opponent);
-        //        current_opponent_cards[i] = card_ref;
-        //    }
-        //}
-        // END: FOR TESTING DELETE THIS
+
     }
 
     // Update is called once per frame
@@ -73,19 +32,14 @@ public class AttackSystem : MonoBehaviour
                 player_card_ref.Attack(opponent_card_ref);
 
                 // After player attacks, check for enemy card death and resets cardslot
+                // This is called before card is deleted, so check with hp
                 if (opponent_card_ref != null && opponent_card_ref.hp <= 0)
                 {
-                    Debug.Log("Opponent card dided");
+                    Debug.Log("Opponent card died");
                     opponent_card_slot_ref.ResetCardSlot();
                 }
             }
 
-            //Card enemy_card_ref  = this.current_opponent_cards[i];
-            //Card player_card_ref = this.columns[i].player_cardholder.GetCard();
-            //if (player_card_ref != null)
-            //{
-            //    player_card_ref.Attack(enemy_card_ref);
-            //}
         }
     }
 
@@ -101,31 +55,21 @@ public class AttackSystem : MonoBehaviour
                 opponent_card_ref.Attack(player_card_ref);
 
                 // After enemy attacks, check for player card death and resets cardslot
+                // This is called before card is deleted, so check with hp
                 if (player_card_ref != null && player_card_ref.hp <= 0)
                 {
+                    Debug.Log("Player card died");
                     player_card_slot_ref.ResetCardSlot();
                 }
             }
 
-            //Card enemy_card_ref  = this.current_opponent_cards[i];
-            //CardSlot player_card_slot_ref = this.columns[i].player_cardholder;
-            //Card player_card_ref = player_card_slot_ref.GetCard();
-            //if (enemy_card_ref != null)
-            //{
-            //    enemy_card_ref.Attack(player_card_ref);
-
-            //    // After enemy attacks, check for player card death and resets cardslot
-            //    if (player_card_ref != null && player_card_ref.hp <= 0)
-            //    {
-            //        player_card_slot_ref.ResetCardSlot();
-            //    }
-            //}
         }
     }
 
     public Card GetOppositeLeft() {
         throw new System.NotImplementedException();
     }
+
     public Card GetOppositeRight() {
         throw new System.NotImplementedException();
     }
@@ -159,18 +103,6 @@ public class AttackSystem : MonoBehaviour
                     }
                     break;
             }
-
-            //Card player_card_ref = this.columns[i].player_cardholder.GetCard();
-            //if (player_card_ref != null && player_card_ref.GetOwnership() == CardOwnership.Player)
-            //{
-            //    ret.Add(player_card_ref);
-            //}
-
-            //Card enemy_card_ref  = this.current_opponent_cards[i];
-            //if (enemy_card_ref != null && enemy_card_ref.GetOwnership() == CardOwnership.Opponent)
-            //{
-            //    ret.Add(enemy_card_ref);
-            //}
         }
 
         return ret;

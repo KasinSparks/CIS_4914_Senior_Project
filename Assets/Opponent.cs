@@ -6,7 +6,9 @@ public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
     [SerializeField] private List<Card> starting_cards;
-    [SerializeField] private GameState gameState;
+    //[SerializeField] private GameState gameState;
+    public GameState gameState;
+
     [SerializeField] private Playfield playfield;
 
     public List<Card> cards;
@@ -14,7 +16,6 @@ public class Opponent : MonoBehaviour
     [SerializeField] private List<Card> hand;
 
     
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +43,10 @@ public class Opponent : MonoBehaviour
         }
     }
 
+    /**
+     * @brief Get's opponent's hand
+     * @return Reference to hand list
+     */
     public List<Card> GetHand()
     {
         return this.hand;
@@ -49,67 +54,55 @@ public class Opponent : MonoBehaviour
 
 
     /**
-     * @brief Add a certain number of cards from the deck to the hand list.
-     * @param UPDATATE
+     * @brief Draw from deck, places into hand list, update turn state, calls Turn()
      */
     public void DrawCards()
     {
-
+        // Moves queue row to opponent row if space is available
         this.UpdateRows();
-        // Check to see if the player is eligible to draw a card
-        //if (gameState.current_turn_state != TurnStates.OpponentDrawCard)
-        //{
-        //    Debug.Log("Opponent can not draw a card if the game is not in the OpponentDrawCardState.");
-        //    return;
-        //}
 
-        // TODO update with loop and random numbers
-        // Send a card from the deck to the hand list
+        // If cards in deck, draw once and place in hand
         if (this.card_queue.Count != 0)
         {
             this.hand.Add(this.GetNextCard());
         }
-        
 
-        // Player has drawn a card, unset the DrawCard state so the player can not draw another
-        // card this turn.
+        // Update turn state
         gameState.current_turn_state = TurnStates.OpponentTurn;
         this.Turn();
     }
 
     /**
-     * @brief Add a certain number of cards from the deck to the hand list.
-     * @param UPDATATE
+     * @brief Calls opponent's card placement logic, updates turn state
+     * 
+     * @todo implement logic in place of TempLogic
      */
     public void Turn()
     {
-
-        // Check to see if the player is eligible to draw a card
-        //if (gameState.current_turn_state != TurnStates.OpponentTurn)
-        //{
-        //    Debug.Log("Opponent place a card if the game is not in the OpponentTurn.");
-        //    return;
-        //}
-
-        // TODO update with loop and random numbers and Logic
-        // Send a card from the deck to the hand list
-        //this.hand.Add(this.GetNextCard());
+        // TODO implement logic here
         this.TempLogic();
 
-        // Player has drawn a card, unset the DrawCard state so the player can not draw another
-        // card this turn.
+        // Update turn state
         gameState.current_turn_state = TurnStates.PlayerDrawCard;
     }
 
+    /**
+     * @brief Calls remove function in cards script on param, sets param's card state
+     * 
+     * @param card card to be removed
+     */
     public void RemoveCard(Card card)
     {
         this.cards.Remove(card);
         card.SetState(CardState.OnPlayfield);
     }
 
+    /**
+     * @brief Moves cards in queue row to opponent row if space is available and resets queue row slots
+     */
     private void UpdateRows()
     {
-        // place card at first available slot
+        // Go through each column
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)
         {
             CardSlot opponent_card_slot_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i];
@@ -118,11 +111,13 @@ public class Opponent : MonoBehaviour
             CardSlot queue_card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[i];
             if (!queue_card_slot_ref.GetIsCardPlaced()) continue;
 
+            // If no card in opponent row and card in queue row
+            // Set selected card to queue row card, and place into opponent row
             SetSelectedCard(queue_card_slot_ref.GetCard());
             playfield.PlaceSelectedCard(CardOwnership.Opponent, opponent_card_slot_ref);
-            Debug.Log("updated row");
-            queue_card_slot_ref.ResetCardSlot();
 
+            // Reset queue row card slot
+            queue_card_slot_ref.ResetCardSlot();
         }
     }
 
@@ -158,6 +153,7 @@ public class Opponent : MonoBehaviour
     /**
      * @brief Returns the next card in the card_queue, and removes it from the
      * queue.
+     * 
      * @return Reference to the next card in the deck queue
      */
     private Card GetNextCard()
@@ -180,26 +176,38 @@ public class Opponent : MonoBehaviour
         this.cards.Add(new_card);
     }
 
-    
-
+    /**
+     * @brief Sets opponent_selected_card in playfield using param
+     * @param selected_card Reference to a card to set as selected.
+     */
     private void SetSelectedCard(Card selected_card)
     {
         playfield.SetSelectedCard(CardOwnership.Opponent, selected_card);
     }
 
+    /**
+     * @brief Temporary logic function for opponent card placement
+     * 
+     * Cards are place from left to right (player's perspective) based
+     * on which spot is open in the queue row
+     * 
+     * @todo UPDATE with logic class
+     */
     private void TempLogic()
     {
+        // If no cards in hand, don't place anything
         if (hand.Count == 0) return;
 
-        // set selected card to first card in hand
-
+        // Set selected card to first in hand
+        // Update card to be visable, card state to be in hand, and ownership to opponent
+        // Remove from hand
         this.SetSelectedCard(hand[0]);
         hand[0].gameObject.SetActive(true);
         hand[0].SetState(CardState.InHand);
         hand[0].SetOwnership(CardOwnership.Opponent);
         hand.RemoveAt(0);
 
-        // place card at first available slot
+        // Place card at first available slot in queue row
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)
         {
             CardSlot card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[i];
