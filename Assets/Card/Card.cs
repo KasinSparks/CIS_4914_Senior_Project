@@ -197,6 +197,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             this.player_hand.SetSelectedCard(this);
         }
+
+        if (this.card_state == CardState.OnPlayfield) //for consumables, check if there is a consumable waiting to be used
+        {
+            Playfield playfield = GameObject.FindFirstObjectByType<Playfield>(); //if there is get the playfield and use consumable
+            if (playfield != null && playfield.IsWaitingForTarget())
+            {
+                playfield.ResolveTarget(this);
+            }
+        }
     }
     
     // Don't call this externally... Call Attack() instead.

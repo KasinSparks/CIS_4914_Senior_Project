@@ -8,13 +8,17 @@ public class ConsumableButton : MonoBehaviour
     //List all consumables so they can be referenced
     public DamageAllOpponentsConsumable damageConsumable;
     public HealAllPlayerCardsConsumable healConsumable;
+    public AddCardToHandConsumable cardConsumable;
+    public HealSingleCardConsumable singleHealConsumable;
     private AttackSystem attackSystem;
     private GameState gameState;
+    private Hand playerHand;
 
     private void Awake()
     {
         gameState = FindFirstObjectByType<GameState>();
         attackSystem = FindFirstObjectByType<AttackSystem>();
+        playerHand = FindFirstObjectByType<Hand>();
         if (damageConsumable != null)
         {
             overlayImage.sprite = damageConsumable.icon;
@@ -23,6 +27,16 @@ public class ConsumableButton : MonoBehaviour
         else if (healConsumable != null)
         {
             overlayImage.sprite = healConsumable.icon;
+            overlayImage.enabled = true;
+        }
+        else if (cardConsumable != null)
+        {
+            overlayImage.sprite = cardConsumable.icon;
+            overlayImage.enabled = true;
+        }
+        else if (singleHealConsumable != null)
+        {
+            overlayImage.sprite = singleHealConsumable.icon;
             overlayImage.enabled = true;
         }
         else
@@ -43,20 +57,36 @@ public class ConsumableButton : MonoBehaviour
         {
             damageConsumable.Use(attackSystem); //uses attack system to effect health of cards
             damageConsumable = null;  //remove item
+            overlayImage.enabled = false; //hide icon, this will not immediatly hide if it is a consumable that requires targeting
         }
         else if (healConsumable != null)
         {
             healConsumable.Use(attackSystem);
             healConsumable = null;
+            overlayImage.enabled = false;
         }
-        overlayImage.enabled = false; //hide icon
+        else if (cardConsumable != null)
+        {
+            cardConsumable.Use(playerHand);
+            cardConsumable = null;
+            overlayImage.enabled = false;
+        }
+        else if (singleHealConsumable != null)
+        {
+            Playfield playfield = FindFirstObjectByType<Playfield>();
+            playfield.ActivateConsumable(singleHealConsumable, this);
+            singleHealConsumable = null;
+            //overlayImage.enabled = false; cannot be disabled here since it needs to be disabled only after the item is actually used, not just clicked on
+        }
     }
 
     //for demoing drag scriptable object into slot
     public void SetDamageConsumable(DamageAllOpponentsConsumable newConsumable)
     {
         damageConsumable = newConsumable;
-        healConsumable = null; //naive check to make sure no two items can be in same slot
+        healConsumable = null;
+        cardConsumable = null;
+        singleHealConsumable = null;
         overlayImage.sprite = newConsumable.icon;
         overlayImage.enabled = true;
     }
@@ -65,7 +95,35 @@ public class ConsumableButton : MonoBehaviour
     {
         healConsumable = newConsumable;
         damageConsumable = null;
+        cardConsumable = null;
+        singleHealConsumable = null;
         overlayImage.sprite = newConsumable.icon;
         overlayImage.enabled = true;
+    }
+
+    public void SetCardConsumable(AddCardToHandConsumable newConsumable)
+    {
+        cardConsumable = newConsumable;
+        damageConsumable = null;
+        healConsumable = null;
+        singleHealConsumable = null;
+        overlayImage.sprite = newConsumable.icon;
+        overlayImage.enabled = true;
+    }
+
+    public void SetSingleHealConsumable(HealSingleCardConsumable newConsumable)
+    {
+        singleHealConsumable = newConsumable;
+        damageConsumable = null;
+        healConsumable = null;
+        cardConsumable = null;
+        overlayImage.sprite = newConsumable.icon;
+        overlayImage.enabled = true;
+    }
+    
+
+    public void HideOverlay() //for disabling icon in Playfield.cs
+    {
+        overlayImage.enabled = false;
     }
 }

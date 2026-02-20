@@ -78,4 +78,34 @@ public class Playfield : MonoBehaviour
         player_hand.RemoveCard(this.selected_card);
         SetSelectedCard(null);
     }
+    
+    //Below is for consumables
+    private ConsumableButton activeButton;
+    private HealSingleCardConsumable activeTargetedConsumable;
+    private bool waitingForCardTarget = false;
+
+    public void ActivateConsumable(HealSingleCardConsumable consumable, ConsumableButton button)
+    {
+        activeTargetedConsumable = consumable;
+        activeButton = button;
+        waitingForCardTarget = true;
+        Debug.Log("Select card");
+    }
+
+    public bool IsWaitingForTarget()
+    {
+        return waitingForCardTarget;
+    }
+
+    public void ResolveTarget(Card target)
+    {
+        if (!waitingForCardTarget || activeTargetedConsumable == null) {
+            return;
+        }
+        activeTargetedConsumable.Use(target);
+        waitingForCardTarget = false;
+        //now that item is used tell button to disable icon
+        activeButton.HideOverlay();
+        activeTargetedConsumable = null;
+    }
 }
