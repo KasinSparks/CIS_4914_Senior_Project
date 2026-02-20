@@ -2844,8 +2844,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableButton
   button: {fileID: 1607403138}
   overlayImage: {fileID: 1502751985}
-  damageConsumable: {fileID: 11400000, guid: 52068bb96f8bd3d4487d9914602eee76, type: 2}
+  damageConsumable: {fileID: 0}
   healConsumable: {fileID: 0}
+  cardConsumable: {fileID: 0}
+  singleHealConsumable: {fileID: 11400000, guid: 3b69cf850a21cfb40b79436272494847, type: 2}
 --- !u!1 &1644620220
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,6 +3195,8 @@ MonoBehaviour:
   overlayImage: {fileID: 1924171339}
   damageConsumable: {fileID: 0}
   healConsumable: {fileID: 0}
+  cardConsumable: {fileID: 11400000, guid: aff2248569348bc44844dc7a736658ec, type: 2}
+  singleHealConsumable: {fileID: 0}
 --- !u!1001 &1856232550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3613,8 +3617,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableButton
   button: {fileID: 2004060822}
   overlayImage: {fileID: 1644620222}
-  damageConsumable: {fileID: 0}
-  healConsumable: {fileID: 11400000, guid: 9e3f021da77566145b86e1f75617fa87, type: 2}
+  damageConsumable: {fileID: 11400000, guid: 52068bb96f8bd3d4487d9914602eee76, type: 2}
+  healConsumable: {fileID: 0}
+  cardConsumable: {fileID: 0}
+  singleHealConsumable: {fileID: 0}
 --- !u!1 &2081642588
 GameObject:
   m_ObjectHideFlags: 0

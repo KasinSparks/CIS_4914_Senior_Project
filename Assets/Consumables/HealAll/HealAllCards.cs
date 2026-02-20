@@ -15,6 +15,6 @@ public class HealAllPlayerCardsConsumable : ScriptableObject
             if (playerCard != null)
                 playerCard.DefendDirect(-healAmount); //direct defending negative amount heals
         }
-        Debug.Log($"Healed all cards");
+        Debug.Log("Healed all cards");
     }
 }
