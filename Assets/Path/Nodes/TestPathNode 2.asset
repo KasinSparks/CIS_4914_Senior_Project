@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b48ce4d3e95ab4181c4f51d8c1485c, type: 3}
+  m_Name: TestPathNode 2
+  m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
+  scene: {fileID: 102900000, guid: 61c0f1239e8dc5b4ea904275ec0ce6af, type: 3}
+  image: {fileID: 2800000, guid: 9e8ea7e11c5b09e42959adbf193d9197, type: 3}
