@@ -110,9 +110,10 @@ public class Hand : MonoBehaviour
         this.front_card_original_z = this.front_card.transform.position.z;
     }
 
-    public void SetSelectedCard(Card selected_card)
+    public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
-        playfield.SetHand(this);
-        playfield.SetSelectedCard(selected_card);
+        if (owner != CardOwnership.Player) return;
+        playfield.SetHand(owner, this);
+        playfield.SetSelectedCard(owner, selected_card);
     }
 }
