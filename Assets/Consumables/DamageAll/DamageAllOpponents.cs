@@ -7,9 +7,8 @@ public class DamageAllOpponentsConsumable : ScriptableObject
     public string itemName;
     public Sprite icon;
     public int damageAmount = 1; //can change for balancing
-    public Playfield playfield;
 
-    public void Use(AttackSystem attackSystem)
+    public void Use(Playfield playfield, AttackSystem attackSystem)
     {
         List<CardSlot> player_card_slots = playfield.GetCardSlots(CardOwnership.Opponent);
         for (int i = 0; i < player_card_slots.Count; i++)

@@ -7,9 +7,8 @@ public class HealAllPlayerCardsConsumable : ScriptableObject
     public string itemName;
     public Sprite icon;
     public int healAmount = 1;
-    public Playfield playfield;
 
-    public void Use(AttackSystem attackSystem)
+    public void Use(Playfield playfield, AttackSystem attackSystem)
     {
         List<CardSlot> player_card_slots = playfield.GetCardSlots(CardOwnership.Player);
         for (int i = 0; i < player_card_slots.Count; i++)
