@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Card/Modifier/Chemical Spray")]
@@ -18,7 +17,6 @@ public class ChemicalSprayCardModifier : CardModifier
 
     override public void ApplyModifier(Card card, Card other)
     {
-        // TODO(KASIN): This is untested, make sure it works as intended
         ChemicalSprayEffect sprayEffect =
             ScriptableObject.CreateInstance<ChemicalSprayEffect>();
         sprayEffect.modifier_name = "Chemical Spray Effect";

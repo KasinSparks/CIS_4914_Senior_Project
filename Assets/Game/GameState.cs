@@ -100,4 +100,9 @@ public class GameState : MonoBehaviour
                 break;
         }
     }
+
+    public TurnStates GetCurrentState()
+    {
+        return this.current_turn_state;
+    }
 }

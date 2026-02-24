@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 
+/**
+ * @brief The modifier for Queen cards. Allows them to spawn a card each turn.
+ */
 [CreateAssetMenu(menuName = "Card/Modifier/Queen")]
 public class QueenModifier : CardModifier
 {
@@ -10,9 +12,11 @@ public class QueenModifier : CardModifier
     private Hand hand;
     private Opponent opponent_ref;
 
+    /**
+     * @brief Set up this modifier before using
+     */
     public override void Initialize()
     {
-        // TODO(KASIN): Fix when we get enemy working
         Scene current_scene = SceneManager.GetActiveScene();
         if (current_scene != null &&
             (current_scene.name.Equals("Gameplay")))
@@ -22,7 +26,6 @@ public class QueenModifier : CardModifier
         }
 
         SetDisplayDescription(this.description.Replace("XXX", spwan_card.card_name));
-        //this.SetImage();
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -30,10 +33,14 @@ public class QueenModifier : CardModifier
         switch (card.GetOwnership())
         {
             case CardOwnership.Player:
+                // NOTE: The hand AddCard function handles the instantiation of
+                //    the GameObject.
                 this.hand.AddCard(this.spwan_card, card.GetOwnership());
                 break;
 
             case CardOwnership.Opponent:
+                // Create the card from the prefab, and add it to the opponent
+                // hand.
                 Card card_prefab = Resources.Load<Card>("Card");
                 Card new_card = Instantiate(card_prefab, opponent_ref.gameObject.transform);
                 new_card.SetCardData(this.spwan_card);

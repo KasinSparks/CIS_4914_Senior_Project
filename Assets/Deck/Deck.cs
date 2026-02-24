@@ -54,10 +54,8 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             return;
         }
 
-        // TODO(KASIN): Change this to use the function call in gameState
-
         // Check to see if the player is eligible to draw a card
-        if (gameState.current_turn_state != TurnStates.PlayerDrawCard)
+        if (gameState.GetCurrentState() != TurnStates.PlayerDrawCard)
         {
             Debug.Log("Player can not draw a card if the game is not in the PlayerDrawCardState.");
             return;
@@ -68,8 +66,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
         // card this turn.
-        // gameState.current_turn_state = gameState.current_turn_state ^ (~TurnStates.PlayerDrawCard);
-        gameState.current_turn_state = TurnStates.PlayerTurn;
+        gameState.UpdateTurnState(TurnStates.PlayerTurn);
     }
 
     /**
