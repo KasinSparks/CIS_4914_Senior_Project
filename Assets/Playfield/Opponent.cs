@@ -6,13 +6,10 @@ public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
     [SerializeField] private List<CardData> starting_cards;
-    //[SerializeField] private GameState gameState;
-    public GameState gameState;
-
     [SerializeField] private Playfield playfield;
 
-    public List<Card> cards;
-    public Queue<Card> card_queue;
+    [SerializeField] private List<Card> cards;
+    [SerializeField] private Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
 
     
@@ -69,9 +66,6 @@ public class Opponent : MonoBehaviour
             this.hand.Add(this.GetNextCard());
         }
 
-        // Update turn state
-        gameState.current_turn_state = TurnStates.OpponentTurn;
-        this.Turn();
     }
 
     /**
@@ -84,8 +78,6 @@ public class Opponent : MonoBehaviour
         // TODO implement logic here
         this.TempLogic();
 
-        // Update turn state
-        gameState.current_turn_state = TurnStates.PlayerDrawCard;
     }
 
     /**
