@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class Hand : MonoBehaviour
 {
@@ -55,7 +54,7 @@ public class Hand : MonoBehaviour
     public void AddCard(CardData card_data, CardOwnership owner)
     {
         // Instantiate card and add it to the hand list
-        Card card_prefab = AssetDatabase.LoadAssetAtPath<Card>("Assets/Card/Card.prefab");
+        Card card_prefab = Resources.Load<Card>("Card");
         Card new_card = Instantiate(card_prefab, this.transform);
         new_card.SetCardData(card_data);
 

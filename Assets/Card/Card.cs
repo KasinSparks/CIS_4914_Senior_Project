@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -594,7 +593,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         //    The modifier gameobject can be loaded and destoryed at runtime.
         // Do not modifier base_modifier. It is only here to be copied.
         // Alter the copied version (attached_mod).
-        GameObject mod_prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Card/CardModifiers/CardModifierPrefab.prefab");
+        GameObject mod_prefab = Resources.Load<GameObject>("CardModifierPrefab");
         GameObject attached_mod = Instantiate(mod_prefab, modifier_start_mark);
 
         this.modifiers.Add(new ModifierTuple(new_mod, attached_mod));
