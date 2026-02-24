@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AddCardToHandConsumable
   itemName: Add Ant
   icon: {fileID: 21300000, guid: c274cb913d18c1145a8c4f6f7467b908, type: 3}
-  cardToAdd: {fileID: 2287071758175566050, guid: 86c14e289d4cc204fae64c0182be1572, type: 3}
+  cardToAdd: {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}

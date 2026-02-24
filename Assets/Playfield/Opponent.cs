@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEditor;
 
 public class Opponent : MonoBehaviour
 {
@@ -173,7 +172,7 @@ public class Opponent : MonoBehaviour
      */
     private void AddCard(CardData card)
     {
-        Card card_prefab = AssetDatabase.LoadAssetAtPath<Card>("Assets/Card/Card.prefab");
+        Card card_prefab = Resources.Load<Card>("Card");
         Card new_card = Instantiate(card_prefab, this.transform);
         new_card.SetCardData(card);
         new_card.gameObject.SetActive(false);

@@ -34,7 +34,7 @@ public class QueenModifier : CardModifier
                 break;
 
             case CardOwnership.Opponent:
-                Card card_prefab = AssetDatabase.LoadAssetAtPath<Card>("Assets/Card/Card.prefab");
+                Card card_prefab = Resources.Load<Card>("Card");
                 Card new_card = Instantiate(card_prefab, opponent_ref.gameObject.transform);
                 new_card.SetCardData(this.spwan_card);
                 new_card.gameObject.SetActive(false);
