@@ -9,11 +9,12 @@ using UnityEngine.EventSystems;
 
 public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject card_slot;
-    public Playfield playfield;
-    public bool is_card_placed;
-    public Card card_in_slot;
-    public CardOwnership card_ownership;
+    [SerializeField] private GameState gameState;
+    [SerializeField] private GameObject card_slot;
+    [SerializeField] private Playfield playfield;
+    [SerializeField] private bool is_card_placed;
+    [SerializeField] private Card card_in_slot;
+    [SerializeField] private CardOwnership card_ownership;
 
     void Awake()
     {
@@ -97,8 +98,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (this.card_ownership != CardOwnership.Player
-            || !(playfield.opponent.gameState.current_turn_state == TurnStates.PlayerTurn
-            || playfield.opponent.gameState.current_turn_state == TurnStates.PlayerDrawCard)) return;
+            || !(gameState.current_turn_state == TurnStates.PlayerTurn
+            || gameState.current_turn_state == TurnStates.PlayerDrawCard)) return;
         playfield.PlaceSelectedCard(this.card_ownership, this);
     }
 

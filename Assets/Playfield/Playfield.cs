@@ -3,19 +3,20 @@ using System.Collections.Generic;
 
 public class Playfield : MonoBehaviour
 {
-    //[SerializeField] private Opponent opponent;
-    public Opponent opponent;
+    [SerializeField] private Opponent opponent;
+    [SerializeField] private float card_scale = 1.0f;
+    //public Opponent opponent;
 
 
     // Player variables
-    public List<CardSlot> player_card_slots;
-    public Hand player_hand;
-    public Card player_selected_card;
+    [SerializeField] private List<CardSlot> player_card_slots;
+    [SerializeField] private Hand player_hand;
+    [SerializeField] private Card player_selected_card;
 
     // Opponent variables
-    public List<CardSlot> opponent_card_slots;
-    public Card opponent_selected_card;
-    public List<CardSlot> queue_card_slots;
+    [SerializeField] private List<CardSlot> opponent_card_slots;
+    [SerializeField] private Card opponent_selected_card;
+    [SerializeField] private List<CardSlot> queue_card_slots;
 
     private const int NUM_ROWS = 3;
 
@@ -32,7 +33,7 @@ public class Playfield : MonoBehaviour
         this.player_card_slots = new List<CardSlot>();
         this.opponent_card_slots = new List<CardSlot>();
         this.queue_card_slots = new List<CardSlot>();
-        
+
         // Sets up each row (player, opponent, queue)
         for (int i = 0; i < NUM_ROWS; i++)
         {
@@ -129,7 +130,7 @@ public class Playfield : MonoBehaviour
                 this.queue_card_slots[card_slot_index] = card_slot;
                 break;
         }
-        
+
     }
 
     public void SetSelectedCard(CardOwnership owner, Card selected_card)
@@ -181,8 +182,7 @@ public class Playfield : MonoBehaviour
 
     public void PlaceSelectedCard(CardOwnership owner, CardSlot selected_slot)
     {
-        int scale = 3;
-        
+
         if (owner != CardOwnership.Player && owner != CardOwnership.Opponent)
         {
             UnityEngine.Debug.Log("Non-Player/Opponent: Can not place card.");
@@ -211,28 +211,37 @@ public class Playfield : MonoBehaviour
             case (CardOwnership.Player):
                 UnityEngine.Debug.Log("Player Card");
                 this.player_selected_card.SetState(CardState.OnPlayfield);
+                // sets playfield as parent for easier scaling
+                this.player_selected_card.transform.SetParent(this.transform);
                 this.player_selected_card.transform.SetPositionAndRotation(
                     selected_slot.transform.position,
                     Quaternion.Euler(0, 0, 90)
-                
+
                 );
+                this.player_selected_card.transform.localScale = new Vector3(card_scale, card_scale, card_scale);
+
                 selected_slot.SetCard(this.player_selected_card);
                 player_hand.RemoveCard(this.player_selected_card);
+                this.player_selected_card.SetSlot(selected_slot);
                 break;
 
             case (CardOwnership.Opponent):
                 UnityEngine.Debug.Log("Opponent Card");
                 this.opponent_selected_card.SetState(CardState.OnPlayfield);
+                // sets playfield as parent for easier scaling
+                this.opponent_selected_card.transform.SetParent(this.transform);
                 this.opponent_selected_card.transform.SetPositionAndRotation(
                     selected_slot.transform.position,
                     Quaternion.Euler(0, 0, 90)
                 );
-                this.opponent_selected_card.transform.localScale = new Vector3(scale, scale, scale);
+
+                this.opponent_selected_card.transform.localScale = new Vector3(card_scale, card_scale, card_scale);
                 selected_slot.SetCard(this.opponent_selected_card);
                 opponent.RemoveCard(this.opponent_selected_card);
+                this.opponent_selected_card.SetSlot(selected_slot);
                 break;
         }
-        
+
         SetSelectedCard(owner, null);
     }
 

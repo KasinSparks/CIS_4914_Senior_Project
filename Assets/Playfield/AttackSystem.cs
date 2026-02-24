@@ -33,11 +33,11 @@ public class AttackSystem : MonoBehaviour
 
                 // After player attacks, check for enemy card death and resets cardslot
                 // This is called before card is deleted, so check with hp
-                if (opponent_card_ref != null && opponent_card_ref.hp <= 0)
-                {
-                    Debug.Log("Opponent card died");
-                    opponent_card_slot_ref.ResetCardSlot();
-                }
+                //if (opponent_card_ref != null && opponent_card_ref.hp <= 0)
+                //{
+                //    Debug.Log("Opponent card died");
+                //    opponent_card_slot_ref.ResetCardSlot();
+                //}
             }
 
         }
@@ -56,11 +56,11 @@ public class AttackSystem : MonoBehaviour
 
                 // After enemy attacks, check for player card death and resets cardslot
                 // This is called before card is deleted, so check with hp
-                if (player_card_ref != null && player_card_ref.hp <= 0)
-                {
-                    Debug.Log("Player card died");
-                    player_card_slot_ref.ResetCardSlot();
-                }
+                //if (player_card_ref != null && player_card_ref.hp <= 0)
+                //{
+                //    Debug.Log("Player card died");
+                //    player_card_slot_ref.ResetCardSlot();
+                //}
             }
 
         }

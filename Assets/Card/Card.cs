@@ -37,12 +37,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Texture card_image;
 
     public CardRarity card_rarity;
-    
+
     // For debuging, this is set to public for now
     //private CardState card_state;
     public CardState card_state;
 
     private CardOwnership card_ownership;
+    private CardSlot slot;
 
     private GameState game_state;
     private GameObject hand_start_marker;
@@ -62,6 +63,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         // Initialize the card state to the default value
         this.card_state = CardState.None;
+        this.slot = null;
 
         // Initialize the card ownership to the default value
         this.card_ownership = CardOwnership.None;
@@ -120,14 +122,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
 
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
-        modifierInfoUIWidget   = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
+        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -207,7 +209,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
     }
-    
+
     // Don't call this externally... Call Attack() instead.
     public void _BaseAttack(Card opponent_card)
     {
@@ -215,7 +217,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (opponent_card == null)
         {
             // TODO
-        } else
+        }
+        else
         {
             opponent_card.Defend(this.attack + this.attack_damage_bonus);
         }
@@ -239,7 +242,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent directly
         if (opponent_card == null)
         {
-            switch (this.card_ownership) {
+            switch (this.card_ownership)
+            {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
                     break;
@@ -304,7 +308,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         */
     }
-    
+
     // To be used by the Defense Modifier(s)
     public void _AddDefenseBonus(int amount)
     {
@@ -350,7 +354,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             // Dodge was not successful
             this._BaseDefend(opponent_attack_amount);
-        } else
+        }
+        else
         {
             Debug.Log("Card " + this.card_name + " dodged an attack!");
         }
@@ -416,7 +421,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
     }
-    
+
     // Warning: This destorys the GameObject. Do not try to call methods on 
     //    this card after calling this function, it will be NULL.
     private void Death()
@@ -439,6 +444,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Destroy the card
         Destroy(this.gameObject);
+
+        // Update card slot
+        Debug.Log("SlotL " + this.slot);
+        if (this.slot != null)
+        {
+            this.slot.ResetCardSlot();
+        }
     }
 
     public void OnTurnStart()
@@ -480,7 +492,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         // Do a simple compare to see if this modifier has already been attached
         List<CardModifier> temp_mods = this.GetModifiers();
-        for (int i = 0; i < temp_mods.Count; ++i) {
+        for (int i = 0; i < temp_mods.Count; ++i)
+        {
             if (base_modifier.Compare(temp_mods[i]))
             {
                 return;
@@ -503,7 +516,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         Vector3 start_mark_position = this.modifier_start_mark.position;
         attached_mod.transform.SetPositionAndRotation(
             new Vector3(
-                start_mark_position.x + 
+                start_mark_position.x +
                 ((attached_mod.transform.Find("ModifierImage").GetComponent<MeshRenderer>().bounds.size.y
                     + MODIFIER_SPACE) * (this.GetModifiers().Count - 1)),
                 start_mark_position.y,
@@ -538,7 +551,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public List<CardModifier> GetModifiers(ModifierType modifierType)
     {
-        return this.GetModifiers(new ModifierType[] {modifierType});
+        return this.GetModifiers(new ModifierType[] { modifierType });
     }
 
     // TODO: Unit tests
@@ -574,7 +587,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public List<CardModifier> GetModifiers(ModifierState modifierState)
     {
-        return this.GetModifiers(new ModifierState[] {modifierState});
+        return this.GetModifiers(new ModifierState[] { modifierState });
     }
 
     public List<CardModifier> GetModifiers(ModifierState[] modifierState)
@@ -597,7 +610,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         return ret;
     }
-    
+
     // TODO(KASIN): This method has not been tested.
     // Use GetModifiers to get the reference of the modifier you wish to remove.
     public void RemoveModifier(CardModifier modifier)
@@ -611,7 +624,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 mods[i].UnapplyModifier(this, null);
             }
         }
-        
+
         // Get rid of the gameobject in Unity
         Destroy(modifier.gameObject);
     }
@@ -625,7 +638,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         // Card text set
         TextMeshPro card_text_mesh = this.gameObject.transform.Find(text_obj_name).gameObject.GetComponent<TextMeshPro>();
-        if (card_text_mesh  == null)
+        if (card_text_mesh == null)
         {
             throw new System.Exception("Unable to find the TextMeshPro Compnent for the Card's " + text_obj_name + ".");
         }
@@ -679,5 +692,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void SetOwnership(CardOwnership owner)
     {
         this.card_ownership = owner;
+    }
+
+    public void SetSlot(CardSlot slot)
+    {
+        this.slot = slot;
     }
 }
