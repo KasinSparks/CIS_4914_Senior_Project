@@ -97,9 +97,36 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (this.card_ownership != CardOwnership.Player
-            || !(gameState.current_turn_state == TurnStates.PlayerTurn
-            || gameState.current_turn_state == TurnStates.PlayerDrawCard)) return;
+        if (this.card_ownership != CardOwnership.Player)
+        {
+            return;
+        }
+
+        // Check to see if nektar cost requirement has been met
+        if (!playfield.HasSacrificeRequirementBeenMet())
+        {
+            // TODO(KASIN): Change this to show in the UI or something...
+            Debug.Log("Nekar requirement has not been met to place this card.");
+            return;
+        }
+        else
+        {
+            if (this.gameState.GetCurrentState() == TurnStates.PlayerSacrifice)
+            {
+                // Reset the nektar cost
+                this.playfield.ResetSacrificeRequirements();
+                
+                // Update the turn state
+                this.gameState.UpdateTurnState(playfield.GetTurnStatePriorToSacrifice());
+
+                // Hide the cancel sacrifice button
+                this.playfield.SetSacrificeButtonActive(false);
+            }    
+        }
+
+        if (!(gameState.GetCurrentState() == TurnStates.PlayerTurn
+            || gameState.GetCurrentState() == TurnStates.PlayerDrawCard)) return;
+
         playfield.PlaceSelectedCard(this.card_ownership, this);
     }
 
