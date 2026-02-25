@@ -2299,31 +2299,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4602772404570154525, guid: 8e71d31041cf7a144af5bbc7746977e0, type: 3}
---- !u!114 &977537400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977537398}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979134334bdbbb84a8c2393de8e16e36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Deck
-  owner: 1
-  starting_cards:
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  - {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
-  gameState: {fileID: 2081642589}
-  hand: {fileID: 976764611}
 --- !u!114 &977537401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2337,7 +2312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NectarDeck
   owner: 1
-  card: {fileID: 11400000, guid: b8ff61bf1c93afb42a4187176f46ce11, type: 2}
+  card: {fileID: 11400000, guid: ed40291e8efa0bc4a9b163df1e437d7d, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!114 &1002743202
@@ -2438,13 +2413,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e71d31041cf7a144af5bbc7746977e0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 977537400}
+      addedObject: {fileID: 977537401}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e71d31041cf7a144af5bbc7746977e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 977537399}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8e71d31041cf7a144af5bbc7746977e0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 977537401}
   m_SourcePrefab: {fileID: 100100000, guid: 8e71d31041cf7a144af5bbc7746977e0, type: 3}
 --- !u!1 &1032196871
 GameObject:
