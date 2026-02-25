@@ -7,6 +7,16 @@ using System.Collections;
 public class AttackSystem : MonoBehaviour
 {
     public Playfield playfield;
+    private GameState game_state;
+
+    private int attack_animation_status = 0;
+    private int aas_opponent_offset = 4;
+
+    void Awake()
+    {
+        // TODO(KASIN): Error handling
+        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,16 +27,47 @@ public class AttackSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // CLEANUP(KASIN): 
+        if ((this.attack_animation_status & (1 << 31)) != 0)
+        {
+            // Attack animation is active
+            // Hold in attacking state until all animations finished.
+            this.game_state.UpdateTurnState(TurnStates.Attacking);
+
+            // Reset the state once all animation are done.
+            if ((this.attack_animation_status & (0xF)) == 0XF)
+            {
+                // Done with attack animations
+                this.attack_animation_status = 0;
+                this.game_state.UpdateTurnState(TurnStates.OpponentDrawCard);
+            }
+        }
+        else if ((this.attack_animation_status & (1 << 30)) != 0)
+        {
+            // Opponent attack animation is active
+            // Hold in attacking state until all animations finished.
+            this.game_state.UpdateTurnState(TurnStates.Attacking);
+
+            // Reset the state once all animation are done.
+            if ((this.attack_animation_status & ((0xF) << this.aas_opponent_offset)) == 0XF0)
+            {
+                // Done with attack animations
+                this.attack_animation_status = 0;
+                this.game_state.UpdateTurnState(TurnStates.PlayerDrawCard);
+            }
+        }
     }
 
-    IEnumerator AttackAnimation(Card card, Card opponent)
+    // CLEANUP(KASIN):
+    IEnumerator AttackAnimation(Card card, Card opponent, int index)
     {
         Debug.Log("Get additional attack count: " + card._GetNumAdditionalAttacks());
         for (int a = 0; a < card._GetNumAdditionalAttacks(); ++a)
         {
             if (opponent == null)
             {
+                // Update state
+                this.attack_animation_status |= (1 << index);
                 yield break;
             }
 
@@ -54,7 +95,11 @@ public class AttackSystem : MonoBehaviour
 
             for (int i = 0; i < 255; ++i)
             {
-                if (card == null) { yield break; }
+                if (card == null) {
+                    // Update state
+                    this.attack_animation_status |= (1 << index);
+                    yield break;
+                }
                 card.transform.position = Vector3.Lerp(
                     original.position,
                     original_pos,
@@ -63,9 +108,14 @@ public class AttackSystem : MonoBehaviour
                 yield return null;
             }
         }
+
+        // Update state
+        this.attack_animation_status |= (1 << index);
     }
 
     public void PlayerAttack() {
+        // Set the animation status to start
+        this.attack_animation_status |= (1 << 31);
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
             CardSlot opponent_card_slot_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i];
@@ -75,13 +125,19 @@ public class AttackSystem : MonoBehaviour
             if (player_card_ref != null)
             {
                 //player_card_ref.Attack(opponent_card_ref);
-                StartCoroutine(this.AttackAnimation(player_card_ref, opponent_card_ref));
+                StartCoroutine(this.AttackAnimation(player_card_ref, opponent_card_ref, i));
             }
-
+            else
+            {
+                // Update state
+                this.attack_animation_status |= (1 << i);
+            }
         }
     }
 
     public void OpponentAttack() {
+        // Set the animation status to start
+        this.attack_animation_status |= (1 << 30);
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
             Card opponent_card_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i].GetCard();
@@ -91,9 +147,13 @@ public class AttackSystem : MonoBehaviour
             if (opponent_card_ref != null)
             {
                 //enemy_card_ref.Attack(player_card_ref);
-                StartCoroutine(this.AttackAnimation(opponent_card_ref, player_card_ref));
+                StartCoroutine(this.AttackAnimation(opponent_card_ref, player_card_ref, i + aas_opponent_offset));
             }
-
+            else
+            {
+                // Update state
+                this.attack_animation_status |= (1 << (i + aas_opponent_offset));
+            }
         }
     }
 
