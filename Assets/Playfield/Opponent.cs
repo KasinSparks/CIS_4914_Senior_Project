@@ -6,13 +6,10 @@ public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
     [SerializeField] private List<CardData> starting_cards;
-    //[SerializeField] private GameState gameState;
-    public GameState gameState;
-
     [SerializeField] private Playfield playfield;
 
-    public List<Card> cards;
-    public Queue<Card> card_queue;
+    [SerializeField] private List<Card> cards;
+    [SerializeField] private Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
 
     
@@ -69,9 +66,6 @@ public class Opponent : MonoBehaviour
             this.hand.Add(this.GetNextCard());
         }
 
-        // Update turn state
-        gameState.current_turn_state = TurnStates.OpponentTurn;
-        this.Turn();
     }
 
     /**
@@ -84,8 +78,6 @@ public class Opponent : MonoBehaviour
         // TODO implement logic here
         this.TempLogic();
 
-        // Update turn state
-        gameState.current_turn_state = TurnStates.PlayerDrawCard;
     }
 
     /**
@@ -203,14 +195,7 @@ public class Opponent : MonoBehaviour
         // If no cards in hand, don't place anything
         if (hand.Count == 0) return;
 
-        // Set selected card to first in hand
-        // Update card to be visable, card state to be in hand, and ownership to opponent
-        // Remove from hand
-        this.SetSelectedCard(hand[0]);
-        hand[0].gameObject.SetActive(true);
-        hand[0].SetState(CardState.InHand);
-        hand[0].SetOwnership(CardOwnership.Opponent);
-        hand.RemoveAt(0);
+        
 
         // Place card at first available slot in queue row
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)
@@ -218,6 +203,16 @@ public class Opponent : MonoBehaviour
             CardSlot card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[i];
             if (card_slot_ref.GetIsCardPlaced()) continue;
 
+            // Set selected card to first in hand
+            // Update card to be visable, card state to be in hand, and ownership to opponent
+            // Remove from hand
+            this.SetSelectedCard(hand[0]);
+            hand[0].gameObject.SetActive(true);
+            hand[0].SetState(CardState.InHand);
+            hand[0].SetOwnership(CardOwnership.Opponent);
+            hand.RemoveAt(0);
+
+            // Place selected card
             playfield.PlaceSelectedCard(CardOwnership.Opponent, card_slot_ref);
 
             return;

@@ -33,20 +33,6 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void EndOpponetTurn()
-    {
-        if (this.current_turn_state == TurnStates.OpponentDrawCard ||
-            this.current_turn_state == TurnStates.OpponentTurn)
-        {
-            this.UpdateTurnState(TurnStates.OpponentEndTurn);
-            UnityEngine.Debug.Log("Opponents Turn");
-        }
-        else
-        {
-            UnityEngine.Debug.Log("Wait until it is your turn again.");
-        }
-    }
-
     public void UpdateTurnState(TurnStates state)
     {
         switch (state)
@@ -92,6 +78,14 @@ public class GameState : MonoBehaviour
                     {
                         opponent_cards[i].OnTurnStart();
                     }
+                    this.UpdateTurnState(TurnStates.OpponentTurn);
+                }
+                break;
+            case TurnStates.OpponentTurn:
+                {
+                    opponent.Turn();
+                    this.current_turn_state = TurnStates.OpponentTurn;
+                    this.UpdateTurnState(TurnStates.OpponentEndTurn);
                 }
                 break;
 
