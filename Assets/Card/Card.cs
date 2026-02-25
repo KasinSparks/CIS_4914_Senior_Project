@@ -31,7 +31,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField]
     private CardData card_data;
 
-    //private List<CardModifier> modifiers;
     private List<ModifierTuple> modifiers;
 
     private int current_hp;
@@ -48,9 +47,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private int attack_damage_bonus = 0;
     public int play_cost;
     
-    // TODO(KASIN): For some reason this doesn't work when set to private
-    //private int num_of_attacks_per_turn = 1;
-    public int num_of_attacks_per_turn = 1;
+    private int num_of_attacks_per_turn;
 
     // For debuging, this is set to public for now
     //private CardState card_state;
@@ -85,6 +82,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         this.modifiers = new List<ModifierTuple>();
 
+        this.num_of_attacks_per_turn = 1;
 
         Scene current_scene = SceneManager.GetActiveScene();
         if (current_scene != null &&
@@ -109,16 +107,29 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             return;
         }
 
-        // TODO: error handling
-        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+        this.game_state = this.GetObject<GameState>("GameState");
 
-        // TODO: error handling
-        this.player_hand = GameObject.Find("Hand").GetComponent<Hand>();
+        this.player_hand = this.GetObject<Hand>("Hand");
 
-        this.playfield_ref = GameObject.Find("Playfield").GetComponent<Playfield>();
+        this.playfield_ref = this.GetObject<Playfield>("Playfield");
 
-        // TODO: error handling
-        this.hand_start_marker = GameObject.Find("start_mark");
+        this.hand_start_marker = this.GetObject<GameObject>("start_mark");
+    }
+
+    /**
+     * @brief Get a GameObject with a given script attached to it.
+     * @return The component.
+     * @throws Exception If gameobject can not be found in the scene.
+     */
+    private T GetObject<T>(string name)
+    {
+        GameObject obj = GameObject.Find(name);
+        if (obj == null)
+        {
+            throw new Exception("Unable to find the GameObject: " + name);
+        }
+
+        return obj.GetComponent<T>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -246,15 +257,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // Don't call this externally... Call Attack() instead.
     public void _BaseAttack(Card opponent_card)
     {
-        // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent directly
         if (opponent_card == null)
         {
-            // TODO
+            // TODO: this is handled in the Attack function for now.
+            return;
         }
         else
         {
-            // Calls opponent.Defend()
-            //StartCoroutine(this.AttackAnimation(opponent_card));
             opponent_card.Defend(this, this.card_data.attack + this.attack_damage_bonus);
         }
     }
@@ -274,7 +283,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
-        // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent directly
+        // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent
+        //    directly. If we want modifier(s) applied before attacking the
+        //    player or opponent directly, then this logic needs to go into
+        //    the baseAttack function.
         if (opponent_card == null)
         {
             switch (this.card_ownership)
@@ -310,11 +322,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
         
-//        for (int i = 0; i < this.num_of_attacks_per_turn; ++i)
-//        {
-            // Base Attack
-            this._BaseAttack(opponent_card);
-//        }
+        // Base Attack
+        this._BaseAttack(opponent_card);
 
         // Update the Card UI elements
         this.UpdateCardTextStats();
@@ -656,27 +665,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         List<ModifierTuple> ret = new List<ModifierTuple>();
 
-        /*
-        Transform card_modifiers_parent = this.transform.Find("card_modifiers");
-        for (int i = 0; i < card_modifiers_parent.childCount; ++i)
-        {
-            CardModifier card_mod = card_modifiers_parent.GetChild(i).gameObject.GetComponent<CardModifier>();
-            foreach (ModifierType mt in modifierType)
-            {
-                if (mt.Equals(ModifierType.All))
-                {
-                    // Add all the modifiers, regardless of type
-                    ret.Add(card_mod);
-                }
-                else if (card_mod.GetModifierType().Equals(mt))
-                {
-                    // Add only the modifier that matches the type supplied
-                    ret.Add(card_mod);
-                }
-            }
-        }
-        */
-
         for (int i = 0; i < this.modifiers.Count; ++i)
         {
             ModifierTuple mod_ref = this.modifiers[i];
@@ -707,23 +695,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private List<ModifierTuple> GetModifiers(ModifierState[] modifierState)
     {
         List<ModifierTuple> ret = new List<ModifierTuple>();
-        /*
-        Transform card_modifiers_parent = this.transform.Find("card_modifiers");
-        for (int i = 0; i < card_modifiers_parent.childCount; ++i)
-        {
-            CardModifier card_mod = card_modifiers_parent.GetChild(i).gameObject.GetComponent<CardModifier>();
-            foreach (ModifierState ms in modifierState)
-            {
-                if (card_mod.modifier_state.Equals(ms))
-                {
-                    // Add only the modifier that matches the state supplied
-                    ret.Add(card_mod);
-                }
-            }
-        }
 
-        return ret;
-        */
         for (int i = 0; i < this.modifiers.Count; ++i)
         {
             ModifierTuple mod_ref = this.modifiers[i];
@@ -740,7 +712,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         return ret;
     }
     
-    // TODO(KASIN): This method has not been tested.
     // Use GetModifiers to get the reference of the modifier you wish to remove.
     public void RemoveModifier(CardModifier modifier)
     {

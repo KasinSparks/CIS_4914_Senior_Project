@@ -14,7 +14,10 @@ public class ExplodeOnDeathModifier : CardModifier
 
     override public void ApplyModifier(Card card, Card other)
     {
-        other.DefendDirect(damage_on_death);
+        if (other != null)
+        {
+            other.DefendDirect(damage_on_death);
+        }
         this.modifier_state = ModifierState.Applied;
     }
 
