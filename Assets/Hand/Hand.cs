@@ -130,4 +130,13 @@ public class Hand : MonoBehaviour
         playfield.SetHand(owner, this);
         playfield.SetSelectedCard(owner, selected_card);
     }
+
+    public void AddCardForUpgrade(CardData card_data) //this allows gamestate to not exist when upgrading card
+    {
+        Card card_prefab = Resources.Load<Card>("Card");
+        Card new_card = Instantiate(card_prefab, this.transform);
+        new_card.SetContext(Card.CardContext.Upgrade);
+        new_card.SetCardData(card_data);
+        AddCardHelper(new_card, CardOwnership.Player);
+    }
 }
