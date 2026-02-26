@@ -6,5 +6,6 @@ public enum TurnStates
     OpponentTurn,
     OpponentDrawCard,
     OpponentEndTurn,
+    Attacking,
     Other,
 }
