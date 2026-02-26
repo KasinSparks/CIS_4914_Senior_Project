@@ -21,13 +21,17 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
 
     private PathSystem path_sys_ref;
 
-    void Start()
+    void Awake()
     {
         if (this.next_nodes_guids == null)
         {
             this.next_nodes_guids = new string[0];
         }
         this.path_sys_ref = GameObject.Find("PathSystem").GetComponent<PathSystem>();
+    }
+
+    public void UpdateImage()
+    {
         this.GetComponent<Renderer>().material.mainTexture = this.data.GetImage();
     }
 
@@ -90,6 +94,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         string json_str = reader.ReadToEnd();
         JsonUtility.FromJsonOverwrite(json_str, this);
         reader.Close();
+        this.UpdateImage();
     }
     
     /**
