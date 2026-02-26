@@ -1,6 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
+[Serializable]
+public struct PathNodeChances
+{
+    public PathNodeData node;
+    [Range(0.0f, 1.0f)]
+    public float        weight;
+}
 
 /**
  * @brief A GameObject to represent the path system in a given scene
@@ -10,7 +19,9 @@ using UnityEngine;
 [Serializable]
 public class PathSystem : MonoBehaviour 
 {
-    private readonly string SAVE_FOLDER = Path.Combine("SAVES", "PATH_SYSTEM");
+    private static readonly string SAVE_FOLDER_NAME = "SAVES";
+    private static readonly string PATH_SAVE_FOLDER_NAME = "PATH_SYSTEM";
+    private readonly string PATH_SAVE_LOCATION = Path.Combine(SAVE_FOLDER_NAME, PATH_SAVE_FOLDER_NAME);
 
     [SerializeField]
     private PathSystemType type;
@@ -25,7 +36,9 @@ public class PathSystem : MonoBehaviour
     private string[] start_node_guids; /// The GUIDs of the start nodes
 
     [SerializeField]
-    private PathNodeData[] node_types; /// Node types that can be randomly chosen from
+    private PathNodeChances[] node_types; /// Node types that can be randomly chosen from
+
+    private PathNodeChances[] normalized_node_types;
     
     [SerializeField, HideInInspector]
     private string current_node_guid = null;
@@ -35,6 +48,19 @@ public class PathSystem : MonoBehaviour
 
     void Start()
     {
+        // Check if the save folders exists
+        if (!Directory.Exists(SAVE_FOLDER_NAME))
+        {
+            Directory.CreateDirectory(SAVE_FOLDER_NAME);
+        }
+
+        // Check if the path save subfolder exists
+        if (!Directory.Exists(PATH_SAVE_LOCATION))
+        {
+            Directory.CreateDirectory(PATH_SAVE_LOCATION);
+        }
+
+
         _camera = Camera.main;
         gUIDs = GameObject.Find("PathSystemGUIDs").GetComponent<PathSystemGUIDs>();
         
@@ -65,8 +91,25 @@ public class PathSystem : MonoBehaviour
                     this.gUIDs.GetGameObject(ng).GetComponent<PathNode>().SetSelectable(true);
                 }
             }
-        } else
+        }
+        else
         {
+            // TODO(KASIN): Move this to a separate function
+            // Normalize percent chance values
+            float total_weight = 0.0f;
+            for (int i = 0; i < this.node_types.Length; ++i)
+            {
+                total_weight += this.node_types[i].weight;
+            }
+
+            this.normalized_node_types = new PathNodeChances[this.node_types.Length];
+            for (int i = 0; i < this.node_types.Length; ++i)
+            {
+                this.normalized_node_types[i].node = this.node_types[i].node;
+                this.normalized_node_types[i].weight =
+                    this.node_types[i].weight / total_weight;
+            }
+
             // Create a new path
             this.GeneratePath();
         }
@@ -92,12 +135,64 @@ public class PathSystem : MonoBehaviour
             PathNode node = this.gUIDs.GetGameObject(guid).GetComponent<PathNode>();
             node.SetSelectable(true);
         }
-        
+
         // TODO(KASIN):
         // Randomly assign node a type
-        // Don't assign the same type twice in a continuous path
+        
+        List<string> visited = new List<string>();
+        Queue<string> node_queue = new Queue<string>();
+        foreach (string guid in this.start_node_guids)
+        {
+            node_queue.Enqueue(guid);
+        }
+
+        while (node_queue.Count > 0)
+        {
+            // Assign node type
+            string guid = node_queue.Dequeue();
+            PathNode node = this.gUIDs.GetGameObject(guid).GetComponent<PathNode>();
+            PathNodeData path_node = this.GetRandomPathNode();
+            node.SetPathNode(path_node);
+
+            // Add the node to the visited list
+            visited.Add(guid);
+            // Add the children to the queue
+            string[] child_nodes = node.GetNextNodes();
+            for (int i = 0; i < child_nodes.Length; ++i)
+            {
+                if (!(visited.Contains(child_nodes[i])))
+                {
+                    node_queue.Enqueue(child_nodes[i]);
+                }
+
+            }
+        }
 
         this.SavePath();
+    }
+    
+    /**
+     * @brief Get a random PathNodeData type.
+     * @return Returns a random PathNodeData type based on the normalized weights.
+     * @todo Write a test to verify this produces random nodes that corelate to
+     * the weight given.
+     */
+    private PathNodeData GetRandomPathNode()
+    {
+        float rand = UnityEngine.Random.Range(0.0f, 0.99f);
+        float curr_val = 0.0f;
+        for (int i = 0; i < this.normalized_node_types.Length; ++i)
+        {
+            if (rand >= curr_val && rand < this.normalized_node_types[i].weight + curr_val)
+            {
+                return this.normalized_node_types[i].node;
+            }
+
+            curr_val += this.normalized_node_types[i].weight;
+        }
+        
+        // Should never reach here...
+        return this.normalized_node_types[this.normalized_node_types.Length - 1].node;
     }
     
     /**
@@ -115,7 +210,7 @@ public class PathSystem : MonoBehaviour
     public void SavePath()
     {
         string json_path_system = JsonUtility.ToJson(this);
-        StreamWriter output = new StreamWriter(Path.Combine(SAVE_FOLDER, "PathSystemSave.json"));
+        StreamWriter output = new StreamWriter(Path.Combine(PATH_SAVE_LOCATION, "PathSystemSave.json"));
         output.Write(json_path_system);
         output.Flush();
         output.Close();
@@ -124,7 +219,7 @@ public class PathSystem : MonoBehaviour
         {
             Transform node = this.transform.GetChild(i);
             string node_name = node.gameObject.name;
-            node.GetComponent<PathNode>().SaveNode(Path.Combine(SAVE_FOLDER, node_name + ".json"));
+            node.GetComponent<PathNode>().SaveNode(Path.Combine(PATH_SAVE_LOCATION, node_name + ".json"));
         }
     }
     
@@ -135,7 +230,7 @@ public class PathSystem : MonoBehaviour
     private bool CheckIfSavePathExist()
     {
         // TODO(KASIN): When game quit, delete the save files
-        if (File.Exists(Path.Combine(SAVE_FOLDER, "PathSystemSave.json")))
+        if (File.Exists(Path.Combine(PATH_SAVE_LOCATION, "PathSystemSave.json")))
         {
             return true;
         }
@@ -149,7 +244,7 @@ public class PathSystem : MonoBehaviour
 
     public void LoadPath()
     {
-        StreamReader reader = new StreamReader(Path.Combine(SAVE_FOLDER, "PathSystemSave.json"));
+        StreamReader reader = new StreamReader(Path.Combine(PATH_SAVE_LOCATION, "PathSystemSave.json"));
         string json_str = reader.ReadToEnd();
         JsonUtility.FromJsonOverwrite(json_str, this);
         reader.Close();
@@ -158,7 +253,7 @@ public class PathSystem : MonoBehaviour
         {
             Transform node = this.transform.GetChild(i);
             string node_name = node.gameObject.name;
-            node.GetComponent<PathNode>().LoadNode(Path.Combine(SAVE_FOLDER, node_name + ".json"));
+            node.GetComponent<PathNode>().LoadNode(Path.Combine(PATH_SAVE_LOCATION, node_name + ".json"));
         }
     }
 

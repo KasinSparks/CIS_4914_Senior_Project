@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b48ce4d3e95ab4181c4f51d8c1485c, type: 3}
   m_Name: TestPathNode
   m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
-  scene: {fileID: 102900000, guid: 8166553f57f84f445a9635bd428a236b, type: 3}
+  scene_name: Gameplay
   image: {fileID: 2800000, guid: 2399fbb601bb73549b192473a813a2d2, type: 3}

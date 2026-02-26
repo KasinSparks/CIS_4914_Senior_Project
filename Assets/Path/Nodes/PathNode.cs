@@ -52,7 +52,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         {
             path_sys_ref.SetCurrentNode(this);
             path_sys_ref.SavePath();
-            SceneManager.LoadScene(this.data.GetScene().name);
+            SceneManager.LoadScene(this.data.GetSceneName());
         }
     }
     
@@ -100,5 +100,14 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     public string[] GetNextNodes()
     {
         return this.next_nodes_guids;
+    }
+
+    /**
+     * @brief Set the node data
+     * @param data The PathNodeData reference
+     */
+    public void SetPathNode(PathNodeData data)
+    {
+        this.data = data;
     }
 }

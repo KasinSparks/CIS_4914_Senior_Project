@@ -1,5 +1,3 @@
-
-using UnityEditor;
 using UnityEngine;
 using System;
 
@@ -12,7 +10,7 @@ public class PathNodeData : ScriptableObject{
 
     [SerializeField]
     /// The scene this node will load when it is clicked.
-    private SceneAsset scene;
+    private string scene_name;
 
     [SerializeField]
     /// The Image for the node.
@@ -22,9 +20,9 @@ public class PathNodeData : ScriptableObject{
      * @brief Get the scene the node holds a reference to.
      * @return The Scene asset the node will load when clicked.
      */
-    public SceneAsset GetScene()
+    public string GetSceneName()
     {
-        return this.scene;
+        return this.scene_name;
     }
     
     /**
