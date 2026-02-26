@@ -79,21 +79,22 @@ public class AttackSystem : MonoBehaviour
                 target.y + .01f,
                 target.z
             );
-            Transform original = card.transform;
-            for (int i = 0; i < 255; ++i)
+            //Transform original = card.transform; this is a moving point
+            for (int i = 0; i < 175; ++i) //can change i to any number, i though 175 was a good time, the orginal 255 felt too slow
             {
                 card.transform.position = Vector3.Lerp(
-                    original.position,
+                    original_pos, //this orignally used orignal.position, which was always moving
                     target,
-                    (float)1 / 64
+                    (float)i / 175f
                 );
                 yield return null;
             }
+            card.transform.position = target; //snap to target, eliminate drifting
 
             card.Attack(opponent);
 
 
-            for (int i = 0; i < 255; ++i)
+            for (int i = 0; i < 175; ++i)
             {
                 if (card == null) {
                     // Update state
@@ -101,17 +102,19 @@ public class AttackSystem : MonoBehaviour
                     yield break;
                 }
                 card.transform.position = Vector3.Lerp(
-                    original.position,
+                    target,
                     original_pos,
-                    (float)1 / 64
+                    (float)i / 175f
                 );
                 yield return null;
             }
+            card.transform.position = original_pos; //ensures no drifting
         }
 
         // Update state
         this.attack_animation_status |= (1 << index);
     }
+
 
     public void PlayerAttack() {
         // Set the animation status to start
