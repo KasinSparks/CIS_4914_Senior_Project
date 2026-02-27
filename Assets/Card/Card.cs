@@ -66,10 +66,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private CardSlot slot;
     private Playfield playfield_ref;
 
+    private bool is_being_sacrificed;
+
     private void Awake()
     {
         this.num_of_attacks_per_turn = 1;
         this.nektar_cost_amt_modifier = 0;
+        this.is_being_sacrificed = false;
 
         this.slot = null;
         // Initialize the card state to the default value
@@ -263,7 +266,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
                 // Check to see if the player is trying to sacrifice this card.
                 if (game_state.current_turn_state == TurnStates.PlayerSacrifice &&
-                    this.card_ownership == CardOwnership.Player)
+                    this.card_ownership == CardOwnership.Player &&
+                    !this.is_being_sacrificed)
                 {
                     // Add this card to the sacrifice list
                     this.playfield_ref.AddSacrificeCard(this);
@@ -896,5 +900,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Update the image
         Transform card_sacrifice_image = this.transform.Find("card_sacrifice_image");
         card_sacrifice_image.gameObject.SetActive(status);
+        this.is_being_sacrificed = status;
     }
 }
