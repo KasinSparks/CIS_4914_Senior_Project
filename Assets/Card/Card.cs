@@ -893,6 +893,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             this.AttachModifier(mod);
         }
+        this.SetCardTextField("card_name_text", data.card_name); //update name
+        this.UpdateCardTextStats(); //display new
     }
 
     public void SetContext(CardContext ctx) //for setting context

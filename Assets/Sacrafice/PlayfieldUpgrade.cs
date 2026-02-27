@@ -63,36 +63,32 @@ public class PlayfieldUpgrade : MonoBehaviour
         }
         Card c1 = slot1.GetCard();
         Card c2 = slot2.GetCard();
-        if (c1.card_name == c2.card_name) //if they are same card double the stats
+        CardData data1 = c1.GetCardData();
+        CardData data2 = c2.GetCardData();
+        if (data1.card_name.Contains("Blessed") || data1.card_name.Contains("Evolved") || data2.card_name.Contains("Blessed") || data2.card_name.Contains("Evolved"))
         {
-            upgradedCardData = CreateDoubledCard(c1);
+            Debug.Log("Upgraded cards cannot be upgraded again");
+            return;
+        }
+        CardData newData = Instantiate(data1); //will write to this data and then apply to first card
+        if (data1.card_name == data2.card_name) //if they are same card double the stats
+        {
+            newData.attack *= 2;
+            newData.hp *= 2;
+            newData.card_name = "Evolved " + newData.card_name;
         }
         else //if they dont have same name they arent same card so upgrade normally
         {
-            upgradedCardData = CreateUpgradedCard(c1, c2);
+            newData.card_name = "Blessed " + newData.card_name;
+            newData.starting_modifiers = MergeModifiers(data1, data2); //combine modifiers
         }
-        playerHand.RemoveCard(c1); //remove orignal cards
         playerHand.RemoveCard(c2);
-        if (playerHand != null)
-        {
-            playerHand.RemoveCard(c1);
-            playerHand.RemoveCard(c2);
-        }
-        Destroy(c1.gameObject); //destroy cards
         Destroy(c2.gameObject);
-        slot1.ResetCardSlot(); //reset slots
         slot2.ResetCardSlot();
-        Card newCard = Instantiate(cardPrefab, transform).GetComponent<Card>(); //display card
-        newCard.SetContext(Card.CardContext.Upgrade);
-        newCard.Initialize(upgradedCardData);
-        newCard.transform.SetParent(this.transform);
-        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
-        newCard.transform.localScale = Vector3.one * cardScale;
-        newCard.SetSlot(slot1);
-        newCard.SetState(CardState.OnPlayfield);
-        slot1.SetCard(newCard);
-        slot1.SetIsCardPlaced(true);
-        SaveUpgradedCard(upgradedCardData); //save card
+        c1.SetCardData(newData); //apply new stats
+        c1.Initialize(newData);
+        c1.SetSlot(slot1);
+        SaveUpgradedCard(c1);
         upgradePerformed = true;
         Debug.Log("Upgraded");
     }
@@ -102,36 +98,15 @@ public class PlayfieldUpgrade : MonoBehaviour
         SceneManager.LoadScene(nextSceneName);
     }
 
-    private CardData CreateUpgradedCard(Card c1, Card c2)
-    {
-        CardData newData = Instantiate(c1.GetCardData());
-        newData.card_name += "+"; //ex. ant -> ant+
-        newData.starting_modifiers = MergeModifiers(c1, c2); //combine modifiers
-        return newData;
-    }
-
-    private CardData CreateDoubledCard(Card c1)
-    {
-        CardData newData = Instantiate(c1.GetCardData());
-        newData.card_name = "Evolved " + newData.card_name; //ex. ant -> Evolved ant
-        newData.attack = c1.attack * 2; //double attack and health
-        newData.hp = c1.hp * 2;
-        return newData;
-    }
-
     //merge modifiers from two cards avoiding duplicates
-    private List<CardModifier> MergeModifiers(Card c1, Card c2)
+    private List<CardModifier> MergeModifiers(CardData d1, CardData d2)
     {
         List<CardModifier> merged = new List<CardModifier>();
-        List<CardModifier> mods1 = c1.GetAllModifierData();
-        List<CardModifier> mods2 = c2.GetAllModifierData();
-
-        foreach (var mod in mods1) //add all modifiers to merged list
-        {
+        foreach (var mod in d1.starting_modifiers)
+        { //add all modifiers to merged list
             merged.Add(mod);
         }
-
-        foreach (var mod2 in mods2) //no duplicate modifiers
+        foreach (var mod2 in d2.starting_modifiers) //no duplicate modifiers
         {
             bool duplicate = false;
             foreach (var existing in merged)
@@ -143,14 +118,11 @@ public class PlayfieldUpgrade : MonoBehaviour
                 }
             }
             if (duplicate == false)
-            {
                 merged.Add(mod2);
-            }
         }
         return merged;
     }
-
-    private void SaveUpgradedCard(CardData card)
+    private void SaveUpgradedCard(Card card)
     {
         //todo
     }
