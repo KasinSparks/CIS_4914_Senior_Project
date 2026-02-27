@@ -1,18 +1,74 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Random = UnityEngine.Random;
 
 public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
-    [SerializeField] private List<CardData> starting_cards;
     [SerializeField] private Playfield playfield;
 
+    [Header("Draw Settings")]
+    [SerializeField] private int draw_amount = 1;
+    [Tooltip("When toggled, the draw random settings are applied")]
+    [SerializeField] private bool draw_random = false;
+
+    [Header("Draw Random Settings")]
+    [Tooltip("Lowest number of cards to potentially draw")]
+    [SerializeField] private int draw_random_start = 1;
+    [Tooltip("Highest number of cards to potentially draw")]
+    [SerializeField] private int draw_random_end = 2;
+
+    [Header("Place Settings")]
+    [SerializeField] private int place_amount = 1;
+    [Tooltip("When toggled, the place random settings are applied")]
+    [SerializeField] private bool place_random = false;
+
+    [Header("Place Random Settings")]
+    [Tooltip("Lowest number of cards to potentially place")]
+    [SerializeField] private int place_random_start = 1;
+    [Tooltip("Highest number of cards to potentially place")]
+    [SerializeField] private int place_random_end = 2;
+
+    [Header("Card Settings")]
+    [SerializeField] private List<CardData> starting_cards;
     [SerializeField] private List<Card> cards;
     [SerializeField] private Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
 
-    
+    private class RowStatus
+    {
+        public int occupied_count;
+        public int unoccupied_count;
+        public List<CardSlot> occupied_slots;
+        public List<CardSlot> unoccupied_slots;
+
+        public RowStatus()
+        {
+            occupied_count = 0;
+            unoccupied_count = 0;
+            occupied_slots = new List<CardSlot>();
+            unoccupied_slots = new List<CardSlot>();
+        }
+
+        public void AddOccupiedSlot(CardSlot slot)
+        {
+            occupied_slots.Add(slot);
+            occupied_count = occupied_slots.Count;
+
+            if (unoccupied_slots.Remove(slot)) unoccupied_count = unoccupied_slots.Count;
+        }
+
+        public void AddUnoccupiedSlot(CardSlot slot)
+        {
+            unoccupied_slots.Add(slot);
+            unoccupied_count = unoccupied_slots.Count;
+
+            if (occupied_slots.Remove(slot)) occupied_count = occupied_slots.Count;
+        }
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,14 +88,6 @@ public class Opponent : MonoBehaviour
 
         // Copy the starting cards to the queue
         this.Shuffle();
-
-        /*
-        // Update the card state to reflect they are currently in the deck.
-        foreach (CardData c in this.card_queue)
-        {
-            c.SetState(CardState.InDeck);
-        }
-        */
     }
 
     /**
@@ -51,7 +99,6 @@ public class Opponent : MonoBehaviour
         return this.hand;
     }
 
-
     /**
      * @brief Draw from deck, places into hand list, update turn state, calls Turn()
      */
@@ -60,24 +107,79 @@ public class Opponent : MonoBehaviour
         // Moves queue row to opponent row if space is available
         this.UpdateRows();
 
-        // If cards in deck, draw once and place in hand
-        if (this.card_queue.Count != 0)
+        // If want to draw random number of cards
+        if (this.draw_random && this.draw_random_end != 0)
         {
-            this.hand.Add(this.GetNextCard());
+            this.draw_amount = Random.Range(this.draw_random_start, this.draw_random_end + 1);
         }
 
+        // If cards in deck, draw amount and place in hand
+        for (int i = 0; i < this.draw_amount; i++)
+        {
+            if (this.card_queue.Count == 0) return;
+
+            this.hand.Add(this.GetNextCard());
+        }
     }
 
     /**
      * @brief Calls opponent's card placement logic, updates turn state
-     * 
-     * @todo implement logic in place of TempLogic
      */
     public void Turn()
     {
-        // TODO implement logic here
-        this.TempLogic();
+        // If no cards in hand, don't place anything
+        if (this.hand.Count == 0) return;
 
+        // If want to place random number of cards
+        if (this.place_random && this.place_random_end != 0)
+        {
+            this.place_amount = Random.Range(this.place_random_start, this.place_random_end + 1);
+        }
+
+        // Track cards placed and their index
+        RowStatus player_status = new RowStatus();
+        RowStatus opponent_status = new RowStatus();
+        RowStatus queue_status = new RowStatus();
+
+
+        for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)
+        {
+            CardSlot player_slot = playfield.GetCardSlots(CardOwnership.Player)[i];
+            if (player_slot.GetIsCardPlaced())
+            {
+                player_status.AddOccupiedSlot(player_slot);
+            }
+            else
+            {
+                player_status.AddUnoccupiedSlot(player_slot);
+            }
+
+            CardSlot opponent_slot = playfield.GetCardSlots(CardOwnership.Opponent)[i];
+            if (opponent_slot.GetIsCardPlaced())
+            {
+                opponent_status.AddOccupiedSlot(player_slot);
+            }
+            else
+            {
+                player_status.AddUnoccupiedSlot(player_slot);
+            }
+            CardSlot queue_slot = playfield.GetCardSlots(CardOwnership.Queue)[i];
+            if (queue_slot.GetIsCardPlaced())
+            {
+                queue_status.AddOccupiedSlot(player_slot);
+            } else
+            {
+                queue_status.AddUnoccupiedSlot(player_slot);
+            }
+        }
+
+        // Logic
+        for (int i = 0; i < this.place_amount; i++)
+        {
+            if (this.hand.Count == 0 || queue_status.unoccupied_count == 0) return;
+
+            this.Logic(queue_status);
+        }
     }
 
     /**
@@ -89,6 +191,106 @@ public class Opponent : MonoBehaviour
     {
         this.cards.Remove(card);
         card.SetState(CardState.OnPlayfield);
+    }
+
+    /**
+     * @brief Helper function that moves card from hand to playfield for repeated lines in logic functions
+     * 
+     * @param handIndex index of card in hand to be moved to playfield
+     */
+    private void HandToPlayfield (int handIndex, int queueIndex)
+    {
+        CardSlot card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[queueIndex];
+        if (card_slot_ref.GetIsCardPlaced()) return;
+
+        // Set selected card
+        this.SetSelectedCard(hand[handIndex]);
+
+        // Update card to be visable, card state to be in hand, and ownership to opponent
+        hand[handIndex].gameObject.SetActive(true);
+        hand[handIndex].SetState(CardState.InHand);
+        hand[handIndex].SetOwnership(CardOwnership.Opponent);
+
+        // Remove from hand
+        hand.RemoveAt(handIndex);
+
+        // Place selected card
+        playfield.PlaceSelectedCard(CardOwnership.Opponent, card_slot_ref);
+    }
+
+    /**
+     * @brief Calls specific logic function based on attack_style
+     * 
+     * @param occupied_player_slots reference to list of tuples in Turn() use to track cards placed in player slots
+     * and their index
+     * 
+     * @param occupied_opponent_slots reference to list of tuples in Turn() use to track cards placed in opponent slots
+     * and their index
+     * 
+     * @param occupied_queue_slots reference to list of tuples in Turn() use to track cards placed in queue slots
+     * and their index
+     */
+    private void Logic(RowStatus queue_status)
+    {
+        switch (attack_style)
+        {
+            case OpponentAttackStyle.Random:
+                LogicRandom(queue_status);
+                break;
+            case OpponentAttackStyle.Defensive:
+                LogicDefensive();
+                break;
+            case OpponentAttackStyle.Aggressive:
+                LogicAggressive();
+                break;
+            case OpponentAttackStyle.Balanced:
+                LogicBalanced();
+                break;
+        }
+    }
+
+    private void LogicRandom(RowStatus queue_status)
+    {
+        int hand_index;
+        int status_index;
+        int hand_count = this.hand.Count;
+
+        // Randomly choose between hand cards
+        if (hand_count == 1)
+        {
+            hand_index = 0;
+        } else
+        {
+            hand_index = Random.Range(0, hand_count);
+        }
+
+        // Randomly choose between open queue slots
+        if (queue_status.unoccupied_count == 1)
+        {
+            HandToPlayfield(hand_index, queue_status.unoccupied_slots[0].GetSlotIndex());
+            return;
+        } else
+        {
+            status_index = Random.Range(0, queue_status.unoccupied_count);
+        }
+
+        // Place card 
+        HandToPlayfield(hand_index, queue_status.unoccupied_slots[status_index].GetSlotIndex());
+    }
+
+    private void LogicDefensive()
+    {
+
+    }
+
+    private void LogicAggressive()
+    {
+
+    }
+
+    private void LogicBalanced()
+    {
+
     }
 
     /**
@@ -180,44 +382,6 @@ public class Opponent : MonoBehaviour
     private void SetSelectedCard(Card selected_card)
     {
         playfield.SetSelectedCard(CardOwnership.Opponent, selected_card);
-    }
-
-    /**
-     * @brief Temporary logic function for opponent card placement
-     * 
-     * Cards are place from left to right (player's perspective) based
-     * on which spot is open in the queue row
-     * 
-     * @todo UPDATE with logic class
-     */
-    private void TempLogic()
-    {
-        // If no cards in hand, don't place anything
-        if (hand.Count == 0) return;
-
-        
-
-        // Place card at first available slot in queue row
-        for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; i++)
-        {
-            CardSlot card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[i];
-            if (card_slot_ref.GetIsCardPlaced()) continue;
-
-            // Set selected card to first in hand
-            // Update card to be visable, card state to be in hand, and ownership to opponent
-            // Remove from hand
-            this.SetSelectedCard(hand[0]);
-            hand[0].gameObject.SetActive(true);
-            hand[0].SetState(CardState.InHand);
-            hand[0].SetOwnership(CardOwnership.Opponent);
-            hand.RemoveAt(0);
-
-            // Place selected card
-            playfield.PlaceSelectedCard(CardOwnership.Opponent, card_slot_ref);
-
-            return;
-        }
-
     }
 
 }

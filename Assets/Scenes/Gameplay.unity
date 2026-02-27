@@ -990,6 +990,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Opponent
   attack_style: 0
+  playfield: {fileID: 1460760515}
+  draw_amount: 1
+  draw_random: 1
+  draw_random_start: 1
+  draw_random_end: 2
+  place_amount: 1
+  place_random: 1
+  place_random_start: 1
+  place_random_end: 2
   starting_cards:
   - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
   - {fileID: 11400000, guid: b61b23b3467ae1e4faa6ab607de49ed3, type: 2}
@@ -1000,7 +1009,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
   - {fileID: 11400000, guid: 94444e15942938943bad1531709bc8f0, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
-  playfield: {fileID: 1460760515}
   cards: []
   hand: []
 --- !u!1 &426161312

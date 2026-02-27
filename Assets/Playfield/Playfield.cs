@@ -18,7 +18,10 @@ public class Playfield : MonoBehaviour
     [SerializeField] private Card opponent_selected_card;
     [SerializeField] private List<CardSlot> queue_card_slots;
 
-    private const int NUM_ROWS = 3;
+    public static int NUM_ROWS
+    {
+        get { return 3; }
+    }
 
     public static int NUM_OF_CARDS_IN_ROW
     {
@@ -47,6 +50,7 @@ public class Playfield : MonoBehaviour
 
                 new_slot.SetPlayfield(this);
                 new_slot.SetCardSlot(slot.gameObject);
+                new_slot.SetSlotIndex(j);
                 switch (i)
                 {
                     case 0:
