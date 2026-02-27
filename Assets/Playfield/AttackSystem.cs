@@ -1,86 +1,161 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
-[Serializable]
-public struct CardHolderColumn
-{
-    public CardSlot player_cardholder;
-    public GameObject enemy_cardholder;
-}
 
 public class AttackSystem : MonoBehaviour
 {
-    // TODO(KASIN): get the cards currently on the playfield.
-    // NOTE(KASIN): This may need to be changed once the code for the placement
-    //     of cards gets pushed.
-
     public Playfield playfield;
+    private GameState game_state;
 
-    // (Player cardholder, Enemy cardholder)
-    //public (GameObject, GameObject)[] columns =
-    //    new (GameObject, GameObject)[NUM_OF_CARDS_IN_ROW];
-    public CardHolderColumn[] columns;
+    private int attack_animation_status = 0;
+    private int aas_opponent_offset = 4;
 
-    // BEGIN: FOR TESTING DELETE THIS
-    public Card[] opponent_cards = new Card[Playfield.NUM_OF_CARDS_IN_ROW];
-    public Card[] current_opponent_cards = new Card[Playfield.NUM_OF_CARDS_IN_ROW];
-    // END: FOR TESTING DELETE THIS
-
+    void Awake()
+    {
+        // TODO(KASIN): Error handling
+        this.game_state = GameObject.Find("GameState").GetComponent<GameState>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // BEGIN: FOR TESTING DELETE THIS
-        for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
-        {
-            if (opponent_cards[i] != null)
-            {
-                Transform opponent_card_holder_transform = columns[i].enemy_cardholder.transform;
-                Card card_ref = Instantiate(opponent_cards[i]);
-                card_ref.transform.localScale = new Vector3(
-                    0.1f * card_ref.transform.localScale.x,
-                    0.1f * card_ref.transform.localScale.y,
-                    0.1f * card_ref.transform.localScale.z
-                );
-                card_ref.transform.SetPositionAndRotation(
-                    opponent_card_holder_transform.position,
-                    Quaternion.Euler(0, 180, 90)
-                );
-                card_ref.SetOwnership(CardOwnership.Opponent);
-                current_opponent_cards[i] = card_ref;
-            }
-        }
-        // END: FOR TESTING DELETE THIS
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // CLEANUP(KASIN): 
+        if ((this.attack_animation_status & (1 << 31)) != 0)
+        {
+            // Attack animation is active
+            // Hold in attacking state until all animations finished.
+            this.game_state.UpdateTurnState(TurnStates.Attacking);
+
+            // Reset the state once all animation are done.
+            if ((this.attack_animation_status & (0xF)) == 0XF)
+            {
+                // Done with attack animations
+                this.attack_animation_status = 0;
+                this.game_state.UpdateTurnState(TurnStates.OpponentDrawCard);
+            }
+        }
+        else if ((this.attack_animation_status & (1 << 30)) != 0)
+        {
+            // Opponent attack animation is active
+            // Hold in attacking state until all animations finished.
+            this.game_state.UpdateTurnState(TurnStates.Attacking);
+
+            // Reset the state once all animation are done.
+            if ((this.attack_animation_status & ((0xF) << this.aas_opponent_offset)) == 0XF0)
+            {
+                // Done with attack animations
+                this.attack_animation_status = 0;
+                this.game_state.UpdateTurnState(TurnStates.PlayerDrawCard);
+            }
+        }
+    }
+
+    // CLEANUP(KASIN):
+    IEnumerator AttackAnimation(Card card, Card opponent, int index)
+    {
+        Debug.Log("Get additional attack count: " + card._GetNumAdditionalAttacks());
+        for (int a = 0; a < card._GetNumAdditionalAttacks(); ++a)
+        {
+            if (opponent == null)
+            {
+                // Update state
+                this.attack_animation_status |= (1 << index);
+                yield break;
+            }
+
+            Vector3 original_pos = card.transform.position;
+            //Transform target = opponent.transform;
+            Vector3 target = opponent.transform.position;
+            target = new Vector3(
+                target.x,
+                target.y + .01f,
+                target.z
+            );
+            //Transform original = card.transform; this is a moving point
+            for (int i = 0; i < 175; ++i) //can change i to any number, i though 175 was a good time, the orginal 255 felt too slow
+            {
+                card.transform.position = Vector3.Lerp(
+                    original_pos, //this orignally used orignal.position, which was always moving
+                    target,
+                    (float)i / 175f
+                );
+                yield return null;
+            }
+            card.transform.position = target; //snap to target, eliminate drifting
+
+            card.Attack(opponent);
+
+
+            for (int i = 0; i < 175; ++i)
+            {
+                if (card == null) {
+                    // Update state
+                    this.attack_animation_status |= (1 << index);
+                    yield break;
+                }
+                card.transform.position = Vector3.Lerp(
+                    target,
+                    original_pos,
+                    (float)i / 175f
+                );
+                yield return null;
+            }
+            card.transform.position = original_pos; //ensures no drifting
+        }
+
+        // Update state
+        this.attack_animation_status |= (1 << index);
     }
 
 
     public void PlayerAttack() {
+        // Set the animation status to start
+        this.attack_animation_status |= (1 << 31);
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
-            Card enemy_card_ref  = this.current_opponent_cards[i];
-            Card player_card_ref = this.columns[i].player_cardholder.GetCard();
+            CardSlot opponent_card_slot_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i];
+            Card opponent_card_ref = opponent_card_slot_ref.GetCard();
+            Card player_card_ref = playfield.GetCardSlots(CardOwnership.Player)[i].GetCard();
+
             if (player_card_ref != null)
             {
-                player_card_ref.Attack(enemy_card_ref);
+                //player_card_ref.Attack(opponent_card_ref);
+                StartCoroutine(this.AttackAnimation(player_card_ref, opponent_card_ref, i));
+            }
+            else
+            {
+                // Update state
+                this.attack_animation_status |= (1 << i);
             }
         }
     }
 
     public void OpponentAttack() {
+        // Set the animation status to start
+        this.attack_animation_status |= (1 << 30);
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
-            Card enemy_card_ref  = this.current_opponent_cards[i];
-            Card player_card_ref = this.columns[i].player_cardholder.GetCard();
-            if (enemy_card_ref != null)
+            Card opponent_card_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i].GetCard();
+            CardSlot player_card_slot_ref = playfield.GetCardSlots(CardOwnership.Player)[i];
+            Card player_card_ref = player_card_slot_ref.GetCard();
+
+            if (opponent_card_ref != null)
             {
-                enemy_card_ref.Attack(player_card_ref);
+                //enemy_card_ref.Attack(player_card_ref);
+                StartCoroutine(this.AttackAnimation(opponent_card_ref, player_card_ref, i + aas_opponent_offset));
+            }
+            else
+            {
+                // Update state
+                this.attack_animation_status |= (1 << (i + aas_opponent_offset));
             }
         }
     }
@@ -88,6 +163,7 @@ public class AttackSystem : MonoBehaviour
     public Card GetOppositeLeft() {
         throw new System.NotImplementedException();
     }
+
     public Card GetOppositeRight() {
         throw new System.NotImplementedException();
     }
@@ -103,16 +179,23 @@ public class AttackSystem : MonoBehaviour
 
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
-            Card player_card_ref = this.columns[i].player_cardholder.GetCard();
-            if (player_card_ref != null && player_card_ref.GetOwnership() == CardOwnership.Player)
+            switch (owner)
             {
-                ret.Add(player_card_ref);
-            }
+                case (CardOwnership.Player):
+                    Card player_card_ref = playfield.GetCardSlots(CardOwnership.Player)[i].GetCard();
+                    if (player_card_ref != null && player_card_ref.GetOwnership() == CardOwnership.Player)
+                    {
+                        ret.Add(player_card_ref);
+                    }
+                    break;
 
-            Card enemy_card_ref  = this.current_opponent_cards[i];
-            if (enemy_card_ref != null && enemy_card_ref.GetOwnership() == CardOwnership.Opponent)
-            {
-                ret.Add(enemy_card_ref);
+                case (CardOwnership.Opponent):
+                    Card opponent_card_ref = playfield.GetCardSlots(CardOwnership.Opponent)[i].GetCard();
+                    if (opponent_card_ref != null && opponent_card_ref.GetOwnership() == CardOwnership.Opponent)
+                    {
+                        ret.Add(opponent_card_ref);
+                    }
+                    break;
             }
         }
 

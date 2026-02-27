@@ -5,6 +5,7 @@ public class GameState : MonoBehaviour
 {
     public TurnStates current_turn_state;
     public AttackSystem attack_sys;
+    public Opponent opponent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,21 +32,9 @@ public class GameState : MonoBehaviour
             UnityEngine.Debug.Log("Wait until it is your turn again.");
         }
     }
-
-    public void EndOpponentTurn()
-    {
-        if (this.current_turn_state == TurnStates.OpponentDrawCard ||
-            this.current_turn_state == TurnStates.OpponentTurn)
-        {
-            this.UpdateTurnState(TurnStates.OpponentEndTurn);
-            UnityEngine.Debug.Log("Opponents Turn");
-        }
-        else
-        {
-            UnityEngine.Debug.Log("Wait until it is your turn again.");
-        }
-    }
-
+    
+    // TODO(KASIN): Make sure the recurrsion in the function is not going to
+    //    cause a runtime error or crash.
     public void UpdateTurnState(TurnStates state)
     {
         switch (state)
@@ -54,9 +43,8 @@ public class GameState : MonoBehaviour
                 {
                     this.current_turn_state = TurnStates.PlayerEndTurn;
                     // Perform attacks of player's cards
+                    // GameState gets updated in AttackSystem
                     attack_sys.PlayerAttack();
-                    // Update the state
-                    this.UpdateTurnState(TurnStates.OpponentDrawCard);
                 }
                 break;
 
@@ -64,9 +52,8 @@ public class GameState : MonoBehaviour
                 {
                     this.current_turn_state = TurnStates.OpponentEndTurn;
                     // Perform attacks of opponent's cards
+                    // GameState gets updated in AttackSystem
                     attack_sys.OpponentAttack();
-                    // Update the state
-                    this.UpdateTurnState(TurnStates.PlayerDrawCard);
                 }
                 break;
 
@@ -76,6 +63,7 @@ public class GameState : MonoBehaviour
                     List<Card> player_cards = attack_sys.GetCards(CardOwnership.Player);
                     for (int i = 0; i < player_cards.Count; ++i)
                     {
+                        Debug.Log("Owner: " + player_cards[i].GetOwnership());
                         player_cards[i].OnTurnStart();
                     }
                 }
@@ -83,12 +71,21 @@ public class GameState : MonoBehaviour
 
             case TurnStates.OpponentDrawCard:
                 {
+                    opponent.DrawCards();
                     this.current_turn_state = TurnStates.OpponentDrawCard;
                     List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponent);
                     for (int i = 0; i < opponent_cards.Count; ++i)
                     {
                         opponent_cards[i].OnTurnStart();
                     }
+                    this.UpdateTurnState(TurnStates.OpponentTurn);
+                }
+                break;
+            case TurnStates.OpponentTurn:
+                {
+                    opponent.Turn();
+                    this.current_turn_state = TurnStates.OpponentTurn;
+                    this.UpdateTurnState(TurnStates.OpponentEndTurn);
                 }
                 break;
 
@@ -96,5 +93,10 @@ public class GameState : MonoBehaviour
                 this.current_turn_state = state;
                 break;
         }
+    }
+
+    public TurnStates GetCurrentState()
+    {
+        return this.current_turn_state;
     }
 }

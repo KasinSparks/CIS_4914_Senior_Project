@@ -13,12 +13,14 @@ public class ConsumableButton : MonoBehaviour
     private AttackSystem attackSystem;
     private GameState gameState;
     private Hand playerHand;
+    private Playfield playfield;
 
     private void Awake()
     {
         gameState = FindFirstObjectByType<GameState>();
         attackSystem = FindFirstObjectByType<AttackSystem>();
         playerHand = FindFirstObjectByType<Hand>();
+        playfield = FindFirstObjectByType<Playfield>();
         if (damageConsumable != null)
         {
             overlayImage.sprite = damageConsumable.icon;
@@ -55,13 +57,13 @@ public class ConsumableButton : MonoBehaviour
         //use consumable attached to button
         if (damageConsumable != null)
         {
-            damageConsumable.Use(attackSystem); //uses attack system to effect health of cards
+            damageConsumable.Use(playfield, attackSystem); //uses attack system to effect health of cards
             damageConsumable = null;  //remove item
             overlayImage.enabled = false; //hide icon, this will not immediatly hide if it is a consumable that requires targeting
         }
         else if (healConsumable != null)
         {
-            healConsumable.Use(attackSystem);
+            healConsumable.Use(playfield, attackSystem);
             healConsumable = null;
             overlayImage.enabled = false;
         }
@@ -73,7 +75,6 @@ public class ConsumableButton : MonoBehaviour
         }
         else if (singleHealConsumable != null)
         {
-            Playfield playfield = FindFirstObjectByType<Playfield>();
             playfield.ActivateConsumable(singleHealConsumable, this);
             singleHealConsumable = null;
             //overlayImage.enabled = false; cannot be disabled here since it needs to be disabled only after the item is actually used, not just clicked on

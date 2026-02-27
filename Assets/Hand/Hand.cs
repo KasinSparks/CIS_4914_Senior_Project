@@ -29,22 +29,36 @@ public class Hand : MonoBehaviour
         
     }
 
+    private void AddCardHelper(Card card, CardOwnership owner)
+    {
+        // Update the newly instantiated card's fields 
+        card.gameObject.SetActive(true);
+        card.SetState(CardState.InHand);
+        card.SetOwnership(owner);
+
+        // Add the card to the hand
+        this.cards.Add(card);
+
+        // Move card to position
+        this.FlareCards();
+    }
+
     public void AddCard(Card card, CardOwnership owner)
     {
         // Instantiate card and add it to the hand list
         Card new_card = Instantiate(card, this.transform);
 
-        // Update the newly instantiated card's fields 
-        new_card.gameObject.SetActive(true);
-        new_card.SetState(CardState.InHand);
-        new_card.SetOwnership(owner);
+        this.AddCardHelper(new_card, owner);
+    }
 
-        // Add the card to the hand
-        this.cards.Add(new_card);
+    public void AddCard(CardData card_data, CardOwnership owner)
+    {
+        // Instantiate card and add it to the hand list
+        Card card_prefab = Resources.Load<Card>("Card");
+        Card new_card = Instantiate(card_prefab, this.transform);
+        new_card.SetCardData(card_data);
 
-        // Move card to position
-        this.FlareCards();
-
+        this.AddCardHelper(new_card, owner);
     }
 
     public void RemoveCard(Card card)
@@ -110,9 +124,10 @@ public class Hand : MonoBehaviour
         this.front_card_original_z = this.front_card.transform.position.z;
     }
 
-    public void SetSelectedCard(Card selected_card)
+    public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
-        playfield.SetHand(this);
-        playfield.SetSelectedCard(selected_card);
+        if (owner != CardOwnership.Player) return;
+        playfield.SetHand(owner, this);
+        playfield.SetSelectedCard(owner, selected_card);
     }
 }
