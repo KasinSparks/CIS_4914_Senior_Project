@@ -262,7 +262,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 //     playfield.
 
                 // Check to see if the player is trying to sacrifice this card.
-                if (game_state.current_turn_state == TurnStates.PlayerSacrifice)
+                if (game_state.current_turn_state == TurnStates.PlayerSacrifice &&
+                    this.card_ownership == CardOwnership.Player)
                 {
                     // Add this card to the sacrifice list
                     this.playfield_ref.AddSacrificeCard(this);
