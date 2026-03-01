@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 public class Opponent : MonoBehaviour
@@ -40,31 +41,31 @@ public class Opponent : MonoBehaviour
     {
         public int occupied_count;
         public int unoccupied_count;
-        public List<CardSlot> occupied_slots;
-        public List<CardSlot> unoccupied_slots;
+        public List<int> occupied_slots;
+        public List<int> unoccupied_slots;
 
         public RowStatus()
         {
             occupied_count = 0;
             unoccupied_count = 0;
-            occupied_slots = new List<CardSlot>();
-            unoccupied_slots = new List<CardSlot>();
+            occupied_slots = new List<int>();
+            unoccupied_slots = new List<int>();
         }
 
-        public void AddOccupiedSlot(CardSlot slot)
+        public void AddOccupiedSlot(int index)
         {
-            occupied_slots.Add(slot);
+            occupied_slots.Add(index);
             occupied_count = occupied_slots.Count;
 
-            if (unoccupied_slots.Remove(slot)) unoccupied_count = unoccupied_slots.Count;
+            if (unoccupied_slots.Remove(index)) unoccupied_count = unoccupied_slots.Count;
         }
 
-        public void AddUnoccupiedSlot(CardSlot slot)
+        public void AddUnoccupiedSlot(int index)
         {
-            unoccupied_slots.Add(slot);
+            unoccupied_slots.Add(index);
             unoccupied_count = unoccupied_slots.Count;
 
-            if (occupied_slots.Remove(slot)) occupied_count = occupied_slots.Count;
+            if (occupied_slots.Remove(index)) occupied_count = occupied_slots.Count;
         }
     }
 
@@ -147,29 +148,29 @@ public class Opponent : MonoBehaviour
             CardSlot player_slot = playfield.GetCardSlots(CardOwnership.Player)[i];
             if (player_slot.GetIsCardPlaced())
             {
-                player_status.AddOccupiedSlot(player_slot);
+                player_status.AddOccupiedSlot(i);
             }
             else
             {
-                player_status.AddUnoccupiedSlot(player_slot);
+                player_status.AddUnoccupiedSlot(i);
             }
 
             CardSlot opponent_slot = playfield.GetCardSlots(CardOwnership.Opponent)[i];
             if (opponent_slot.GetIsCardPlaced())
             {
-                opponent_status.AddOccupiedSlot(player_slot);
+                opponent_status.AddOccupiedSlot(i);
             }
             else
             {
-                player_status.AddUnoccupiedSlot(player_slot);
+                opponent_status.AddUnoccupiedSlot(i);
             }
             CardSlot queue_slot = playfield.GetCardSlots(CardOwnership.Queue)[i];
             if (queue_slot.GetIsCardPlaced())
             {
-                queue_status.AddOccupiedSlot(player_slot);
+                queue_status.AddOccupiedSlot(i);
             } else
             {
-                queue_status.AddUnoccupiedSlot(player_slot);
+                queue_status.AddUnoccupiedSlot(i);
             }
         }
 
@@ -178,7 +179,22 @@ public class Opponent : MonoBehaviour
         {
             if (this.hand.Count == 0 || queue_status.unoccupied_count == 0) return;
 
-            this.Logic(queue_status);
+            // Calls specific logic function based on attack_style
+            switch (this.attack_style)
+            {
+                case OpponentAttackStyle.Random:
+                    LogicRandom(queue_status);
+                    break;
+                case OpponentAttackStyle.Defensive:
+                    LogicDefensive(player_status, opponent_status, queue_status);
+                    break;
+                case OpponentAttackStyle.Aggressive:
+                    LogicAggressive(player_status, opponent_status, queue_status);
+                    break;
+                case OpponentAttackStyle.Balanced:
+                    LogicBalanced(player_status, opponent_status, queue_status);
+                    break;
+            }
         }
     }
 
@@ -196,12 +212,17 @@ public class Opponent : MonoBehaviour
     /**
      * @brief Helper function that moves card from hand to playfield for repeated lines in logic functions
      * 
+     * @param queue_status use to track cards placed in queue slots, updated here
      * @param handIndex index of card in hand to be moved to playfield
+     * @param queueIndex index of cardslot in queue for card to be placed
      */
-    private void HandToPlayfield (int handIndex, int queueIndex)
+    private void HandToPlayfield (RowStatus queue_status, int handIndex, int queueIndex)
     {
         CardSlot card_slot_ref = playfield.GetCardSlots(CardOwnership.Queue)[queueIndex];
         if (card_slot_ref.GetIsCardPlaced()) return;
+
+        // Update queue_status
+        queue_status.AddOccupiedSlot(queueIndex);
 
         // Set selected card
         this.SetSelectedCard(hand[handIndex]);
@@ -219,76 +240,214 @@ public class Opponent : MonoBehaviour
     }
 
     /**
-     * @brief Calls specific logic function based on attack_style
+     * @brief Randomly chooses from hand and places card in random open queue slot
      * 
-     * @param occupied_player_slots reference to list of tuples in Turn() use to track cards placed in player slots
-     * and their index
-     * 
-     * @param occupied_opponent_slots reference to list of tuples in Turn() use to track cards placed in opponent slots
-     * and their index
-     * 
-     * @param occupied_queue_slots reference to list of tuples in Turn() use to track cards placed in queue slots
-     * and their index
+     * @param queue_status use to track cards placed in queue slots
      */
-    private void Logic(RowStatus queue_status)
-    {
-        switch (attack_style)
-        {
-            case OpponentAttackStyle.Random:
-                LogicRandom(queue_status);
-                break;
-            case OpponentAttackStyle.Defensive:
-                LogicDefensive();
-                break;
-            case OpponentAttackStyle.Aggressive:
-                LogicAggressive();
-                break;
-            case OpponentAttackStyle.Balanced:
-                LogicBalanced();
-                break;
-        }
-    }
-
     private void LogicRandom(RowStatus queue_status)
     {
         int hand_index;
-        int status_index;
-        int hand_count = this.hand.Count;
+        int queue_status_index;
 
         // Randomly choose between hand cards
-        if (hand_count == 1)
-        {
-            hand_index = 0;
-        } else
-        {
-            hand_index = Random.Range(0, hand_count);
-        }
+        hand_index = Random.Range(0, this.hand.Count);
 
         // Randomly choose between open queue slots
-        if (queue_status.unoccupied_count == 1)
-        {
-            HandToPlayfield(hand_index, queue_status.unoccupied_slots[0].GetSlotIndex());
-            return;
-        } else
-        {
-            status_index = Random.Range(0, queue_status.unoccupied_count);
-        }
+        queue_status_index = Random.Range(0, queue_status.unoccupied_count);
 
         // Place card 
-        HandToPlayfield(hand_index, queue_status.unoccupied_slots[status_index].GetSlotIndex());
+        HandToPlayfield(queue_status, hand_index, queue_status.unoccupied_slots[queue_status_index]);
     }
 
-    private void LogicDefensive()
+    /**
+     * @brief Chooses cards with highest hp from hand and places card in front of players card with highest attack,
+     * wants to block player cards as much as possible
+     * 
+     * Opponent will place cards with highest hp in front of player card with highest attack. If there isn't a player
+     * card on the field, the opponent will spread out their cards as much as possible; otherwise, they will place cards
+     * in random queue row with player cards in the same column. If there is not a queue row spot open with a player
+     * card in the same column, they will place cards in any random open queue slot
+     * 
+     * @param player_status use to track cards placed in player slots
+     * 
+     * @param opponent_status use to track cards placed in opponent slots
+     * 
+     * @param queue_status use to track cards placed in queue slots
+     */
+    private void LogicDefensive(RowStatus player_status, RowStatus opponent_status, RowStatus queue_status)
     {
+        int hand_index;
+        int queue_index;
 
+        // Get hand card with highest hp, breaks tie based on attack
+        Card highest_HP = this.hand[0];
+        hand_index = 0;
+        for (int i = 0; i < this.hand.Count; i++)
+        {
+            Card card = this.hand[i];
+            if (card.GetCurrentHP() > highest_HP.GetCurrentHP() ||
+                (card.GetCurrentHP() == highest_HP.GetCurrentHP() && card.GetBaseAttack() > highest_HP.GetBaseAttack()))
+            {
+                highest_HP = card;
+                hand_index = i;
+            }
+        }
+
+        var unoccupied_slots = queue_status.unoccupied_slots.Intersect(opponent_status.unoccupied_slots);
+        var valid_slots = player_status.occupied_slots.Intersect(unoccupied_slots);
+        var backup_slots = player_status.occupied_slots.Intersect(queue_status.unoccupied_slots);
+
+        // If no player card on field 
+        if (player_status.occupied_count == 0)
+        {
+            // If exists column with queue and opponent slots open, place in random queue slot without opponent
+            if (unoccupied_slots.Any())
+            {
+                queue_index = unoccupied_slots.ElementAt(Random.Range(0, unoccupied_slots.Count()));
+            } // else, place in random queue slot
+            else 
+            {
+                queue_index = queue_status.unoccupied_slots[Random.Range(0, queue_status.unoccupied_count)];
+            }
+        } // If player card on field but not in column with queue and opponent slots open
+        else if (player_status.occupied_count != 0 && !valid_slots.Any())
+        {
+            // If exists column with queue and player slots open, place random there
+            if (backup_slots.Any())
+            {
+                queue_index = backup_slots.ElementAt(Random.Range(0, backup_slots.Count()));
+            } // If exists column with queue and opponent slots open, place in random queue slot without opponent
+            else if (unoccupied_slots.Any())
+            {
+                queue_index = unoccupied_slots.ElementAt(Random.Range(0, unoccupied_slots.Count()));
+            } // else, place in random queue slot
+            else
+            {
+                queue_index = queue_status.unoccupied_slots[Random.Range(0, queue_status.unoccupied_count)];
+            }
+        } // If player card on field and exists column with queue and opponent slots open
+        else if (valid_slots.Any())
+        {
+            // Get slot index with highest player attack and open player and queue, breaks tie based on HP
+            queue_index = valid_slots.ElementAt(0);
+            foreach (int index in valid_slots)
+            {
+                Card card = playfield.GetSpecificCardSlot(CardOwnership.Player, index).GetCard();
+                Card highest_attack = playfield.GetSpecificCardSlot(CardOwnership.Player, queue_index).GetCard();
+                if (card.GetBaseAttack() > highest_attack.GetBaseAttack()
+                    || (card.GetBaseAttack() == highest_attack.GetBaseAttack() && card.GetCurrentHP() > highest_attack.GetCurrentHP()))
+                {
+                    queue_index = index;
+                }
+            }
+        } // else, place in random queue slot
+        else
+        {
+            queue_index = queue_status.unoccupied_slots[Random.Range(0, queue_status.unoccupied_count)];
+        }
+        
+        HandToPlayfield(queue_status, hand_index, queue_index);
     }
 
-    private void LogicAggressive()
+    /**
+     * @brief Chooses cards with highest attack from hand and places card in front of players card with highest HP,
+     * wants to attack player directly as much as possible
+     * 
+     * Opponent will place cards with highest attack in front of player card with highest HP. If there isn't a player
+     * card on the field, the opponent will spread out their cards as much as possible; otherwise, they will place cards
+     * in random queue row with player cards in the same column. If there is not a queue row spot open with a player
+     * card in the same column, they will place cards in any random open queue slot
+     * 
+     * 
+     * @param player_status use to track cards placed in player slots
+     * 
+     * @param opponent_status use to track cards placed in opponent slots
+     * 
+     * @param queue_status use to track cards placed in queue slots
+     */
+    private void LogicAggressive(RowStatus player_status, RowStatus opponent_status, RowStatus queue_status)
     {
+        int hand_index;
+        int queue_index;
 
+        // Get hand card with highest attack, breaks tie based on hp
+        Card highest_attack = this.hand[0];
+        hand_index = 0;
+        for (int i = 0; i < this.hand.Count; i++)
+        {
+            Card card = this.hand[i];
+            if (card.GetBaseAttack() > highest_attack.GetBaseAttack() ||
+                (card.GetBaseAttack() == highest_attack.GetBaseAttack() && card.GetCurrentHP() > highest_attack.GetCurrentHP()))
+            {
+                highest_attack = card;
+                hand_index = i;
+            }
+        }
+
+        var unoccupied_slots = queue_status.unoccupied_slots.Intersect(opponent_status.unoccupied_slots);
+        var valid_slots = player_status.occupied_slots.Intersect(unoccupied_slots);
+        var backup_slots = player_status.occupied_slots.Intersect(queue_status.unoccupied_slots);
+
+        // If no player card on field 
+        if (player_status.occupied_count == 0)
+        {
+            // If exists column with queue and opponent slots open, place in random queue slot without opponent
+            if (unoccupied_slots.Any())
+            {
+                queue_index = unoccupied_slots.ElementAt(Random.Range(0, unoccupied_slots.Count()));
+            } // else, place in random queue slot
+            else
+            {
+                queue_index = queue_status.unoccupied_slots[Random.Range(0, queue_status.unoccupied_count)];
+            }
+        } // If player card on field but not in column with queue and opponent slots open but exists
+          // column with queue and opponent slots open
+        else if (player_status.occupied_count != 0 && !valid_slots.Any() && unoccupied_slots.Any())
+        {
+            // place in random queue slot without opponent
+            queue_index = unoccupied_slots.ElementAt(Random.Range(0, unoccupied_slots.Count()));
+            
+        } // If player card on field and exists column with queue and opponent slots open
+        else if (valid_slots.Any())
+        {
+            // Get slot index with highest player HP and open player and queue, breaks tie based on attack
+            queue_index = valid_slots.ElementAt(0);
+            foreach (int index in valid_slots)
+            {
+                Card card = playfield.GetSpecificCardSlot(CardOwnership.Player, index).GetCard();
+                Card highest_HP = playfield.GetSpecificCardSlot(CardOwnership.Player, queue_index).GetCard();
+                if (card.GetCurrentHP() > highest_HP.GetCurrentHP()
+                    || (card.GetCurrentHP() == highest_HP.GetCurrentHP() && card.GetBaseAttack() > highest_HP.GetBaseAttack()))
+                {
+                    queue_index = index;
+                }
+            }
+        } // else, place in random queue slot
+        else
+        {
+            queue_index = queue_status.unoccupied_slots[Random.Range(0, queue_status.unoccupied_count)];
+        }
+
+        HandToPlayfield(queue_status, hand_index, queue_index);
     }
 
-    private void LogicBalanced()
+    /**
+     * @brief Chooses cards with highest attack from hand and places card in front of players card with highest HP,
+     * wants to attack player directly as much as possible
+     * 
+     * Opponent will place cards with highest attack in front of player card with highest HP. If there isn't a player
+     * card on the field, the opponent will spread out their cards as much as possible; otherwise, they will place cards
+     * in random queue row with player cards in the same column. If there is not a queue row spot open with a player
+     * card in the same column, they will place cards in any random open queue slot
+     * 
+     * 
+     * @param player_status use to track cards placed in player slots
+     * 
+     * @param opponent_status use to track cards placed in opponent slots
+     * 
+     * @param queue_status use to track cards placed in queue slots
+     */
+    private void LogicBalanced(RowStatus player_status, RowStatus opponent_status, RowStatus queue_status)
     {
 
     }
