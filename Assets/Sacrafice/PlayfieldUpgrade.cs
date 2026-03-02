@@ -12,6 +12,13 @@ public class PlayfieldUpgrade : MonoBehaviour
     [SerializeField] private float cardScale = 1f; //scale for playfield display
     [SerializeField] private List<CardData> availableCards;
 
+    public GameObject upgradeButton;
+
+    public GameObject exitButton;
+
+    public GameObject healButton;
+
+
     private bool upgradePerformed = false; //ensures only one upgrade
     private CardData upgradedCardData; //stores the upgraded card
     public Card selectedUpgradeCard; 
@@ -24,6 +31,10 @@ public class PlayfieldUpgrade : MonoBehaviour
         }
         slot1.SetPlayfieldUpgrade(this);
         slot2.SetPlayfieldUpgrade(this);
+        if (SceneManager.GetActiveScene().name == "Campfire")
+        {
+            exitButton.SetActive(false); //you cant straight up exit, either upgrade or heal
+        }
     }
 
     public void PlaceCard(Card card, CardSlot slot)
@@ -51,46 +62,90 @@ public class PlayfieldUpgrade : MonoBehaviour
 
     public void ConfirmUpgrade()
     {
-        if (upgradePerformed)
+        if (SceneManager.GetActiveScene().name == "Sacrafice") 
         {
-            Debug.Log("Already Upgraded");
-            return;
+            if (upgradePerformed)
+            {
+                Debug.Log("Already Upgraded");
+                return;
+            }
+            if (slot1.GetCard() == null || slot2.GetCard() == null)
+            {
+                Debug.Log("Both slots must be filled");
+                return;
+            }
+            Card c1 = slot1.GetCard();
+            Card c2 = slot2.GetCard();
+            CardData data1 = c1.GetCardData();
+            CardData data2 = c2.GetCardData();
+            if (data1.card_name.Contains("Blessed") || data1.card_name.Contains("Evolved") || data2.card_name.Contains("Blessed") || data2.card_name.Contains("Evolved"))
+            {
+                Debug.Log("Upgraded cards cannot be upgraded again");
+                return;
+            }
+            CardData newData = Instantiate(data1); //will write to this data and then apply to first card
+            if (data1.card_name == data2.card_name) //if they are same card double the stats
+            {
+                newData.attack *= 2;
+                newData.hp *= 2;
+                newData.card_name = "Evolved " + newData.card_name;
+            }
+            else //if they dont have same name they arent same card so upgrade normally
+            {
+                newData.card_name = "Blessed " + newData.card_name;
+                newData.starting_modifiers = MergeModifiers(data1, data2); //combine modifiers
+            }
+            playerHand.RemoveCard(c2);
+            Destroy(c2.gameObject);
+            slot2.ResetCardSlot();
+            c1.SetCardData(newData); //apply new stats
+            c1.Initialize(newData);
+            c1.SetSlot(slot1);
+            SaveUpgradedCard(c1);
+            upgradePerformed = true;
+            Debug.Log("Upgraded");
         }
-        if (slot1.GetCard() == null || slot2.GetCard() == null)
+        if (SceneManager.GetActiveScene().name == "Campfire")
         {
-            Debug.Log("Both slots must be filled");
-            return;
+            if (upgradePerformed)
+            {
+                Debug.Log("Already Upgraded");
+                return;
+            }
+            if (slot1.GetCard() == null)
+            {
+                Debug.Log("Fill the slot with a card");
+                return;
+            }
+            Card c1 = slot1.GetCard();
+            CardData data1 = c1.GetCardData();
+            if (data1.card_name.Contains("+"))
+            {
+                Debug.Log("Upgraded cards cannot be upgraded again");
+                return;
+            }
+            CardData newData = Instantiate(data1); //will write to this data and then apply to first card
+            newData.attack += 2;
+            newData.hp += 2;
+            newData.card_name = newData.card_name + "+"; //ex: Ant+
+            c1.SetCardData(newData); //apply new stats
+            c1.Initialize(newData);
+            c1.SetSlot(slot1);
+            SaveUpgradedCard(c1);
+            upgradePerformed = true;
+            Debug.Log("Upgraded");
+            healButton.SetActive(false);
+            exitButton.SetActive(true);
         }
-        Card c1 = slot1.GetCard();
-        Card c2 = slot2.GetCard();
-        CardData data1 = c1.GetCardData();
-        CardData data2 = c2.GetCardData();
-        if (data1.card_name.Contains("Blessed") || data1.card_name.Contains("Evolved") || data2.card_name.Contains("Blessed") || data2.card_name.Contains("Evolved"))
-        {
-            Debug.Log("Upgraded cards cannot be upgraded again");
-            return;
-        }
-        CardData newData = Instantiate(data1); //will write to this data and then apply to first card
-        if (data1.card_name == data2.card_name) //if they are same card double the stats
-        {
-            newData.attack *= 2;
-            newData.hp *= 2;
-            newData.card_name = "Evolved " + newData.card_name;
-        }
-        else //if they dont have same name they arent same card so upgrade normally
-        {
-            newData.card_name = "Blessed " + newData.card_name;
-            newData.starting_modifiers = MergeModifiers(data1, data2); //combine modifiers
-        }
-        playerHand.RemoveCard(c2);
-        Destroy(c2.gameObject);
-        slot2.ResetCardSlot();
-        c1.SetCardData(newData); //apply new stats
-        c1.Initialize(newData);
-        c1.SetSlot(slot1);
-        SaveUpgradedCard(c1);
-        upgradePerformed = true;
-        Debug.Log("Upgraded");
+        upgradeButton.SetActive(false); //deactivate option
+    }
+
+    public void HealPlayer()
+    {
+        upgradeButton.SetActive(false);
+        healButton.SetActive(false);
+        exitButton.SetActive(true);
+        //TODO once Gabriel finishes health system
     }
 
     public void ExitScene()

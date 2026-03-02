@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Hand : MonoBehaviour
 {
@@ -127,6 +128,7 @@ public class Hand : MonoBehaviour
     public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
         if (owner != CardOwnership.Player) return;
+        if (SceneManager.GetActiveScene().name == "Sacrafice" || SceneManager.GetActiveScene().name == "Campfire") return; //to stop errors from being thrown
         playfield.SetHand(owner, this);
         playfield.SetSelectedCard(owner, selected_card);
     }
