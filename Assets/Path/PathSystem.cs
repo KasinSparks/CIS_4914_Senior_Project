@@ -43,6 +43,8 @@ public class PathSystem : MonoBehaviour
     [SerializeField, HideInInspector]
     private string current_node_guid = null;
 
+    [SerializeField]
+    private Vector3 camera_default_position;
     private Camera _camera;
     private PathSystemGUIDs gUIDs;
 
@@ -113,6 +115,8 @@ public class PathSystem : MonoBehaviour
             // Create a new path
             this.GeneratePath();
         }
+
+        this.MoveCamaeraToCurrentNode();
     }
     
     /**
@@ -198,11 +202,25 @@ public class PathSystem : MonoBehaviour
     
     /**
      * @brief Will move the Main Camera to the current node.
-     * @todo Implement function
      */
     public void MoveCamaeraToCurrentNode()
     {
-        throw new NotImplementedException();
+        if (this.current_node_guid == null || this.current_node_guid.Equals(""))
+        {
+            this._camera.transform.position = this.camera_default_position;
+            return;
+        }
+
+        PathNode node = this.gUIDs.GetGameObject(this.current_node_guid).GetComponent<PathNode>();
+        Vector3 node_position = node.transform.position;
+        this._camera.transform.position = node_position;
+        this._camera.transform.position += new Vector3(
+            0.0f,
+            32.0f,
+            0.0f
+        );
+
+
     }
     
     /**
