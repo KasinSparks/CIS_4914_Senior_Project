@@ -293,10 +293,20 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
+                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    if(this.game_state.player_hp_system.is_defeated == true)
+                    {
+                        UnityEngine.Debug.Log("Opponent is defeated!");
+                    }
                     break;
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
+                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    if (this.game_state.opponent_hp_system.is_defeated == true)
+                    {
+                        UnityEngine.Debug.Log("Player is defeated!");
+                    }
                     break;
             }
             return;

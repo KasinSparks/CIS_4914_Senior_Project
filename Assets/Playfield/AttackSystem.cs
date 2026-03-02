@@ -127,7 +127,7 @@ public class AttackSystem : MonoBehaviour
 
             if (player_card_ref != null)
             {
-                //player_card_ref.Attack(opponent_card_ref);
+                player_card_ref.Attack(opponent_card_ref);
                 StartCoroutine(this.AttackAnimation(player_card_ref, opponent_card_ref, i));
             }
             else
@@ -149,7 +149,7 @@ public class AttackSystem : MonoBehaviour
 
             if (opponent_card_ref != null)
             {
-                //enemy_card_ref.Attack(player_card_ref);
+                opponent_card_ref.Attack(player_card_ref);
                 StartCoroutine(this.AttackAnimation(opponent_card_ref, player_card_ref, i + aas_opponent_offset));
             }
             else

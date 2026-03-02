@@ -11,7 +11,6 @@ public class Opponent : MonoBehaviour
     [SerializeField] private List<Card> cards;
     [SerializeField] private Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
-
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -7,10 +7,16 @@ public class GameState : MonoBehaviour
     public AttackSystem attack_sys;
     public Opponent opponent;
 
+    public HPSystem player_hp_system;
+    public HPSystem opponent_hp_system;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         this.UpdateTurnState(TurnStates.PlayerDrawCard);
+
+        this.player_hp_system = gameObject.AddComponent<HPSystem>();
+        this.opponent_hp_system = gameObject.AddComponent<HPSystem>();
     }
 
     // Update is called once per frame
