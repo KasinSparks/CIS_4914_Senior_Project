@@ -35,17 +35,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private int current_hp;
 
-    // NOTE: Changes to these fields in the editor will only appear when the game is in a RUNNING state.
-    public string card_name;
-    public string description;
-
-    public int hp;
     private int defense_bonus = 0;
     private float dodge_chance = 0.0f; // 0.0 to 1.0 inclusive.
 
-    public int attack;
     private int attack_damage_bonus = 0;
-    public int play_cost;
+
+    private int nektar_cost_amt_modifier;
     
     private int num_of_attacks_per_turn;
 
@@ -71,8 +66,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private CardSlot slot;
     private Playfield playfield_ref;
 
+    private bool is_being_sacrificed;
+
     private void Awake()
     {
+        this.num_of_attacks_per_turn = 1;
+        this.nektar_cost_amt_modifier = 0;
+        this.is_being_sacrificed = false;
+
         this.slot = null;
         // Initialize the card state to the default value
         this.card_state = CardState.None;
@@ -238,19 +239,47 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Debug.Log("Mouse Click.");
-        if (this.card_state == CardState.InHand)
+        switch (this.card_state)
         {
-            this.player_hand.SetSelectedCard(this.card_ownership, this);
-        }
+            case CardState.InHand:
+                if (game_state.current_turn_state == TurnStates.PlayerSacrifice)
+                {
+                    // Make it so the player can not interrupt the sacrifice.
+                    Debug.Log("You are currently placing a card that requires sacrifice. To cancel, click on the Cancel Sacrifice Button.");
+                    return;
+                }
 
-        if (this.card_state == CardState.OnPlayfield) //for consumables, check if there is a consumable waiting to be used
-        {
-            Playfield playfield = GameObject.FindFirstObjectByType<Playfield>(); //if there is get the playfield and use consumable
-            if (playfield != null && playfield.IsWaitingForTarget())
-            {
-                playfield.ResolveTarget(this);
-            }
+                this.player_hand.SetSelectedCard(this.card_ownership, this);
+                break;
+
+            case CardState.OnPlayfield:
+                //for consumables, check if there is a consumable waiting to be used
+                Playfield playfield = GameObject.FindFirstObjectByType<Playfield>(); //if there is get the playfield and use consumable
+                if (playfield != null && playfield.IsWaitingForTarget())
+                {
+                    playfield.ResolveTarget(this);
+                }
+
+                // CLEANUP(KASIN): There is a reference to the playfield here. We
+                //     also have a member variable that is a reference to the
+                //     playfield.
+
+                // Check to see if the player is trying to sacrifice this card.
+                if (game_state.current_turn_state == TurnStates.PlayerSacrifice &&
+                    this.card_ownership == CardOwnership.Player &&
+                    !this.is_being_sacrificed)
+                {
+                    // Add this card to the sacrifice list
+                    this.playfield_ref.AddSacrificeCard(this);
+
+                    this.SetToBeSacrificed(true);
+                }
+
+                break;
+
+            case CardState.RequireSacrifice:
+
+                break;
         }
     }
 
@@ -510,7 +539,26 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnSacrifice()
     {
+        // TODO(KASIN): Not sure if we want the OnDeath modifier to run when a
+        //    card gets sacrificed.
 
+        // Apply modifiers that trigger on the sacrifice of this card
+        List<ModifierTuple> mods = this.GetModifiers(ModifierType.OnSacrificeNektarGiver);
+        for (int i = 0; i < mods.Count; ++i)
+        {
+            // Check to see if this modifier has already been applied
+            switch (mods[i].modifier.modifier_state)
+            {
+                case ModifierState.ReadyToApply:
+                    mods[i].modifier.ApplyModifier(this, null);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        this.Death(null);
     }
 
     public void OnTurnStart()
@@ -840,5 +888,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.card_data = Instantiate(data);
         }
         this.current_hp = this.card_data.hp;
+    }
+
+    public int GetNektarCost()
+    {
+        return this.card_data.nektar_cost + this.nektar_cost_amt_modifier;
+    }
+
+    public void SetToBeSacrificed(bool status)
+    {
+        // Update the image
+        Transform card_sacrifice_image = this.transform.Find("card_sacrifice_image");
+        card_sacrifice_image.gameObject.SetActive(status);
+        this.is_being_sacrificed = status;
     }
 }

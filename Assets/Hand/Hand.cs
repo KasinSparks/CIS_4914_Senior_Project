@@ -16,6 +16,18 @@ public class Hand : MonoBehaviour
 
     [SerializeField] private Playfield playfield;
 
+    private Card current_card_selected;
+    private const float RAISE_AMT = 0.05f;
+    
+    // TODO(KASIN): This might not stay in this class.
+    private int player_current_nektar;
+
+    private void Awake()
+    {
+        this.player_current_nektar = 0;
+        this.current_card_selected = null;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -90,6 +102,7 @@ public class Hand : MonoBehaviour
         // Move the new front card forward
         this.front_card = card;
         this.front_card_original_z = this.front_card.transform.position.z;
+        
         this.front_card.transform.SetPositionAndRotation(
             new Vector3(
                 this.front_card.transform.position.x,
@@ -122,12 +135,41 @@ public class Hand : MonoBehaviour
 
         this.front_card = this.cards[0];
         this.front_card_original_z = this.front_card.transform.position.z;
+        this.current_card_selected = null;
     }
 
     public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
         if (owner != CardOwnership.Player) return;
+
+        if (this.current_card_selected != null &&
+            this.current_card_selected.card_state == CardState.InHand)
+        {
+            // Reset the old selected card's position
+            this.current_card_selected.transform.position = new Vector3(
+                this.current_card_selected.transform.position.x,
+                this.current_card_selected.transform.position.y - RAISE_AMT,
+                this.current_card_selected.transform.position.z
+        );
+        }
+
+
         playfield.SetHand(owner, this);
         playfield.SetSelectedCard(owner, selected_card);
+
+        this.current_card_selected = selected_card;
+        if (selected_card == null)
+        {
+            return;
+        }
+
+        // Raise the selected card
+        this.current_card_selected.transform.position = new Vector3(
+            this.current_card_selected.transform.position.x,
+            this.current_card_selected.transform.position.y + RAISE_AMT,
+            this.current_card_selected.transform.position.z
+        );
+
+        playfield.SetCurrentSacrificeCost(selected_card.GetNektarCost());
     }
 }
