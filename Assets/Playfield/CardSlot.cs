@@ -15,10 +15,13 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private bool is_card_placed;
     [SerializeField] private Card card_in_slot;
     [SerializeField] private CardOwnership card_ownership;
+    private int slot_index;
 
     void Awake()
     {
         this.playfield = this.GetComponent<Playfield>();
+
+        this.is_card_placed = false;
 
         this.card_in_slot = null;
 
@@ -28,7 +31,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.is_card_placed = false;
+        
     }
 
 
@@ -93,6 +96,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     public CardOwnership GetCardOwnership()
     {
         return this.card_ownership;
+    }
+
+    public void SetSlotIndex(int index)
+    {
+        this.slot_index = index;
+    }
+
+    public int GetSlotIndex()
+    {
+        return this.slot_index;
     }
 
     public void OnPointerClick(PointerEventData eventData)
