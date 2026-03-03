@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /**
  *  @brief Used to store the modifier object and the gameobject that displays
@@ -154,6 +155,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Card description text set
         this.SetCardTextField("card_description_text", this.card_data.description);
+
+        this.GetComponentInChildren<HighlightedWords>().Initialize(this.card_data.highlighted_words);
 
         this.UpdateCardTextStats();
 
@@ -901,5 +904,20 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         Transform card_sacrifice_image = this.transform.Find("card_sacrifice_image");
         card_sacrifice_image.gameObject.SetActive(status);
         this.is_being_sacrificed = status;
+    }
+
+    public Sprite GetImage()
+    {
+        return Sprite.Create(
+            (Texture2D) this.card_data.image,
+            new Rect(
+                0.0f,
+                0.0f,
+                this.card_data.image.width,
+                this.card_data.image.height
+            ),
+            new Vector2(0.5f, 0.5f),
+            100.0f
+        );
     }
 }

@@ -530,6 +530,8 @@ GameObject:
   - component: {fileID: 955754759379796090}
   - component: {fileID: 6205591524171150914}
   - component: {fileID: 4762729576242130553}
+  - component: {fileID: 8830640252394771523}
+  - component: {fileID: 6573391816979733394}
   m_Layer: 0
   m_Name: card_description_text
   m_TagString: Untagged
@@ -700,6 +702,39 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6205591524171150914}
   m_maskType: 0
+--- !u!114 &8830640252394771523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5789795779643132463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5071ae58763a2b64bac07bc596bb6604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!65 &6573391816979733394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5789795779643132463}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.940983, y: 2.2593207, z: 0}
+  m_Center: {x: -0.008913159, y: -0.13542403, z: 0.0000076293945}
 --- !u!1 &5892356869699696398
 GameObject:
   m_ObjectHideFlags: 0

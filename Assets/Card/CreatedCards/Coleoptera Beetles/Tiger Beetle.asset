@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Tiger Beetle
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Tiger Beetle
-  description: A fast beetle.
+  description: A fast <color="blue">beetle</color>.
+  highlighted_words:
+  - word: 
+    info: 
   order: 0
   hp: 2
   attack: 1
