@@ -4,7 +4,7 @@ using UnityEngine;
 public class WordInfo : ScriptableObject
 {
     [SerializeField]
-    private string word;
+    private string[] words;
 
     [TextArea(3,10)]
     [SerializeField]
@@ -13,9 +13,9 @@ public class WordInfo : ScriptableObject
     [SerializeField]
     private Texture image;
     
-    public string GetWord()
+    public string[] GetWords()
     {
-        return this.word;
+        return this.words;
     }
 
     public string GetInfo()

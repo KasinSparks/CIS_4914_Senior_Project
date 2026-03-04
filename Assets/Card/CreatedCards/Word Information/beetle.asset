@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
   m_Name: beetle
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
-  word: beetle
+  words:
+  - beetle
+  - beetles
   info: 'Beetles are a part of the largest animal kingdom orders, Coleoptera. The
     life cycle of a typical beetle starts with an egg stage. Once hatched, the larva
     stage begins. The larva will eat and grow eventually turning into a pupa where

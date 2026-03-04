@@ -83,19 +83,23 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         {
             click_word = this.book_text.textInfo.wordInfo[word_index].GetWord().ToUpper();
         }
-
-        foreach (WordInfo word in this.words)
+        
+        // TODO(KASIN): Speed
+        foreach (WordInfo word_info in this.words)
         {
-            if (word.GetWord().ToUpper().Equals(click_word))
+            foreach (string word in word_info.GetWords())
             {
-                Debug.Log("Click on highlighted word: " + word.GetWord());
-                Debug.Log("Highlighted word info: " + word.GetInfo());
+                if (word.ToUpper().Equals(click_word))
+                {
+                    Debug.Log("Click on highlighted word: " + word);
+                    Debug.Log("Highlighted word info: " + word_info.GetInfo());
 
-                this.ui_book.SetActive(true);
-                this.book_text.text = AddColorTags(word.GetInfo(), this.book_text.transform.GetComponent<HighlightedWords>().GetWordInfos());
-                this.book_text_name.text = "<color=blue>" + word.GetWord().ToUpper() + "</color>";
-                this.book_image.sprite = word.GetSprite();
-                break;
+                    this.ui_book.SetActive(true);
+                    this.book_text.text = AddColorTags(word_info.GetInfo(), this.book_text.transform.GetComponent<HighlightedWords>().GetWordInfos());
+                    this.book_text_name.text = "<color=blue>" + word.ToUpper() + "</color>";
+                    this.book_image.sprite = word_info.GetSprite();
+                    break;
+                }
             }
         }
     }
@@ -148,14 +152,18 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
             bool consumed = false;
             foreach (WordInfo word_info in wi)
             {
-                if (word_info.GetWord().ToUpper().Equals(token.ToUpper()))
+                foreach (string word in word_info.GetWords())
                 {
-                    Debug.Log("here");
-                    sb.Append("<color=\"blue\">");
-                    sb.Append(token);
-                    sb.Append("</color>");
-                    Debug.Log(sb.ToString());
-                    consumed = true;
+                    if (word.ToUpper().Equals(token.ToUpper()))
+                    {
+                        Debug.Log("here");
+                        sb.Append("<color=\"blue\">");
+                        sb.Append(token);
+                        sb.Append("</color>");
+                        Debug.Log(sb.ToString());
+                        consumed = true;
+                        break;
+                    }
                 }
             }
 

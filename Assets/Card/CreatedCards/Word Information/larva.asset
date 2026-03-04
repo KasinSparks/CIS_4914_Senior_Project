@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
   m_Name: larva
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
-  word: larva
+  words:
+  - larva
   info: '"Larva, stage in the development of many animals, occurring after birth
     or hatching and before the adult form is reached. These immature, active forms
     are structurally different from the adults and are adapted to a different environment".
