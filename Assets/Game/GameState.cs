@@ -32,7 +32,9 @@ public class GameState : MonoBehaviour
             UnityEngine.Debug.Log("Wait until it is your turn again.");
         }
     }
-
+    
+    // TODO(KASIN): Make sure the recurrsion in the function is not going to
+    //    cause a runtime error or crash.
     public void UpdateTurnState(TurnStates state)
     {
         switch (state)
@@ -41,9 +43,8 @@ public class GameState : MonoBehaviour
                 {
                     this.current_turn_state = TurnStates.PlayerEndTurn;
                     // Perform attacks of player's cards
+                    // GameState gets updated in AttackSystem
                     attack_sys.PlayerAttack();
-                    // Update the state
-                    this.UpdateTurnState(TurnStates.OpponentDrawCard);
                 }
                 break;
 
@@ -51,9 +52,8 @@ public class GameState : MonoBehaviour
                 {
                     this.current_turn_state = TurnStates.OpponentEndTurn;
                     // Perform attacks of opponent's cards
+                    // GameState gets updated in AttackSystem
                     attack_sys.OpponentAttack();
-                    // Update the state
-                    this.UpdateTurnState(TurnStates.PlayerDrawCard);
                 }
                 break;
 

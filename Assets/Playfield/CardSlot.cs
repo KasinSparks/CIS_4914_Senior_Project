@@ -16,10 +16,13 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Card card_in_slot;
     [SerializeField] private CardOwnership card_ownership;
     [SerializeField] private PlayfieldUpgrade playfieldUpgrade; //for upgrading
+    private int slot_index;
 
     void Awake()
     {
         this.playfield = this.GetComponent<Playfield>();
+
+        this.is_card_placed = false;
 
         this.card_in_slot = null;
 
@@ -29,7 +32,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.is_card_placed = false;
+        
     }
 
 
@@ -101,6 +104,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         return this.card_ownership;
     }
 
+    public void SetSlotIndex(int index)
+    {
+        this.slot_index = index;
+    }
+
+    public int GetSlotIndex()
+    {
+        return this.slot_index;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (playfieldUpgrade != null) //if there was a upgrade playfield use that instead
@@ -112,9 +125,36 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        if (this.card_ownership != CardOwnership.Player
-            || !(gameState.current_turn_state == TurnStates.PlayerTurn
-            || gameState.current_turn_state == TurnStates.PlayerDrawCard)) return;
+        if (this.card_ownership != CardOwnership.Player)
+        {
+            return;
+        }
+
+        // Check to see if nektar cost requirement has been met
+        if (!playfield.HasSacrificeRequirementBeenMet())
+        {
+            // TODO(KASIN): Change this to show in the UI or something...
+            Debug.Log("Nekar requirement has not been met to place this card.");
+            return;
+        }
+        else
+        {
+            if (this.gameState.GetCurrentState() == TurnStates.PlayerSacrifice)
+            {
+                // Reset the nektar cost
+                this.playfield.ResetSacrificeRequirements();
+                
+                // Update the turn state
+                this.gameState.UpdateTurnState(playfield.GetTurnStatePriorToSacrifice());
+
+                // Hide the cancel sacrifice button
+                this.playfield.SetSacrificeButtonActive(false);
+            }    
+        }
+
+        if (!(gameState.GetCurrentState() == TurnStates.PlayerTurn
+            || gameState.GetCurrentState() == TurnStates.PlayerDrawCard)) return;
+
         playfield.PlaceSelectedCard(this.card_ownership, this);
     }
 

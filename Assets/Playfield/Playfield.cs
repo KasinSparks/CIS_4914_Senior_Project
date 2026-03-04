@@ -18,11 +18,27 @@ public class Playfield : MonoBehaviour
     [SerializeField] private Card opponent_selected_card;
     [SerializeField] private List<CardSlot> queue_card_slots;
 
-    private const int NUM_ROWS = 3;
+    public static int NUM_ROWS
+    {
+        get { return 3; }
+    }
+
+    private GameObject sacrifice_ui_button;
 
     public static int NUM_OF_CARDS_IN_ROW
     {
         get { return 4; }
+    }
+
+    private int current_sacrifice_cost;
+    private List<Card> current_sacrifice;
+    private TurnStates game_state_prior_to_sacrifice;
+
+    [SerializeField] private GameState game_state;
+
+    void Awake()
+    {
+        this.sacrifice_ui_button = GameObject.Find("-----UI-----/EndTurnCanvas/SacrificeCancelButton");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,6 +49,8 @@ public class Playfield : MonoBehaviour
         this.player_card_slots = new List<CardSlot>();
         this.opponent_card_slots = new List<CardSlot>();
         this.queue_card_slots = new List<CardSlot>();
+        this.current_sacrifice = new List<Card>();
+        this.current_sacrifice_cost = 0;
 
         // Sets up each row (player, opponent, queue)
         for (int i = 0; i < NUM_ROWS; i++)
@@ -47,6 +65,7 @@ public class Playfield : MonoBehaviour
 
                 new_slot.SetPlayfield(this);
                 new_slot.SetCardSlot(slot.gameObject);
+                new_slot.SetSlotIndex(j);
                 switch (i)
                 {
                     case 0:
@@ -305,5 +324,83 @@ public class Playfield : MonoBehaviour
         //now that item is used tell button to disable icon
         activeButton.HideOverlay();
         activeTargetedConsumable = null;
+    }
+
+    public void AddSacrificeCard(Card card)
+    {
+        // Add the card to the current sacrifice data structure
+        this.current_sacrifice.Add(card);
+
+        // Check if nektar cost requirement has been met
+        if (this.HasSacrificeRequirementBeenMet())
+        {
+            // Sacarifice the cards
+            foreach (Card c in this.current_sacrifice)
+            {
+                c.OnSacrifice();
+            }
+
+            this.SetSacrificeButtonActive(false);
+        }
+
+    }
+
+    public void SetCurrentSacrificeCost(int cost)
+    {
+        this.current_sacrifice_cost = cost;
+        if (this.current_sacrifice_cost > 0)
+        {
+            this.game_state_prior_to_sacrifice = this.game_state.GetCurrentState();
+
+            // Set the turn state to sacrifice mode
+            this.game_state.UpdateTurnState(TurnStates.PlayerSacrifice);
+
+            // Update the card state
+            this.player_selected_card.card_state = CardState.RequireSacrifice;
+
+            // Add a button to the UI so the player can cancel the sacrifice
+            this.sacrifice_ui_button.SetActive(true);
+        }
+    }
+
+    public bool HasSacrificeRequirementBeenMet()
+    {
+        // TODO: This may change if we want certain cards to give more than one
+        //     nektar
+        return (this.current_sacrifice.Count >= this.current_sacrifice_cost);
+    }
+
+    public void ResetSacrificeRequirements()
+    {
+        this.current_sacrifice.Clear();
+        this.current_sacrifice_cost = 0;
+    }
+
+    public void CancelSacrifice()
+    {
+        foreach (Card c in this.current_sacrifice)
+        {
+            c.SetToBeSacrificed(false);
+        }
+
+        this.player_selected_card.card_state = CardState.InHand;
+
+        this.player_hand.SetSelectedCard(CardOwnership.Player, null);
+
+        this.game_state.UpdateTurnState(this.GetTurnStatePriorToSacrifice());
+
+        this.ResetSacrificeRequirements();
+
+        this.sacrifice_ui_button.SetActive(false);
+    }
+
+    public TurnStates GetTurnStatePriorToSacrifice()
+    {
+        return this.game_state_prior_to_sacrifice;
+    }
+
+    public void SetSacrificeButtonActive(bool active)
+    {
+        this.sacrifice_ui_button.SetActive(active);
     }
 }
