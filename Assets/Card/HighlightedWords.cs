@@ -16,24 +16,46 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private WordInfo[] words;
 
+    private Dictionary<string, WordInfo> dict_word_info;
+
 
     private GameObject ui_book;
     private TextMeshProUGUI book_text;
     private Image book_image;
     private TextMeshProUGUI book_text_name;
-
+    
+    /**
+     * @brief Initialize the dictionary to track words and info.
+     */
+    private void InitDict()
+    {
+        this.dict_word_info = new Dictionary<string, WordInfo>();
+        foreach (WordInfo word_info in this.words)
+        {
+            foreach (string word in word_info.GetWords())
+            {
+                this.dict_word_info[word.ToUpper()] = word_info;
+            }
+        }
+    }
+    
+    /**
+     * @brief Use this method when attached to card to initialize this class.
+     */
     public void Initialize(WordInfo[] words)
     {
         this.words = words;
-        this.description_text.text = this.AddColorTags(this.description_text.text, words);
+        this.InitDict();
+        this.description_text.text = this.AddColorTags(this.description_text.text, this.dict_word_info);
     }
 
-    void Start()
+    void Awake()
     {
         this.ui_book = GameObject.Find("-----UI-----/UI_Book/Panel");
         this.book_text = GameObject.Find("-----UI-----/UI_Book/Panel/Info").GetComponent<TextMeshProUGUI>();
         this.book_text_name = GameObject.Find("-----UI-----/UI_Book/Panel/Name").GetComponent<TextMeshProUGUI>();
         this.book_image = GameObject.Find("-----UI-----/UI_Book/Panel/Image").GetComponent<Image>();
+        this.InitDict();
     }
 
     void Update() {}
@@ -72,7 +94,6 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         }
 
         // See if the word clicked on is in the highlighted list
-        // TODO(KASIN): Not the best way to check, but will work for now
         // CLEANUP(KASIN):
         string click_word = "";
         if (this.description_text != null)
@@ -84,33 +105,29 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
             click_word = this.book_text.textInfo.wordInfo[word_index].GetWord().ToUpper();
         }
         
-        // TODO(KASIN): Speed
-        foreach (WordInfo word_info in this.words)
+        if (this.dict_word_info.ContainsKey(click_word.ToUpper()))
         {
-            foreach (string word in word_info.GetWords())
-            {
-                if (word.ToUpper().Equals(click_word))
-                {
-                    Debug.Log("Click on highlighted word: " + word);
-                    Debug.Log("Highlighted word info: " + word_info.GetInfo());
+            Debug.Log("Click on highlighted word: " + click_word);
+            Debug.Log("Highlighted word info: " +
+                this.dict_word_info[click_word.ToUpper()].GetInfo());
 
-                    this.ui_book.SetActive(true);
-                    this.book_text.text = AddColorTags(word_info.GetInfo(), this.book_text.transform.GetComponent<HighlightedWords>().GetWordInfos());
-                    this.book_text_name.text = "<color=blue>" + word.ToUpper() + "</color>";
-                    this.book_image.sprite = word_info.GetSprite();
-                    break;
-                }
-            }
+            WordInfo word_info = this.dict_word_info[click_word.ToUpper()];
+
+            this.ui_book.SetActive(true);
+            this.book_text.text = AddColorTags(word_info.GetInfo(), this.book_text.transform.GetComponent<HighlightedWords>().GetDict());
+            this.book_text_name.text = "<color=blue>" + click_word.ToUpper() + "</color>";
+            this.book_image.sprite = word_info.GetSprite();
         }
     }
-
-    private string AddColorTags(string str, WordInfo[] wi)
+    
+    /**
+     * @brief Adds color tags around a key word.
+     * @param str The string of words to parse through.
+     * @param wi The keyword information
+     * @return A new string that has the key words colored blue.
+     */
+    private string AddColorTags(string str, Dictionary<string, WordInfo> dict)
     {
-        if (wi == null)
-        {
-            wi = this.words;
-        }
-        
         StringBuilder sb = new StringBuilder();
         // TODO(KASIN): Make it go fast...
         // TODO(KASIN): Parse better...
@@ -149,25 +166,15 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
                 continue;
             }
 
-            bool consumed = false;
-            foreach (WordInfo word_info in wi)
+            if (dict.ContainsKey(token.ToUpper()))
             {
-                foreach (string word in word_info.GetWords())
-                {
-                    if (word.ToUpper().Equals(token.ToUpper()))
-                    {
-                        Debug.Log("here");
-                        sb.Append("<color=\"blue\">");
-                        sb.Append(token);
-                        sb.Append("</color>");
-                        Debug.Log(sb.ToString());
-                        consumed = true;
-                        break;
-                    }
-                }
+                Debug.Log("here");
+                sb.Append("<color=\"blue\">");
+                sb.Append(token);
+                sb.Append("</color>");
+                Debug.Log(sb.ToString());
             }
-
-            if (!consumed)
+            else
             {
                 sb.Append(token);
             }
@@ -176,9 +183,14 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         Debug.Log(sb.ToString());
         return sb.ToString();
     }
-
-    public WordInfo[] GetWordInfos()
+    
+    /**
+     * @brief Get the dictionary with the word information
+     * @reutrn The current word information dictionary
+     */
+    public Dictionary<string, WordInfo> GetDict()
     {
-        return this.words;
+        return this.dict_word_info;
     }
+
 }
