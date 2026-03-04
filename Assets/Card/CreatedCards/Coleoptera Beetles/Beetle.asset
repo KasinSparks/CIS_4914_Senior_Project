@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Beetle
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Beetle
-  description: A common <color="blue">beetle</color>
+  description: A common beetle
   highlighted_words:
   - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
   order: 0

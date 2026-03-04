@@ -714,6 +714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5071ae58763a2b64bac07bc596bb6604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  description_text: {fileID: 4762729576242130553}
+  words: []
+  card: {fileID: 1863678930309910690}
 --- !u!65 &6573391816979733394
 BoxCollider:
   m_ObjectHideFlags: 0

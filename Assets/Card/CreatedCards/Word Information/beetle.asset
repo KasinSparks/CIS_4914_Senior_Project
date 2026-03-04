@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: beetle
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
   word: beetle
-  info: '<color="blue">Beetles</color> are a part of the largest animal kingdom orders,
-    <color="blue">Coleoptera</color>. The life cycle of a typical beetle starts with
-    an <color="blue">egg</color> stage. Once hatched, the <color="blue">larva</color>
-    stage begins. The <color="blue">larva</color> will eat and grow eventually turning
-    into a <color="blue">pupa</color> where they will be immobile, typically during
-    the winter months. In the spring, the <color="blue">adult beetle</color> will
-    emerge and continue the cycle by feeding, mating, and laying eggs.
+  info: 'Beetles are a part of the largest animal kingdom orders, Coleoptera. The
+    life cycle of a typical beetle starts with an egg stage. Once hatched, the larva
+    stage begins. The larva will eat and grow eventually turning into a pupa where
+    they will be immobile, typically during the winter months. In the spring, the
+    adult beetle will emerge and continue the cycle by feeding, mating, and laying
+    eggs.
 
 
-    Source:
-    https://www.webmd.com/a-to-z-guides/beetles-what-to-know '
+    Source: https://www.webmd.com/a-to-z-guides/beetles-what-to-know '
+  image: {fileID: 2800000, guid: 18a17c91437568246a7fdab40582affc, type: 3}
