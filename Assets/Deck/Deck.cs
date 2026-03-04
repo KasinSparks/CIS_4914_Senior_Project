@@ -33,6 +33,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Copy the starting cards to the queue
         this.Shuffle();
+        //DrawAllCards();
     }
 
     // Update is called once per frame
@@ -139,5 +140,13 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         throw new System.NotImplementedException();
     }
 
+    public void DrawAllCards() //useful for things like upgrade where you want to see all your cards
+    {
+        while (card_queue.Count > 0)
+        {
+            CardData nextCard = GetNextCard();
+            hand.AddCard(nextCard, this.owner);
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Hand : MonoBehaviour
 {
@@ -141,7 +142,8 @@ public class Hand : MonoBehaviour
     public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
         if (owner != CardOwnership.Player) return;
-
+        if (SceneManager.GetActiveScene().name == "Sacrafice" || SceneManager.GetActiveScene().name == "Campfire") return; //to stop errors from being thrown
+        
         if (this.current_card_selected != null &&
             this.current_card_selected.card_state == CardState.InHand)
         {
@@ -150,10 +152,9 @@ public class Hand : MonoBehaviour
                 this.current_card_selected.transform.position.x,
                 this.current_card_selected.transform.position.y - RAISE_AMT,
                 this.current_card_selected.transform.position.z
-        );
+            );
         }
-
-
+        
         playfield.SetHand(owner, this);
         playfield.SetSelectedCard(owner, selected_card);
 
@@ -171,5 +172,14 @@ public class Hand : MonoBehaviour
         );
 
         playfield.SetCurrentSacrificeCost(selected_card.GetNektarCost());
+    }
+
+    public void AddCardForUpgrade(CardData card_data) //this allows gamestate to not exist when upgrading card
+    {
+        Card card_prefab = Resources.Load<Card>("Card");
+        Card new_card = Instantiate(card_prefab, this.transform);
+        new_card.SetContext(Card.CardContext.Upgrade);
+        new_card.SetCardData(card_data);
+        AddCardHelper(new_card, CardOwnership.Player);
     }
 }

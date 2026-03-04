@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,6 +29,16 @@ struct ModifierTuple
 //              a Phisics RaycRaycaster entity attached to it for the Input system to work.
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public enum CardContext //needed for upgrades since gameplay loop needs gamestate which doesnt exist in upgrades
+        {
+            Gameplay,
+            Upgrade,
+            Creator
+        }
+
+    private CardContext context = CardContext.Gameplay; //default to gameplay
+
+
     [SerializeField]
     private CardData card_data;
 
@@ -35,9 +46,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private int current_hp;
 
+    // NOTE: Changes to these fields in the editor will only appear when the game is in a RUNNING state.
+    public string card_name;
+    public string description;
+
+    public int hp;
     private int defense_bonus = 0;
     private float dodge_chance = 0.0f; // 0.0 to 1.0 inclusive.
 
+    public int attack;
     private int attack_damage_bonus = 0;
 
     private int nektar_cost_amt_modifier;
@@ -66,6 +83,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private CardSlot slot;
     private Playfield playfield_ref;
 
+    public bool isUpgradeMode = false;
     private bool is_being_sacrificed;
 
     private void Awake()
@@ -107,14 +125,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             return;
         }
-
-        this.game_state = this.GetObject<GameState>("GameState");
-
-        this.player_hand = this.GetObject<Hand>("Hand");
-
-        this.playfield_ref = this.GetObject<Playfield>("Playfield");
-
-        this.hand_start_marker = this.GetObject<GameObject>("start_mark");
     }
 
     /**
@@ -136,6 +146,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+         if (context == CardContext.Gameplay) //so this doesnt initalize during upgrades, had to move from awake because order matters
+        {
+            this.game_state = this.GetObject<GameState>("GameState");
+
+        }
+
+        this.player_hand = this.GetObject<Hand>("Hand");
+
+        this.playfield_ref = this.GetObject<Playfield>("Playfield");
+
+        this.hand_start_marker = this.GetObject<GameObject>("start_mark");
+
         this.current_hp = this.card_data.hp;
 
         // TODO(KASIN): This can lead to attaching another copy of a modifier
@@ -239,16 +261,28 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        //Debug.Log("Mouse Click.");
+        if (context == CardContext.Upgrade)
+        {
+            PlayfieldUpgrade playfeildUpgrade = FindObjectOfType<PlayfieldUpgrade>();
+            if (playfeildUpgrade != null)
+            {
+                playfeildUpgrade.selectedUpgradeCard = this;
+            }
+
+            return;
+        }
+
         switch (this.card_state)
         {
-            case CardState.InHand:
+	        case CardState.InHand:
                 if (game_state.current_turn_state == TurnStates.PlayerSacrifice)
                 {
                     // Make it so the player can not interrupt the sacrifice.
                     Debug.Log("You are currently placing a card that requires sacrifice. To cancel, click on the Cancel Sacrifice Button.");
                     return;
                 }
-
+        
                 this.player_hand.SetSelectedCard(this.card_ownership, this);
                 break;
 
@@ -759,6 +793,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         return ret;
     }
+
+    public List<CardModifier> GetAllModifierData() //for getting modifiers for sacrafice node
+    {
+        List<CardModifier> result = new List<CardModifier>();
+        foreach (var tuple in this.GetModifiers())
+        {
+            result.Add(tuple.modifier);
+        }
+        return result;
+    }
     
     // Use GetModifiers to get the reference of the modifier you wish to remove.
     public void RemoveModifier(CardModifier modifier)
@@ -888,6 +932,30 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.card_data = Instantiate(data);
         }
         this.current_hp = this.card_data.hp;
+    }
+
+    public CardData GetCardData() //for upgrading cards
+    {
+        return this.card_data;
+    }
+
+    public void Initialize(CardData data) //initalize to display new card when upgrading
+    {
+        card_name = data.card_name;
+        attack = data.attack;
+        hp = data.hp;
+        this.modifiers = new List<ModifierTuple>();
+        foreach (CardModifier mod in data.starting_modifiers)
+        {
+            this.AttachModifier(mod);
+        }
+        this.SetCardTextField("card_name_text", data.card_name); //update name
+        this.UpdateCardTextStats(); //display new
+    }
+
+    public void SetContext(CardContext ctx) //for setting context
+    {
+        context = ctx;
     }
 
     public int GetNektarCost()

@@ -329,6 +329,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!114 &11993142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +348,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &123962364 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6541023525796821194, guid: cb2e83fba003d974a88999133bf2e816, type: 3}
@@ -370,6 +372,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &143619538
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,6 +771,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &278456228
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +894,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &363630409
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +951,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &406524353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1229,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &555927088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,6 +2349,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1001 &1023869471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3061,6 +3069,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &1315738672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3543,6 +3552,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &1460760511 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1425902252273740314, guid: cb2e83fba003d974a88999133bf2e816, type: 3}
@@ -3592,6 +3602,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!224 &1575155626 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6596749196565048642, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
@@ -3770,6 +3781,7 @@ MonoBehaviour:
   is_card_placed: 0
   card_in_slot: {fileID: 0}
   card_ownership: 0
+  playfieldUpgrade: {fileID: 0}
 --- !u!1 &1944684278
 GameObject:
   m_ObjectHideFlags: 0
