@@ -33,7 +33,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Copy the starting cards to the queue
         this.Shuffle();
-        DrawAllCards();
+        //DrawAllCards();
     }
 
     // Update is called once per frame
