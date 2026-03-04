@@ -131,6 +131,12 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
             }
         }
 
+        if (curr_token.Length > 0)
+        {
+            // flush
+            tokens.Add(curr_token.ToString());
+        }
+
         foreach (string token in tokens)
         {
             if (token.Length == 1)
