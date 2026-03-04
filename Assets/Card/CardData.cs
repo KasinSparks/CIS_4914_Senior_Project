@@ -22,4 +22,19 @@ public class CardData : ScriptableObject
     // NOTE: This list is only used to add modifiers in the editor. If you need to get
     //       modifiers on this card during game runtime, use the GetModifiers function.
     public List<CardModifier> starting_modifiers;
+    
+    /**
+     * @brief A very simple comparison. Compares name and order to determine
+     * equality.
+     * @param The other card data.
+     * @return If the card is the same as the other.
+     */
+    public bool Compare(CardData other)
+    {
+        if (other == null) return false;
+
+        if ((this.card_name == other.card_name) && (this.order == other.order)) return true;
+
+        return false;
+    }
 }
