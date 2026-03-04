@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -110,19 +110,44 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         StringBuilder sb = new StringBuilder();
         // TODO(KASIN): Make it go fast...
         // TODO(KASIN): Parse better...
-        string[] words = str.Split(" ");
-        foreach (string word in words)
+        List<string> tokens = new List<string>();
+        
+        StringBuilder curr_token = new StringBuilder();
+        foreach (char c in str)
         {
-            bool consumed = false;
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+            {
+                curr_token.Append(c);
+            }
+            else
+            {
+                if (curr_token.Length > 0)
+                {
+                    tokens.Add(curr_token.ToString());
+                    curr_token.Clear();
+                }
 
+                tokens.Add(c.ToString());
+            }
+        }
+
+        foreach (string token in tokens)
+        {
+            if (token.Length == 1)
+            {
+                sb.Append(token);
+                continue;
+            }
+
+            bool consumed = false;
             foreach (WordInfo word_info in wi)
             {
-                if (word_info.GetWord().ToUpper().Equals(word.ToUpper()))
+                if (word_info.GetWord().ToUpper().Equals(token.ToUpper()))
                 {
                     Debug.Log("here");
                     sb.Append("<color=\"blue\">");
-                    sb.Append(word);
-                    sb.Append("</color> ");
+                    sb.Append(token);
+                    sb.Append("</color>");
                     Debug.Log(sb.ToString());
                     consumed = true;
                 }
@@ -130,8 +155,7 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
 
             if (!consumed)
             {
-                sb.Append(word);
-                sb.Append(" ");
+                sb.Append(token);
             }
         }
 

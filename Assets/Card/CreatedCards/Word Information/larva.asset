@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: larva
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
   word: larva
-  info: '" Larva , stage in the development of many animals, occurring after birth
+  info: '"Larva, stage in the development of many animals, occurring after birth
     or hatching and before the adult form is reached. These immature, active forms
     are structurally different from the adults and are adapted to a different environment".
 

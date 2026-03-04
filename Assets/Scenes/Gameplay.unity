@@ -1731,6 +1731,7 @@ MonoBehaviour:
   card: {fileID: 0}
   words:
   - {fileID: 11400000, guid: 0058ae39bc8a06b4783ac51305c60162, type: 2}
+  - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
 --- !u!61 &513039228
 BoxCollider2D:
   m_ObjectHideFlags: 0
