@@ -15,17 +15,7 @@ MonoBehaviour:
   card_name: Beetle
   description: A common <color="blue">beetle</color>
   highlighted_words:
-  - word: beetle
-    info: '<color="blue">Beetles</color> are a part of the largest order, <color="blue">Coleoptera</color>.
-      The life cycle of a beetle starts with an <color="blue">egg</color> stage.
-      Once hacthed, the <color="blue">larva</color> stage begins. The <color="blue">larva</color>
-      will eat and grow turning into a <color="blue">pupa</color> where they will
-      be immobile, typically during the winter months. In the spring, the <color="blue">adult</color>
-      beetle will emerge and continue the cycle by feeding, mating, and laying eggs.
-
-
-      Source:
-      https://www.webmd.com/a-to-z-guides/beetles-what-to-know'
+  - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
   order: 0
   hp: 3
   attack: 1

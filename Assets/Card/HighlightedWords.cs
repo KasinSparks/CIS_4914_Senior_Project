@@ -4,26 +4,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[Serializable]
-public struct HighlightedWordInfo
-{
-    public string word;
-    [TextArea(3,10)]
-    public string info;
-}
-
 public class HighlightedWords : MonoBehaviour, IPointerClickHandler
 {
     private TextMeshPro description_text;
     private Card card;
-    private HighlightedWordInfo[] words;
+    private WordInfo[] words;
 
     private GameObject ui_book;
     private Image book_image;
     private TextMeshProUGUI book_text;
     private TextMeshProUGUI book_text_name;
 
-    public void Initialize(HighlightedWordInfo[] words)
+    public void Initialize(WordInfo[] words)
     {
         this.card = this.gameObject.GetComponentInParent<Card>();
         this.description_text = GetComponent<TextMeshPro>();
@@ -43,15 +35,10 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
     {
         int word_index = TMP_TextUtilities.FindIntersectingWord(
             this.description_text,
-            eventData.pointerCurrentRaycast.worldPosition,
-            null
+            eventData.pointerCurrentRaycast.screenPosition,
+            Camera.main
         );
         
-        Debug.DrawLine(Camera.main.transform.position,
-            eventData.pointerCurrentRaycast.worldPosition,
-            Color.red,
-            30.0f);
-
         if (word_index < 0)
         {
             // User did not click on a word in the description, pass the click
@@ -66,7 +53,7 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         // TODO(KASIN): Not the best way to check, but will work for now
         string click_word =
             this.description_text.textInfo.wordInfo[word_index].GetWord().ToUpper();
-        foreach (HighlightedWordInfo word in this.words)
+        foreach (WordInfo word in this.words)
         {
             if (word.word.ToUpper().Equals(click_word))
             {
