@@ -7,6 +7,8 @@ public class CardData : ScriptableObject
     public string card_name;
     public string description;
 
+    public WordInfo[] highlighted_words;
+
     public CardOrder order;
 
     public int hp;

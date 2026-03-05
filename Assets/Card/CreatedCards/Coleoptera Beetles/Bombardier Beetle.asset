@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5417316250d64fd479b35bc486caf505, type: 3}
   m_Name: Bombardier Beetle
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  card_name: Bombbardier Beetle
+  card_name: Bombardier Beetle
   description: Has chemical spray attack.
+  highlighted_words: []
   order: 0
   hp: 3
   attack: 0
