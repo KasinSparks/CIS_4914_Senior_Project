@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Ant Queen
   description: A Queen of a colony ant
+  highlighted_words: []
   order: 2
   hp: 4
   attack: 0
   nektar_cost: 2
-  image: {fileID: 2800000, guid: a7ed49ce2ab7a8d458bd047f45d673cf, type: 3}
+  image: {fileID: 2800000, guid: cf74d920fdba01c47a86eeed7544a74b, type: 3}
   card_rarity: 1
   starting_modifiers:
   - {fileID: 11400000, guid: 83ed999be4706834894ecfe31a312523, type: 2}

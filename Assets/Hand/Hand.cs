@@ -108,7 +108,7 @@ public class Hand : MonoBehaviour
             new Vector3(
                 this.front_card.transform.position.x,
                 this.front_card.transform.position.y,
-                this.card_starting_mark.transform.position.z - 0.2f * this.front_card.transform.parent.transform.localScale.x),
+                this.card_starting_mark.transform.position.z - 0.01f * this.front_card.transform.parent.transform.localScale.x),
             this.front_card.transform.rotation
         );
     }
