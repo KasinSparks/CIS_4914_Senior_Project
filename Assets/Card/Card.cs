@@ -270,6 +270,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 playfeildUpgrade.selectedUpgradeCard = this;
             }
 
+            ShopBehavior shop = FindObjectOfType<ShopBehavior>();
+            if (shop != null)
+            {
+                shop.selectedUpgradeCard = this;
+            }
+
             return;
         }
 
