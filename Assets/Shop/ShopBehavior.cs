@@ -11,6 +11,7 @@ public class ShopBehavior : MonoBehaviour
     [SerializeField] private string nextSceneName; //scene to load after exit
     [SerializeField] private float cardScale = 1f; //scale for playfield display
     [SerializeField] private List<CardData> availableCards;
+    [SerializeField] private List<CardData> shopCards; //cards to be placed in shop
 
     public GameObject upgradeButton;
     public GameObject exitButton;
@@ -27,7 +28,35 @@ public class ShopBehavior : MonoBehaviour
         {
             slot.SetShopBehavior(this);
         }
+        InitializeShopCards();
     }
+
+    private void InitializeShopCards()
+{
+    int shopIndex = 0;
+
+    for (int i = 0; i < slots.Count; i += 2) // first slot in each pair
+    {
+        if (shopIndex >= shopCards.Count)
+            break;
+
+        CardSlot slot = slots[i];
+        GameObject cardObj = Instantiate(cardPrefab); //create card, set data
+        Card card = cardObj.GetComponent<Card>();
+        card.SetContext(Card.CardContext.Upgrade); //so it doesnt look for gamestate in card
+        CardData data = Instantiate(shopCards[shopIndex]);
+        card.SetCardData(data);
+        card.Initialize(data);
+        slot.SetCard(card); //place in 0, 2, ... 10 slot so that there will be a slot next to it
+        slot.SetIsCardPlaced(true);
+        card.transform.SetParent(this.transform);
+        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
+        card.transform.localScale = Vector3.one * cardScale;
+        card.SetSlot(slot);
+        card.SetState(CardState.OnPlayfield);
+        shopIndex++;
+    }
+}
 
     public void PlaceCard(Card card, CardSlot slot)
     {
@@ -52,7 +81,7 @@ public class ShopBehavior : MonoBehaviour
         }
     }
 
-    public void ConfirmUpgrade()
+    public void ConfirmUpgrade() //really confirm purchase
     {
         //find which pair is filled
         CardSlot pairSlot1 = null;
@@ -85,7 +114,7 @@ public class ShopBehavior : MonoBehaviour
         }
 
         CardData newData = Instantiate(data1);
-        if (data1.card_name == data2.card_name)
+        if (c1.GetOrder() == c2.GetOrder())
         {
             newData.attack *= 2;
             newData.hp *= 2;

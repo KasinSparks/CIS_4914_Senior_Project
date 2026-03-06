@@ -3172,6 +3172,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
   - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  shopCards:
+  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
+  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
+  - {fileID: 11400000, guid: 7df6c0c86b1bc53488012eddd8d403d6, type: 2}
+  - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
+  - {fileID: 11400000, guid: 93bd8af31692fbb4a8accb6351310847, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   upgradeButton: {fileID: 658286133}
   exitButton: {fileID: 682431302}
   selectedUpgradeCard: {fileID: 0}
