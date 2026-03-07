@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb16c59bd7933a4eb1129f25fdfdc51, type: 3}
+  m_Name: Nektar Reduction 1
+  m_EditorClassIdentifier: Assembly-CSharp::NektarReductionModifier
+  modifier_name: Nektar Redution
+  description: Reduce the cost of the cards in your hand by XXX while this card is
+    alive and on the playfield.
+  image: {fileID: 2800000, guid: 9106e473e1284f24bad51dae39832cb8, type: 3}
+  modifier_type: 8
+  modifier_state: 0
+  nektar_reduction: -1

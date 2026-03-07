@@ -7,6 +7,9 @@ public class GameState : MonoBehaviour
     public AttackSystem attack_sys;
     public Opponent opponent;
 
+    [SerializeField]
+    private Playfield playfield;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,6 +76,7 @@ public class GameState : MonoBehaviour
                         Debug.Log("Owner: " + player_cards[i].GetOwnership());
                         player_cards[i].OnTurnStart();
                     }
+                    playfield.ResetLanesAttacked(CardOwnership.Player);
                 }
                 break;
 
@@ -86,6 +90,7 @@ public class GameState : MonoBehaviour
                         opponent_cards[i].OnTurnStart();
                     }
                     this.UpdateTurnState(TurnStates.OpponentTurn);
+                    playfield.ResetLanesAttacked(CardOwnership.Opponent);
                 }
                 break;
             case TurnStates.OpponentTurn:

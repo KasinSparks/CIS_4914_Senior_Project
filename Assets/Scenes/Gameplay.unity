@@ -8075,6 +8075,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
   - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: c9528b940a1906d49822f84c5967cc0e, type: 2}
+  - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
+  - {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}
+  - {fileID: 11400000, guid: fd74b69f0ca63f64e8e4ec26863c41d7, type: 2}
+  - {fileID: 11400000, guid: ef93ccc55bf64874a98409e2744bac54, type: 2}
+  - {fileID: 11400000, guid: 828e7ad6cfe662640bdde533eb7213a5, type: 2}
+  - {fileID: 11400000, guid: 21a6a758f543d1543b817beca7c5b9e3, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!1 &1838678334
@@ -8974,6 +8981,7 @@ MonoBehaviour:
   current_turn_state: 1
   attack_sys: {fileID: 1032196872}
   opponent: {fileID: 406524356}
+  playfield: {fileID: 1460760515}
 --- !u!4 &2081642590
 Transform:
   m_ObjectHideFlags: 0

@@ -129,6 +129,7 @@ public class AttackSystem : MonoBehaviour
             {
                 //player_card_ref.Attack(opponent_card_ref);
                 StartCoroutine(this.AttackAnimation(player_card_ref, opponent_card_ref, i));
+                playfield.AddLaneToAttackedList(opponent_card_slot_ref, CardOwnership.Opponent);
             }
             else
             {
@@ -151,6 +152,7 @@ public class AttackSystem : MonoBehaviour
             {
                 //enemy_card_ref.Attack(player_card_ref);
                 StartCoroutine(this.AttackAnimation(opponent_card_ref, player_card_ref, i + aas_opponent_offset));
+                playfield.AddLaneToAttackedList(player_card_slot_ref, CardOwnership.Player);
             }
             else
             {

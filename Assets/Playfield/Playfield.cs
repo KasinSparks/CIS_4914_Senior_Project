@@ -35,6 +35,9 @@ public class Playfield : MonoBehaviour
     [SerializeField] private GameState game_state;
     [SerializeField] private Opponent opponent;
 
+    private List<CardSlot> player_lanes_attacked;
+    private List<CardSlot> opponent_lanes_attacked;
+
     void Awake()
     {
         this.sacrifice_ui_button = GameObject.Find("-----UI-----/EndTurnCanvas/SacrificeCancelButton");
@@ -50,6 +53,8 @@ public class Playfield : MonoBehaviour
         this.queue_card_slots = new List<CardSlot>();
         this.current_sacrifice = new List<Card>();
         this.current_sacrifice_cost = 0;
+        this.player_lanes_attacked = new List<CardSlot>();
+        this.opponent_lanes_attacked = new List<CardSlot>();
 
         // Sets up each row (player, opponent, queue)
         for (int i = 0; i < NUM_ROWS; i++)
@@ -372,9 +377,13 @@ public class Playfield : MonoBehaviour
 
     public bool HasSacrificeRequirementBeenMet()
     {
-        // TODO: This may change if we want certain cards to give more than one
-        //     nektar
-        return (this.current_sacrifice.Count >= this.current_sacrifice_cost);
+        int current_nektar_amount_proposed = 0;
+        foreach (Card c in this.current_sacrifice)
+        {
+            current_nektar_amount_proposed += c.GetCardData().nektar_given_when_scarificed;
+        }
+
+        return current_nektar_amount_proposed >= this.current_sacrifice_cost;
     }
 
     public void ResetSacrificeRequirements()
@@ -409,5 +418,92 @@ public class Playfield : MonoBehaviour
     public void SetSacrificeButtonActive(bool active)
     {
         this.sacrifice_ui_button.SetActive(active);
+    }
+    
+    /**
+     * @brief Get the lanes that were attacked in a given turn.
+     * @param owner The owner of the lane you want to get the attack data for.
+     * @return The lanes that were attacked by a card on a given turn.
+     */
+    public CardSlot[] GetLanesAttacked(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                return this.player_lanes_attacked.ToArray();
+            case CardOwnership.Opponent:
+                return this.opponent_lanes_attacked.ToArray();
+        }
+
+        return null;
+    }
+
+    /**
+     * @brief Clear the list of the lanes that were attacked in a given turn.
+     * @param owner The owner of the lane to reset.
+     */
+    public void ResetLanesAttacked(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                this.player_lanes_attacked.Clear();
+                break;
+            case CardOwnership.Opponent:
+                this.opponent_lanes_attacked.Clear();
+                break;
+        }
+    }
+
+    public void AddLaneToAttackedList(CardSlot slot, CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                this.player_lanes_attacked.Add(slot);
+                break;
+            case CardOwnership.Opponent:
+                this.opponent_lanes_attacked.Add(slot);
+                break;
+        }
+    }
+    
+    /**
+     * @breif Finds the empty card slots for a given owner.
+     * @param owner The owner of the card slots you want to get.
+     * @return The open card slots. Will be empty if no card slots are open.
+     * Will return null if there was an error.
+     */
+    public CardSlot[] GetOpenLanes(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                return this._GetCardSlotHelper(this.player_card_slots);
+            case CardOwnership.Opponent:
+                return this._GetCardSlotHelper(this.opponent_card_slots);
+        }
+
+        return null;
+    }
+
+    private CardSlot[] _GetCardSlotHelper(List<CardSlot> current_slots)
+    {
+        List<CardSlot> ret = new List<CardSlot>();
+        
+        foreach (CardSlot slot in current_slots)
+        {
+            if (!slot.GetIsCardPlaced())
+            {
+                ret.Add(slot);
+            }
+        }
+
+        return ret.ToArray();
+    }
+
+    public float GetCardScaleAmount()
+    {
+        return this.card_scale;
     }
 }
