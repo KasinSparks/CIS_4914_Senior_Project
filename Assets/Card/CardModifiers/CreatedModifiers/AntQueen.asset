@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b57596809ef4c41b4cfe10e112d262, type: 3}
+  m_Name: AntQueen
+  m_EditorClassIdentifier: Assembly-CSharp::QueenModifier
+  modifier_name: Queen
+  description: Spawns a XXX card into hand each turn.
+  image: {fileID: 2800000, guid: ef9e8b0a01742664290da0cfb48b12cc, type: 3}
+  modifier_type: 9
+  modifier_state: 0
+  spwan_card: {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}

@@ -79,7 +79,6 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
                 eventData.pointerCurrentRaycast.screenPosition,
                 null
             );
-            Debug.Log("word index: " + word_index);
         }
 
         if (word_index < 0)
@@ -107,10 +106,6 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         
         if (this.dict_word_info.ContainsKey(click_word.ToUpper()))
         {
-            Debug.Log("Click on highlighted word: " + click_word);
-            Debug.Log("Highlighted word info: " +
-                this.dict_word_info[click_word.ToUpper()].GetInfo());
-
             WordInfo word_info = this.dict_word_info[click_word.ToUpper()];
 
             this.ui_book.SetActive(true);
@@ -180,7 +175,6 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
             }
         }
 
-        Debug.Log(sb.ToString());
         return sb.ToString();
     }
     

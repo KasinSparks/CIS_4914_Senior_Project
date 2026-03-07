@@ -73,8 +73,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private Hand player_hand;
 
-    private bool is_in_card_creation_scene = false;
-
     private Transform modifier_start_mark;
     private const float MODIFIER_SPACE = 0.1f;
 
@@ -103,29 +101,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         this.modifiers = new List<ModifierTuple>();
 
         this.num_of_attacks_per_turn = 1;
-
-        Scene current_scene = SceneManager.GetActiveScene();
-        if (current_scene != null &&
-            (current_scene.name.Equals("CardCreator") || current_scene.name.Equals("ModifierCreator")))
-        {
-            this.is_in_card_creation_scene = true;
-        }
-
-        // TODO(KASIN): This can lead to attaching another copy of a modifier
-        //     that is already attached. For now, a simple compare is used to
-        //     prevent duplication of attached modifiers.
-        this.modifier_start_mark = this.transform.Find("card_modifiers");
-        for (int i = 0; i < this.modifiers.Count; ++i)
-        {
-            this.AttachModifier(this.modifiers[i].modifier);
-        }
-
-
-        // Got what is needed for the card creation scene, exit early
-        if (this.is_in_card_creation_scene)
-        {
-            return;
-        }
     }
 
     /**
@@ -560,6 +535,24 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
 
+        // Unapply any passives
+        mods.Clear();
+        mods = this.GetModifiers(ModifierType.Passive);
+        for (int i = 0; i < mods.Count; ++i)
+        {
+            // Check to see if this modifier has already been applied
+            switch (mods[i].modifier.modifier_state)
+            {
+                case ModifierState.Applied:
+                    mods[i].modifier.UnapplyModifier(this, other);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
         // Destroy the card
         Destroy(this.gameObject);
 
@@ -874,7 +867,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         this.dodge_chance -= amt;
     }
 
-    private void UpdateCardTextStats()
+    public void UpdateCardTextStats()
     {
         // Card HP Text set
         this.SetCardTextField("card_health_text",
@@ -885,7 +878,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             (this.card_data.attack + this.attack_damage_bonus).ToString());
 
         // Card Cost Text set
-        this.SetCardTextField("card_cost_text", this.card_data.nektar_cost.ToString());
+        this.SetCardTextField("card_cost_text", this.GetNektarCost().ToString());
     }
 
     public CardOwnership GetOwnership()
@@ -961,6 +954,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         context = ctx;
     }
 
+    public void SetNektarAmountAdjustment(int amount)
+    {
+        this.nektar_cost_amt_modifier = amount;
+    }
+
     public int GetNektarCost()
     {
         return this.card_data.nektar_cost + this.nektar_cost_amt_modifier;
@@ -987,5 +985,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             new Vector2(0.5f, 0.5f),
             100.0f
         );
+    }
+
+    public Hand GetHandRef()
+    {
+        return this.player_hand;
     }
 }
