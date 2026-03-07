@@ -20,13 +20,12 @@ public class Hand : MonoBehaviour
     private Card current_card_selected;
     private const float RAISE_AMT = 0.05f;
     
-    // TODO(KASIN): This might not stay in this class.
-    private int player_current_nektar;
+    private int current_nektar_reduction;
 
     private void Awake()
     {
-        this.player_current_nektar = 0;
         this.current_card_selected = null;
+        this.current_nektar_reduction = 0;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +41,15 @@ public class Hand : MonoBehaviour
         
     }
 
+    public void UpdateCardsNektarCost()
+    {
+        foreach (Card card in cards)
+        {
+            card.SetNektarAmountAdjustment(current_nektar_reduction);
+            card.UpdateCardTextStats();
+        }
+    }
+
     private void AddCardHelper(Card card, CardOwnership owner)
     {
         // Update the newly instantiated card's fields 
@@ -54,6 +62,8 @@ public class Hand : MonoBehaviour
 
         // Move card to position
         this.FlareCards();
+
+        this.UpdateCardsNektarCost();
     }
 
     public void AddCard(Card card, CardOwnership owner)
@@ -83,7 +93,11 @@ public class Hand : MonoBehaviour
         }
         //card.gameObject.SetActive(false);
         card.SetState(CardState.OnPlayfield);
+        // Activate the OnPlace modifiers, if any are attached.
+        card.Placed();
         //throw new System.NotImplementedException();
+
+        this.UpdateCardsNektarCost();
     }
 
     public void MoveCardFront(Card card)
@@ -181,5 +195,12 @@ public class Hand : MonoBehaviour
         new_card.SetContext(Card.CardContext.Upgrade);
         new_card.SetCardData(card_data);
         AddCardHelper(new_card, CardOwnership.Player);
+    }
+
+    public void CurrentNektarReductionAdjustment(int amt)
+    {
+        Debug.Log("here");
+        this.current_nektar_reduction += amt;
+        Debug.Log(this.current_nektar_reduction);
     }
 }

@@ -5420,6 +5420,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
   - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: c9528b940a1906d49822f84c5967cc0e, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!1 &1838678334
