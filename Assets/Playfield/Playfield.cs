@@ -369,9 +369,13 @@ public class Playfield : MonoBehaviour
 
     public bool HasSacrificeRequirementBeenMet()
     {
-        // TODO: This may change if we want certain cards to give more than one
-        //     nektar
-        return (this.current_sacrifice.Count >= this.current_sacrifice_cost);
+        int current_nektar_amount_proposed = 0;
+        foreach (Card c in this.current_sacrifice)
+        {
+            current_nektar_amount_proposed += c.GetCardData().nektar_given_when_scarificed;
+        }
+
+        return current_nektar_amount_proposed >= this.current_sacrifice_cost;
     }
 
     public void ResetSacrificeRequirements()

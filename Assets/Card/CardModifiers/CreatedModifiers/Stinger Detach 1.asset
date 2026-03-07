@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8c52a96caa1254085f9aa10be7ef4f, type: 3}
   m_Name: Stinger Detach 1
   m_EditorClassIdentifier: Assembly-CSharp::StingerDetachModifier
-  modifier_name: 
-  description: 
-  image: {fileID: 0}
-  modifier_type: 0
+  modifier_name: Stinger Detach
+  description: Once this card attacks, the stinger is detached from the insect.
+  image: {fileID: 2800000, guid: 42d90bed399dd9f438894267e26d8df2, type: 3}
+  modifier_type: 4
   modifier_state: 0
