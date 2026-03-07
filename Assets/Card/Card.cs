@@ -517,7 +517,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     
     // Warning: This destorys the GameObject. Do not try to call methods on 
     //    this card after calling this function, it will be NULL.
-    private void Death(Card other)
+    public void Death(Card other)
     {
         // Apply modifiers that trigger on the death of a card
         List<ModifierTuple> mods = this.GetModifiers(ModifierType.OnDeath);
