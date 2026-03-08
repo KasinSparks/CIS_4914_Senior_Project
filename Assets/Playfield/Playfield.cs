@@ -506,4 +506,66 @@ public class Playfield : MonoBehaviour
     {
         return this.card_scale;
     }
+
+    /**
+     * @brief Gets the open slots to the left and right of a given slot.
+     * @return The LHS in index 0 and RHS slot in index 1 of the returned array.
+     * @param owner The owner of the lane
+     * @param slot The reference slot for position.
+     * @note This only works of the slot lists are in order.
+     */
+    public CardSlot[] GetLeftAndRightOpenSlots(CardOwnership owner, CardSlot slot)
+    {
+        CardSlot[] ret = new CardSlot[2] {null, null};
+        List<CardSlot> card_slots = null;
+
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                card_slots = this.player_card_slots;
+                break;
+            case CardOwnership.Opponent:
+                card_slots = this.opponent_card_slots;
+                break;
+        }
+
+        if (card_slots == null)
+        {
+            return new CardSlot[] { null, null };
+        }
+
+        int card_slot_position = -1;
+
+        // Find the given slot position
+        for (int i = 0; i < card_slots.Count; ++i)
+        {
+            if (slot.Equals(card_slots[i]))
+            {
+                card_slot_position = i;
+                break;
+            }
+        }
+        
+        // LHS
+        if ((card_slot_position - 1 >= 0) && (card_slot_position - 1 < card_slots.Count))
+        {
+            ret[0] = card_slots[card_slot_position - 1];
+            if (ret[0].GetIsCardPlaced())
+            {
+                ret[0] = null;
+            }
+        }
+        
+        // RHS
+        if ((card_slot_position + 1 >= 0) && (card_slot_position + 1 < card_slots.Count))
+        {
+            ret[1] = card_slots[card_slot_position + 1];
+            if (ret[1].GetIsCardPlaced())
+            {
+                ret[1] = null;
+            }
+        }
+
+        return ret;
+    }
 }

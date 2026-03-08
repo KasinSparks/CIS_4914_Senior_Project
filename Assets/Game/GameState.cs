@@ -69,6 +69,13 @@ public class GameState : MonoBehaviour
 
             case TurnStates.PlayerDrawCard:
                 {
+                    if (this.current_turn_state == TurnStates.PlayerSacrifice)
+                    {
+                        // Don't reload the on turn start modifiers
+                        this.current_turn_state = TurnStates.PlayerDrawCard;
+                        break;
+                    }
+
                     this.current_turn_state = TurnStates.PlayerDrawCard;
                     List<Card> player_cards = attack_sys.GetCards(CardOwnership.Player);
                     for (int i = 0; i < player_cards.Count; ++i)
