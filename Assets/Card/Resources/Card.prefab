@@ -1353,6 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
   card_data: {fileID: 0}
+  rare_material: {fileID: 2100000, guid: 796b8b5ff1c28424db8ec786bc498f66, type: 2}
   card_name: 
   description: 
   hp: 0
