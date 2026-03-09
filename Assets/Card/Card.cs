@@ -42,6 +42,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     [SerializeField]
     private CardData card_data;
+    [SerializeField] private Material rare_material;
 
     private List<ModifierTuple> modifiers;
 
@@ -189,6 +190,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
 
         this.gameObject.transform.Find("card_image").gameObject.GetComponent<Renderer>().material.mainTexture = this.card_data.image;
+
+
+        if (card_data.card_rarity == CardRarity.Rare)
+        {
+            this.gameObject.GetComponent<Renderer>().material = rare_material;
+        }
 
 
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
