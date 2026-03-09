@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class ShopBehavior : MonoBehaviour
 {
@@ -32,36 +33,43 @@ public class ShopBehavior : MonoBehaviour
     }
 
     private void InitializeShopCards()
-{
-    int shopIndex = 0;
-
-    for (int i = 0; i < slots.Count; i += 2) // first slot in each pair
     {
-        if (shopIndex >= shopCards.Count)
-            break;
+        int shopIndex = 0;
 
-        CardSlot slot = slots[i];
-        GameObject cardObj = Instantiate(cardPrefab); //create card, set data
-        Card card = cardObj.GetComponent<Card>();
-        card.SetContext(Card.CardContext.Upgrade); //so it doesnt look for gamestate in card
-        CardData data = Instantiate(shopCards[shopIndex]);
-        card.SetCardData(data);
-        card.Initialize(data);
-        slot.SetCard(card); //place in 0, 2, ... 10 slot so that there will be a slot next to it
-        slot.SetIsCardPlaced(true);
-        card.transform.SetParent(this.transform);
-        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
-        card.transform.localScale = Vector3.one * cardScale;
-        card.SetSlot(slot);
-        card.SetState(CardState.OnPlayfield);
-        shopIndex++;
+        for (int i = 0; i < slots.Count; i += 2) // first slot in each pair
+        {
+            if (shopIndex >= shopCards.Count)
+                break;
+
+            CardSlot slot = slots[i];
+            GameObject cardObj = Instantiate(cardPrefab); //create card, set data
+            Card card = cardObj.GetComponent<Card>();
+            card.SetContext(Card.CardContext.Upgrade); //so it doesnt look for gamestate in card
+            CardData data = Instantiate(shopCards[shopIndex]);
+            card.SetCardData(data);
+            card.Initialize(data);
+            slot.SetCard(card); //place in 0, 2, ... 10 slot so that there will be a slot next to it
+            slot.SetIsCardPlaced(true);
+            card.transform.SetParent(this.transform);
+            card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
+            card.transform.localScale = Vector3.one * cardScale;
+            card.SetSlot(slot);
+            card.SetState(CardState.OnPlayfield);
+            shopIndex++;
+        }
     }
-}
 
     public void PlaceCard(Card card, CardSlot slot)
     {
-        if (purchasedSlots.Contains(slot) || slot.GetIsCardPlaced() || card == null) //cannot purchase from same slot twice
+        if (purchasedSlots.Contains(slot) || slot.GetIsCardPlaced() || card == null || card.card_state == CardState.OnPlayfield) //cannot purchase from same slot twice
         {
+            return;
+        }
+        CardSlot pairedSlot = GetPairedSlot(slot); //get card in purchase pair, do not let player place card next to bug of wrong order
+        Card pairedCard = pairedSlot.GetCard();
+        if (pairedCard != null && pairedCard.GetOrder() != card.GetOrder())
+        {
+            Debug.Log("Card must be placed next to same order.");
             return;
         }
         slot.SetIsCardPlaced(true);
@@ -79,6 +87,13 @@ public class ShopBehavior : MonoBehaviour
         {
             selectedUpgradeCard = null;
         }
+        //ConfirmUpgrade();
+    }
+
+    private CardSlot GetPairedSlot(CardSlot slot)
+    {
+        int index = slots.IndexOf(slot);
+        return slots[index - 1]; //-1 since can only place on odd index
     }
 
     public void ConfirmUpgrade() //really confirm purchase
@@ -88,7 +103,7 @@ public class ShopBehavior : MonoBehaviour
         CardSlot pairSlot2 = null;
         for (int i = 0; i < slots.Count; i += 2)
         {
-            if (slots[i].GetCard() != null && slots[i + 1].GetCard() != null)
+            if (slots[i].GetCard() != null && slots[i + 1].GetCard() != null) //this will buy last slot if multiple slots are filled, may change to just insta buy
             {
                 pairSlot1 = slots[i];
                 pairSlot2 = slots[i + 1];
@@ -107,60 +122,37 @@ public class ShopBehavior : MonoBehaviour
         Card c2 = pairSlot2.GetCard();
         CardData data1 = c1.GetCardData();
         CardData data2 = c2.GetCardData();
-        if (data1.card_name.Contains("Blessed") || data1.card_name.Contains("Evolved") || data2.card_name.Contains("Blessed") || data2.card_name.Contains("Evolved"))
-        {
-            Debug.Log("Upgraded cards cannot be upgraded again");
-            return;
-        }
-
         CardData newData = Instantiate(data1);
-        if (c1.GetOrder() == c2.GetOrder())
-        {
-            newData.attack *= 2;
-            newData.hp *= 2;
-            newData.card_name = "Evolved " + newData.card_name;
-        }
-        else
-        {
-            newData.card_name = "Blessed " + newData.card_name;
-            newData.starting_modifiers = MergeModifiers(data1, data2);
-        }
-
-        playerHand.RemoveCard(c2);
-        Destroy(c2.gameObject);
         pairSlot2.ResetCardSlot();
 
-        c1.SetCardData(newData);
-        c1.Initialize(newData);
-        c1.SetSlot(pairSlot1);
-        Debug.Log("Upgraded");
+        c2.SetCardData(newData); //copying purhcased card data to players card, so i dont have to create a new card, and this card should already have save data configured for it
+        c2.Initialize(newData);
+        c2.SetSlot(pairSlot1);
+        c2.transform.position = c1.transform.position; //after copying the card, switch the places to make it seem like purchased card is flying into your hand
+        Destroy(c1.gameObject);
+        Debug.Log("Purchased " + newData.card_name);
+        StartCoroutine(FloatToHand(c2.transform));
+        pairSlot1.transform.position += new Vector3(0, -1000, 0); //move off screen
+        pairSlot2.transform.position += new Vector3(0, -1000, 0);
+    }
+
+    private IEnumerator FloatToHand(Transform obj, float distance = 1.5f, float duration = 1.5f)
+    {
+        Vector3 startPos = obj.position;
+        Vector3 endPos = startPos + Vector3.back * distance + Vector3.up * .1f; //slightly up so it doesnt go inside other cards if on top row
+        float time = 0f;
+        while (time < duration)
+        {
+            obj.position = Vector3.Lerp(startPos, endPos, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        obj.position = endPos;
     }
 
     public void ExitScene()
     {
         SceneManager.LoadScene(nextSceneName);
-    }
-
-    private List<CardModifier> MergeModifiers(CardData d1, CardData d2)
-    {
-        List<CardModifier> merged = new List<CardModifier>();
-        merged.AddRange(d1.starting_modifiers);
-
-        foreach (var mod2 in d2.starting_modifiers)
-        {
-            bool duplicate = false;
-            foreach (var existing in merged)
-            {
-                if (mod2.Compare(existing))
-                {
-                    duplicate = true;
-                    break;
-                }
-            }
-            if (!duplicate)
-                merged.Add(mod2);
-        }
-        return merged;
     }
 
     private void SaveUpgradedCard(Card card)
