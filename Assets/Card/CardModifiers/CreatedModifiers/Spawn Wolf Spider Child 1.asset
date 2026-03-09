@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a251b0e8ecd1ec419a1f16bf56705d2, type: 3}
+  m_Name: Spawn Wolf Spider Child 1
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnChildModifier
+  modifier_name: Spawn Child
+  description: A XXX will fall off the back when this card dies.
+  image: {fileID: 2800000, guid: 6340eba69c593a74092a661507b7b302, type: 3}
+  modifier_type: 7
+  modifier_state: 0
+  leave_behind_card: {fileID: 11400000, guid: 7c6759326e8d2f54da13198965d4d0b9, type: 2}

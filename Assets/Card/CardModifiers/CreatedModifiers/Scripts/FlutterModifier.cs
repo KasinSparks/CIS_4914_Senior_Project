@@ -41,7 +41,6 @@ public class Flutter : CardModifier
         {
             Card new_card = Instantiate<Card>(Resources.Load<Card>("Card"), playfield.transform);
             new_card.SetCardData(leave_behind_card);
-            new_card.Initialize(leave_behind_card);
             original_slot.SetCard(new_card);
             original_slot.SetIsCardPlaced(true);
             new_card.SetSlot(original_slot);

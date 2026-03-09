@@ -86,6 +86,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public bool isUpgradeMode = false;
     private bool is_being_sacrificed;
 
+    private bool has_side_strike = false;
+
     private void Awake()
     {
         this.num_of_attacks_per_turn = 1;
@@ -559,25 +561,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //    this card after calling this function, it will be NULL.
     public void Death(Card other)
     {
-        // Apply modifiers that trigger on the death of a card
-        List<ModifierTuple> mods = this.GetModifiers(ModifierType.OnDeath);
-        for (int i = 0; i < mods.Count; ++i)
-        {
-            // Check to see if this modifier has already been applied
-            switch (mods[i].modifier.modifier_state)
-            {
-                case ModifierState.ReadyToApply:
-                    mods[i].modifier.ApplyModifier(this, other);
-                    break;
-
-                default:
-                    break;
-            }
-        }
 
         // Unapply any passives
-        mods.Clear();
-        mods = this.GetModifiers(ModifierType.Passive);
+        List<ModifierTuple> mods = this.GetModifiers(ModifierType.Passive);
         for (int i = 0; i < mods.Count; ++i)
         {
             // Check to see if this modifier has already been applied
@@ -599,13 +585,30 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.slot.ResetCardSlot();
         }
 
+        // Apply modifiers that trigger on the death of a card
+        mods.Clear();
+        mods = this.GetModifiers(ModifierType.OnDeath);
+        for (int i = 0; i < mods.Count; ++i)
+        {
+            // Check to see if this modifier has already been applied
+            switch (mods[i].modifier.modifier_state)
+            {
+                case ModifierState.ReadyToApply:
+                    mods[i].modifier.ApplyModifier(this, other);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
 
         // Destroy the card
         Destroy(this.gameObject);
     }
-
+    
     public void OnSacrifice()
     {
         // TODO(KASIN): Not sure if we want the OnDeath modifier to run when a
@@ -1050,5 +1053,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Hand GetHandRef()
     {
         return this.player_hand;
+    }
+
+    public bool GetHasSideStrike()
+    {
+        return this.has_side_strike;
+    }
+
+    public void SetHasSideStrike(bool has_side_strike)
+    {
+        this.has_side_strike = has_side_strike;
     }
 }

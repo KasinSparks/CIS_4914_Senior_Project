@@ -16,5 +16,5 @@ MonoBehaviour:
   description: Makes this insect attack XXX times per turn.
   image: {fileID: 2800000, guid: c0e0b9a8fefdf654495d3a2b7701982f, type: 3}
   modifier_type: 2
-  modifier_state: 1
+  modifier_state: 0
   num_of_additional_attacks: 1
