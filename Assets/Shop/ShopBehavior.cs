@@ -7,16 +7,18 @@ public class ShopBehavior : MonoBehaviour
 {
     [SerializeField] private List<CardSlot> slots; //now 12 slots (pairs)
     private List<CardSlot> purchasedSlots = new List<CardSlot>(); //to track which slots have been used for purchase
+    private List<CardOrder> shopOrder = new List<CardOrder>(); //to track the order of each card in each slot
     [SerializeField] private Hand playerHand;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private string nextSceneName; //scene to load after exit
     [SerializeField] private float cardScale = 1f; //scale for playfield display
     [SerializeField] private List<CardData> availableCards;
     [SerializeField] private List<CardData> shopCards; //cards to be placed in shop
+    [SerializeField] private Material highlightMaterial; //to highlight wanted slots green to show where card can be placed
+    [SerializeField] private Material defaultMaterial;
 
-    public GameObject upgradeButton;
     public GameObject exitButton;
-    private CardData upgradedCardData; //stores the upgraded card TODO for later
+    private CardData upgradedCardData; //stores the upgraded card TODO for later? Maybe save will work instantly
     public Card selectedUpgradeCard;
 
     void Start()
@@ -32,10 +34,9 @@ public class ShopBehavior : MonoBehaviour
         InitializeShopCards();
     }
 
-    private void InitializeShopCards()
+    private void InitializeShopCards() //if we want to weigh the odds, duplicate cards in inspector
     {
         int shopIndex = 0;
-
         for (int i = 0; i < slots.Count; i += 2) // first slot in each pair
         {
             if (shopIndex >= shopCards.Count)
@@ -45,7 +46,7 @@ public class ShopBehavior : MonoBehaviour
             GameObject cardObj = Instantiate(cardPrefab); //create card, set data
             Card card = cardObj.GetComponent<Card>();
             card.SetContext(Card.CardContext.Upgrade); //so it doesnt look for gamestate in card
-            CardData data = Instantiate(shopCards[shopIndex]);
+            CardData data = Instantiate(shopCards[Random.Range(0, shopCards.Count)]); //changed to be random
             card.SetCardData(data);
             card.Initialize(data);
             slot.SetCard(card); //place in 0, 2, ... 10 slot so that there will be a slot next to it
@@ -55,12 +56,19 @@ public class ShopBehavior : MonoBehaviour
             card.transform.localScale = Vector3.one * cardScale;
             card.SetSlot(slot);
             card.SetState(CardState.OnPlayfield);
+            shopOrder.Add(card.GetOrder()); //save order of all cards in shop
             shopIndex++;
         }
     }
 
     public void PlaceCard(Card card, CardSlot slot)
     {
+        /*
+        foreach (var order in shopOrder)
+        {
+            Debug.Log(order);
+        }
+        */
         if (purchasedSlots.Contains(slot) || slot.GetIsCardPlaced() || card == null || card.card_state == CardState.OnPlayfield) //cannot purchase from same slot twice
         {
             return;
@@ -87,7 +95,7 @@ public class ShopBehavior : MonoBehaviour
         {
             selectedUpgradeCard = null;
         }
-        //ConfirmUpgrade();
+        ConfirmUpgrade(); //the highlighted slots make it obvious so instant confirm
     }
 
     private CardSlot GetPairedSlot(CardSlot slot)
@@ -134,6 +142,7 @@ public class ShopBehavior : MonoBehaviour
         StartCoroutine(FloatToHand(c2.transform));
         pairSlot1.transform.position += new Vector3(0, -1000, 0); //move off screen
         pairSlot2.transform.position += new Vector3(0, -1000, 0);
+        UnhighlightSlots();
     }
 
     private IEnumerator FloatToHand(Transform obj, float distance = 1.5f, float duration = 1.5f)
@@ -148,6 +157,34 @@ public class ShopBehavior : MonoBehaviour
             yield return null;
         }
         obj.position = endPos;
+    }
+
+    public void HighlightSlots()
+    {
+        if (selectedUpgradeCard == null)
+            return;
+        CardOrder order = selectedUpgradeCard.GetOrder();
+        for (int i = 0; i < 6; i++)
+        {
+            Renderer r = slots[i * 2 + 1].GetComponent<Renderer>();
+            if (order == shopOrder[i])
+            {
+                r.material = highlightMaterial;
+            }
+            else
+            {
+                r.material = defaultMaterial;
+            }
+        }
+    }
+
+    public void UnhighlightSlots()
+    {
+        foreach (CardSlot slot in slots)
+        {
+            Renderer r = slot.GetComponent<Renderer>();
+            r.material = defaultMaterial;
+        }
     }
 
     public void ExitScene()
