@@ -148,7 +148,7 @@ public class ShopBehavior : MonoBehaviour
     private IEnumerator FloatToHand(Transform obj, float distance = 1.5f, float duration = 1.5f)
     {
         Vector3 startPos = obj.position;
-        Vector3 endPos = startPos + Vector3.back * distance + Vector3.up * .1f; //slightly up so it doesnt go inside other cards if on top row
+        Vector3 endPos = startPos + Vector3.back * distance + Vector3.up * .04f; //slightly up so it doesnt go inside other cards if on top row
         float time = 0f;
         while (time < duration)
         {
