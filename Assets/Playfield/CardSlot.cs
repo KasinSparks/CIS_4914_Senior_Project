@@ -15,6 +15,8 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private bool is_card_placed;
     [SerializeField] private Card card_in_slot;
     [SerializeField] private CardOwnership card_ownership;
+    [SerializeField] private PlayfieldUpgrade playfieldUpgrade; //for upgrading
+    [SerializeField] private ShopBehavior shopBehavior; //for shop
     private int slot_index;
 
     void Awake()
@@ -54,6 +56,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     public void SetPlayfield(Playfield playfield)
     {
         this.playfield = playfield;
+    }
+
+    public void SetPlayfieldUpgrade(PlayfieldUpgrade playfieldfUpgrade) //for sacrafice playfield
+    {
+        this.playfieldUpgrade = playfieldfUpgrade;
+    }
+
+    public void SetShopBehavior(ShopBehavior shop) //for shop
+    {
+        this.shopBehavior = shop;
     }
 
     public bool GetIsCardPlaced()
@@ -110,6 +122,24 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (playfieldUpgrade != null) //if there was a upgrade playfield use that instead
+        {
+            if (!is_card_placed && playfieldUpgrade.selectedUpgradeCard != null)
+            {
+                playfieldUpgrade.PlaceCard(playfieldUpgrade.selectedUpgradeCard, this);
+            }
+            return;
+        }
+
+        if (shopBehavior != null) //for shop slots
+        {
+            if (!is_card_placed && shopBehavior.selectedUpgradeCard != null)
+            {
+                shopBehavior.PlaceCard(shopBehavior.selectedUpgradeCard, this);
+            }
+            return;
+        }
+
         if (this.card_ownership != CardOwnership.Player)
         {
             return;

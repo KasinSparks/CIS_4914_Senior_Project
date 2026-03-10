@@ -121,10 +121,44 @@ public class ConsumableButton : MonoBehaviour
         overlayImage.sprite = newConsumable.icon;
         overlayImage.enabled = true;
     }
-    
+
+    public void SetConsumableToEmpty()
+    {
+        singleHealConsumable = null;
+        damageConsumable = null;
+        healConsumable = null;
+        cardConsumable = null;
+        this.HideOverlay();
+    }
 
     public void HideOverlay() //for disabling icon in Playfield.cs
     {
         overlayImage.enabled = false;
+    }
+
+    /**
+     * @brief Get the first consumable that is currently assigned
+     * @return The consumable assigned, or null if no consumable is assigned
+     */
+    public ScriptableObject GetConsumableAssigned()
+    {
+        if (damageConsumable != null)
+        {
+            return damageConsumable;
+        }
+        else if (healConsumable != null)
+        {
+            return healConsumable;
+        }
+        else if (cardConsumable != null)
+        {
+            return cardConsumable;
+        }
+        else if (singleHealConsumable != null)
+        {
+            return singleHealConsumable;
+        }
+
+        return null;
     }
 }

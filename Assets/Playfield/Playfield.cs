@@ -233,9 +233,10 @@ public class Playfield : MonoBehaviour
                 // sets playfield as parent for easier scaling
                 this.player_selected_card.transform.SetParent(this.transform);
                 this.player_selected_card.transform.SetPositionAndRotation(
-                    selected_slot.transform.position,
-                    Quaternion.Euler(0, 0, 90)
-
+                    new Vector3(selected_slot.transform.position.x,
+                    selected_slot.transform.position.y + 0.0001f * this.player_selected_card.transform.localScale.x,
+                    selected_slot.transform.position.z),
+                    Quaternion.Euler(0, 0, 0)
                 );
                 this.player_selected_card.transform.localScale = new Vector3(card_scale, card_scale, card_scale);
 
@@ -249,9 +250,12 @@ public class Playfield : MonoBehaviour
                 this.opponent_selected_card.SetState(CardState.OnPlayfield);
                 // sets playfield as parent for easier scaling
                 this.opponent_selected_card.transform.SetParent(this.transform);
+
                 this.opponent_selected_card.transform.SetPositionAndRotation(
-                    selected_slot.transform.position,
-                    Quaternion.Euler(0, 0, 90)
+                    new Vector3(selected_slot.transform.position.x,
+                    selected_slot.transform.position.y + 0.0001f * this.opponent_selected_card.transform.localScale.x,
+                    selected_slot.transform.position.z),
+                    Quaternion.Euler(0, 0, 0)
                 );
 
                 this.opponent_selected_card.transform.localScale = new Vector3(card_scale, card_scale, card_scale);

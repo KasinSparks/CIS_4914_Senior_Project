@@ -19,12 +19,25 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         this.cards = new List<CardData>();
 
-        foreach (CardData c in this.starting_cards)
+        CardData[] saved_deck = SaveSystem.LoadDeck(SaveSystemFile.PlayerDeck);
+
+        if (saved_deck == null || saved_deck.Length < 1)
         {
-            this.AddCard(c);
+            foreach (CardData c in this.starting_cards)
+            {
+                this.AddCard(c);
+            }
+        }
+        else
+        {
+            Debug.Log("Loaded deck from file.");
+            foreach (CardData c in saved_deck)
+            {
+                this.AddCard(c);
+            }
         }
 
-        this.card_queue = new Queue<CardData>();
+            this.card_queue = new Queue<CardData>();
 
         if (this.cards.Count < 1)
         {
@@ -33,10 +46,16 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Copy the starting cards to the queue
         this.Shuffle();
+        //DrawAllCards();
     }
 
     // Update is called once per frame
     void Update() {}
+
+    void OnDestroy()
+    {
+        SaveSystem.SaveDeck(this.cards.ToArray(), SaveSystemFile.PlayerDeck);
+    }
 
     public void OnPointerEnter(PointerEventData eventData) {}
 
@@ -139,5 +158,13 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         throw new System.NotImplementedException();
     }
 
+    public void DrawAllCards() //useful for things like upgrade where you want to see all your cards
+    {
+        while (card_queue.Count > 0)
+        {
+            CardData nextCard = GetNextCard();
+            hand.AddCard(nextCard, this.owner);
+        }
+    }
 
 }
