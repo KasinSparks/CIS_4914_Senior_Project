@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 public class Opponent : MonoBehaviour
 {
     [SerializeField] private OpponentAttackStyle attack_style;
-    [SerializeField] private Playfield playfield;
 
     [Header("Draw Settings")]
     [SerializeField] private int draw_amount = 1;
@@ -36,6 +35,7 @@ public class Opponent : MonoBehaviour
     [SerializeField] private List<Card> cards;
     [SerializeField] private Queue<Card> card_queue;
     [SerializeField] private List<Card> hand;
+    [SerializeField] private Playfield playfield;
 
     private class RowStatus
     {

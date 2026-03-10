@@ -9,14 +9,15 @@ using UnityEngine.EventSystems;
 
 public class CardSlot : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private GameState gameState;
+    
     [SerializeField] private GameObject card_slot;
-    [SerializeField] private Playfield playfield;
     [SerializeField] private bool is_card_placed;
     [SerializeField] private Card card_in_slot;
     [SerializeField] private CardOwnership card_ownership;
     [SerializeField] private PlayfieldUpgrade playfieldUpgrade; //for upgrading
     private int slot_index;
+    [SerializeField] private GameState gameState;
+    [SerializeField] private Playfield playfield;
 
     void Awake()
     {

@@ -6,5 +6,8 @@ public enum CardOrder
     Mantodea,
     Lepidoptera,
     Araneae,
+    Odonata,
+    Siphonaptera,
+    Orthoptera,
     Other,
 }

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 public class Playfield : MonoBehaviour
 {
-    [SerializeField] private Opponent opponent;
+    
     [SerializeField] private float card_scale = 1.0f;
-    //public Opponent opponent;
 
-
-    // Player variables
+    [Header("Player variables")]
     [SerializeField] private List<CardSlot> player_card_slots;
     [SerializeField] private Hand player_hand;
     [SerializeField] private Card player_selected_card;
 
-    // Opponent variables
+    [Header("Opponent variables")]
     [SerializeField] private List<CardSlot> opponent_card_slots;
     [SerializeField] private Card opponent_selected_card;
     [SerializeField] private List<CardSlot> queue_card_slots;
@@ -35,6 +33,7 @@ public class Playfield : MonoBehaviour
     private TurnStates game_state_prior_to_sacrifice;
 
     [SerializeField] private GameState game_state;
+    [SerializeField] private Opponent opponent;
 
     void Awake()
     {

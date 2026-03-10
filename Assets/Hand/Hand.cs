@@ -15,13 +15,16 @@ public class Hand : MonoBehaviour
     private Card front_card;
     private float front_card_original_z;
 
-    [SerializeField] private Playfield playfield;
+    
 
     private Card current_card_selected;
     private const float RAISE_AMT = 0.05f;
     
     // TODO(KASIN): This might not stay in this class.
     private int player_current_nektar;
+
+    [SerializeField] private Playfield playfield;
+    [SerializeField] private Totem totem;
 
     private void Awake()
     {
@@ -48,6 +51,9 @@ public class Hand : MonoBehaviour
         card.gameObject.SetActive(true);
         card.SetState(CardState.InHand);
         card.SetOwnership(owner);
+
+        // adds totem modifier temporarily (won't be saved to card)
+        this.totem.AttachModifier(card);
 
         // Add the card to the hand
         this.cards.Add(card);

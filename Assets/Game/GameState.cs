@@ -10,7 +10,7 @@ public class GameState : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.UpdateTurnState(TurnStates.PlayerDrawCard);
+        this.UpdateTurnState(TurnStates.PlayerTurn);
     }
 
     // Update is called once per frame
@@ -39,6 +39,13 @@ public class GameState : MonoBehaviour
     {
         switch (state)
         {
+            case TurnStates.PlayerTurn:
+                {
+                    this.current_turn_state = TurnStates.PlayerTurn;
+                    // Perform attacks of player's cards
+                    // GameState gets updated in AttackSystem
+                }
+                break;
             case TurnStates.PlayerEndTurn:
                 {
                     this.current_turn_state = TurnStates.PlayerEndTurn;
