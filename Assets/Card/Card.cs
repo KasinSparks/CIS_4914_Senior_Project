@@ -129,12 +129,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             this.game_state = this.GetObject<GameState>("GameState");
         }
+        
+        if (this.context != CardContext.Creator)
+        {
+            this.player_hand = this.GetObject<Hand>("Hand");
 
-        this.player_hand = this.GetObject<Hand>("Hand");
+            this.playfield_ref = this.GetObject<Playfield>("Playfield");
 
-        this.playfield_ref = this.GetObject<Playfield>("Playfield");
-
-        this.hand_start_marker = this.GetObject<GameObject>("start_mark");
+            this.hand_start_marker = this.GetObject<GameObject>("start_mark");
+        }
 
         this.current_hp = this.card_data.hp;
 

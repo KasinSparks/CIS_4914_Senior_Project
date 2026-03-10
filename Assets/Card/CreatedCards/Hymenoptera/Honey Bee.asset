@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Honey Bee
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Honey Bee
-  description: 
+  description: A social bee that produces honey from pollen collected.
   highlighted_words: []
   order: 2
   hp: 1
