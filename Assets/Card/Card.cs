@@ -151,7 +151,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
          if (context == CardContext.Gameplay) //so this doesnt initalize during upgrades, had to move from awake because order matters
         {
             this.game_state = this.GetObject<GameState>("GameState");
-
         }
 
         this.player_hand = this.GetObject<Hand>("Hand");
@@ -211,6 +210,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        EnsureModifierUI();
         // Have a UI Pop-up to show the modifier details
         List<ModifierTuple> mods = this.GetModifiers();
         for (int i = 0; i < mods.Count; ++i)
@@ -258,6 +258,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        EnsureModifierUI();
         // Remove the UI pop-ups for the modifiers
         for (int i = 0; i < this.modifierInfoCanvas.transform.childCount; ++i)
         {
@@ -278,6 +279,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             if (playfeildUpgrade != null)
             {
                 playfeildUpgrade.selectedUpgradeCard = this;
+            }
+
+            ShopBehavior shop = FindObjectOfType<ShopBehavior>();
+            if (shop != null)
+            {
+                shop.selectedUpgradeCard = this;
+                shop.HighlightSlots();
             }
 
             return;
@@ -960,7 +968,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.AttachModifier(mod);
         }
         this.SetCardTextField("card_name_text", data.card_name); //update name
-        this.UpdateCardTextStats(); //display new
+        this.SetCardTextField("card_description_text", data.description);
+        if (data.image != null)
+        {
+            this.transform.Find("card_image")
+                .GetComponent<Renderer>()
+                .material.mainTexture = data.image;
+        }
+        this.UpdateCardTextStats(); //display new stats
+    }
+
+    private void EnsureModifierUI() //this is because when creating cards in shop, they did not have the modifiers appear, so i need to make sure the object works
+    {
+        if (modifierInfoCanvas == null)
+            modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
+
+        if (modifierInfoUIWidget == null)
+            modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
     }
 
     public void SetContext(CardContext ctx) //for setting context

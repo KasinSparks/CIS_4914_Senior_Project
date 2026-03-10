@@ -142,7 +142,7 @@ public class Hand : MonoBehaviour
     public void SetSelectedCard(CardOwnership owner, Card selected_card)
     {
         if (owner != CardOwnership.Player) return;
-        if (SceneManager.GetActiveScene().name == "Sacrafice" || SceneManager.GetActiveScene().name == "Campfire") return; //to stop errors from being thrown
+        if (SceneManager.GetActiveScene().name == "Sacrafice" || SceneManager.GetActiveScene().name == "Campfire" || SceneManager.GetActiveScene().name == "Shop") return; //to stop errors from being thrown
         
         if (this.current_card_selected != null &&
             this.current_card_selected.card_state == CardState.InHand)
