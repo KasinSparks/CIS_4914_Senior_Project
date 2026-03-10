@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
-//using System.ComponentModel.DataAnnotations;
 
 public class ShopBehavior : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class ShopBehavior : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private string nextSceneName; //scene to load after exit
     [SerializeField] private float cardScale = 1f; //scale for playfield display
-    [SerializeField] private List<CardData> availableCards;
     [SerializeField] private List<CardData> shopCards; //cards to be placed in shop
     [SerializeField] private Material highlightMaterial; //to highlight wanted slots green to show where card can be placed
     [SerializeField] private Material defaultMaterial;
