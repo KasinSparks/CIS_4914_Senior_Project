@@ -305,6 +305,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
 --- !u!1 &143619538
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +738,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
 --- !u!1 &555927088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,7 +2175,7 @@ MonoBehaviour:
   slot2: {fileID: 553253028}
   playerHand: {fileID: 976764611}
   cardPrefab: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-  nextSceneName: Gameplay
+  nextSceneName: Path
   cardScale: 2.5
   availableCards:
   - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}

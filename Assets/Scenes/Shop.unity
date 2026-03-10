@@ -1608,8 +1608,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayfieldUpgrade, Assembly-CSharp
+      - m_Target: {fileID: 1460760512}
+        m_TargetAssemblyTypeName: ShopBehavior, Assembly-CSharp
         m_MethodName: ExitScene
         m_Mode: 1
         m_Arguments:
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   - {fileID: 1612176380}
   playerHand: {fileID: 976764611}
   cardPrefab: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-  nextSceneName: Gameplay
+  nextSceneName: Path
   cardScale: 2.5
   availableCards:
   - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}

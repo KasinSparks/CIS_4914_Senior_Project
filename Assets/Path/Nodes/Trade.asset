@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b48ce4d3e95ab4181c4f51d8c1485c, type: 3}
   m_Name: Trade
   m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
-  scene_name: TestTrade
+  scene_name: Shop
   image: {fileID: 2800000, guid: dae3ee83da03dda48ae9aff5a165f73b, type: 3}
