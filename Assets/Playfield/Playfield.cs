@@ -272,7 +272,7 @@ public class Playfield : MonoBehaviour
 
     public void RegisterPlayfieldUpdate(CardOwnership owner)
     {
-        int num_of_hymenopteras = 0;
+        int num_of_card_with_str_in_num_mod = 0;
         List<CardSlot> slots = this.GetCardSlots(owner);
         foreach (CardSlot slot in slots)
         {
@@ -281,9 +281,13 @@ public class Playfield : MonoBehaviour
                 continue;
             }
 
-            if (slot.GetCard().GetOrder() == CardOrder.Hymenoptera)
+            List<CardModifier> card_mods = slot.GetCard().GetAllModifierData();
+            foreach (CardModifier modifier in card_mods)
             {
-                num_of_hymenopteras++;
+                if (modifier.GetType() == typeof(StrengthInNumberModifier))
+                {
+                    num_of_card_with_str_in_num_mod++;
+                }
             }
         }
          
@@ -294,7 +298,7 @@ public class Playfield : MonoBehaviour
                 continue;
             }
 
-            slot.GetCard().OnPlayfieldUpdate(num_of_hymenopteras);
+            slot.GetCard().OnPlayfieldUpdate(num_of_card_with_str_in_num_mod);
         }
     }
 

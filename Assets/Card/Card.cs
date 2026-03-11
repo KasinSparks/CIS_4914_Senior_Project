@@ -673,7 +673,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             if (mods[i].modifier.GetType() == typeof(StrengthInNumberModifier))
             {
                 // TODO(KASIN): Yeah, not sure how I feel about this...
-                ((StrengthInNumberModifier)mods[i].modifier).SetNumberOfHymenopteras(val);
+                ((StrengthInNumberModifier)mods[i].modifier).SetNumberOfStrInNumMods(val);
             }
 
             // Check to see if this modifier has already been applied

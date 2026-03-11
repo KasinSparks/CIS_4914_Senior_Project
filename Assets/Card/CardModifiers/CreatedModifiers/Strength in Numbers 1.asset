@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Strength in Numbers 1
   m_EditorClassIdentifier: Assembly-CSharp::StrengthInNumberModifier
   modifier_name: Strength in Numbers
-  description: Increases attack based on the number of Hymenopteras on the board.
+  description: Gets stronger according to the amount of played bugs with this modifier
   image: {fileID: 2800000, guid: b0dd87d492b9e534b8f97ea8d24a14ee, type: 3}
   modifier_type: 10
   modifier_state: 0
