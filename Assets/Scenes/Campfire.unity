@@ -2145,7 +2145,7 @@ MonoBehaviour:
   slot2: {fileID: 553253028}
   playerHand: {fileID: 149651789}
   cardPrefab: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-  nextSceneName: Gameplay
+  nextSceneName: Path
   cardScale: 1.3
   upgradeButton: {fileID: 658286133}
   exitButton: {fileID: 1991132684}
