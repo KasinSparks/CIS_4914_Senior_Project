@@ -2145,22 +2145,8 @@ MonoBehaviour:
   slot2: {fileID: 553253028}
   playerHand: {fileID: 149651789}
   cardPrefab: {fileID: 6258434679688823376, guid: 4d6df38d317c3a94c9f5576b54a57ee6, type: 3}
-<<<<<<< path_system_integration
-  nextSceneName: Path
-  cardScale: 2.5
-  availableCards:
-  - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
-  - {fileID: 11400000, guid: b61b23b3467ae1e4faa6ab607de49ed3, type: 2}
-  - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
-  - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
-  - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
-  - {fileID: 11400000, guid: 93bd8af31692fbb4a8accb6351310847, type: 2}
-  - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
-  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
-=======
   nextSceneName: Gameplay
   cardScale: 1.3
->>>>>>> main
   upgradeButton: {fileID: 658286133}
   exitButton: {fileID: 1991132684}
   healButton: {fileID: 682431302}
