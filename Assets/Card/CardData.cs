@@ -33,7 +33,7 @@ public class CardData : ScriptableObject
     {
         if (other == null) return false;
 
-        if ((this.card_name == other.card_name) && (this.order == other.order)) return true;
+        if ((this.card_name.Equals(other.card_name)) && (this.order == other.order)) return true;
 
         return false;
     }
