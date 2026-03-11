@@ -155,11 +155,8 @@ public class PathSystem : MonoBehaviour
             // Assign node type
             string guid = node_queue.Dequeue();
             PathNode node = this.gUIDs.GetGameObject(guid).GetComponent<PathNode>();
-            if (!(node.HasBeenAssignedPathNodeData()))
-            {
-                PathNodeData path_node = this.GetRandomPathNode();
-                node.SetPathNode(path_node);
-            }
+            PathNodeData path_node = this.GetRandomPathNode();
+            node.SetPathNode(path_node);
             node.UpdateImage();
 
             // Add the node to the visited list
