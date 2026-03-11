@@ -16,22 +16,27 @@ public class JSON_TESTER : MonoBehaviour
         */
         JsonParser jsonParser = new JsonParser();
         JsonAST ast = jsonParser.Parse(Path.Combine(new string[] { "Assets", "Save System", "Json", "test.json" }));
-        JsonObject val = (JsonObject) ((JsonObject)ast.value).value["glossary"];
+        JsonObject val = (JsonObject) ((JsonObject)ast.value)["glossary"];
 
-        Debug.Log(((JsonLiteral<string>) (val.value["title"])).value);
-        JsonObject t = (JsonObject) val.value["GlossDiv"];
-        t = (JsonObject) t.value["GlossList"];
-        t = (JsonObject) t.value["GlossEntry"];
-        JsonObject t2 = (JsonObject) t.value["GlossDef"];
-        JsonArray f = (JsonArray) t2.value["GlossSeeAlso"];
-        Debug.Log(((JsonLiteral<string>) f.value[0]).value);
-        Debug.Log(((JsonLiteral<string>) f.value[1]).value);
+        Debug.Log(((JsonString) (val["title"])).value);
+        JsonObject t = (JsonObject) val["GlossDiv"];
+        t = (JsonObject) t["GlossList"];
+        t = (JsonObject) t["GlossEntry"];
+        JsonObject t2 = (JsonObject) t["GlossDef"];
+        JsonArray f = (JsonArray) t2["GlossSeeAlso"];
+        Debug.Log(((JsonString) f[0]).value);
+        Debug.Log(((JsonString) f[1]).value);
 
-        Debug.Log(((JsonLiteral<int>) t.value["TestNumber"]).value);
-        Debug.Log(((JsonLiteral<int>) t.value["TestNumber2"]).value);
-        Debug.Log(((JsonLiteral<int>) t.value["TestNumber3"]).value);
-        Debug.Log(((JsonLiteral<float>) t.value["TestFloat"]).value);
-        Debug.Log(((JsonLiteral<float>) t.value["TestFloat2"]).value);
+        Debug.Log(((JsonInt) t["TestNumber"]).value);
+        Debug.Log(((JsonInt) t["TestNumber2"]).value);
+        Debug.Log(((JsonInt) t["TestNumber3"]).value);
+        Debug.Log(((JsonFloat) t["TestFloat"]).value);
+        Debug.Log(((JsonFloat) t["TestFloat2"]).value);
+
+        StreamWriter writer = new StreamWriter(Path.Combine(new string[] { "SAVES", "JSON_TESTING", "test_output.json" }));
+        writer.Write(ast.ToStringJson());
+        writer.Flush();
+        writer.Close();
     }
 
     // Update is called once per frame
