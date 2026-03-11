@@ -10,7 +10,6 @@ public class PlayfieldUpgrade : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private string nextSceneName; //scene to load after exit
     [SerializeField] private float cardScale = 1f; //scale for playfield display
-    [SerializeField] private List<CardData> availableCards;
 
     public GameObject upgradeButton;
 
@@ -25,7 +24,8 @@ public class PlayfieldUpgrade : MonoBehaviour
 
     void Start()
     {
-        foreach (CardData cardData in availableCards)
+        CardData[] playerCards = SaveSystem.LoadDeck(SaveSystemFile.PlayerDeck); //for save data
+        foreach (CardData cardData in playerCards) //changed to save data cards
         {
             playerHand.AddCardForUpgrade(cardData);
         }
@@ -46,7 +46,7 @@ public class PlayfieldUpgrade : MonoBehaviour
         slot.SetIsCardPlaced(true);
         slot.SetCard(card);
         card.transform.SetParent(this.transform);
-        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
+        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 0));
         card.transform.localScale = Vector3.one * cardScale;
         card.SetSlot(slot);
         card.SetState(CardState.OnPlayfield);
@@ -96,12 +96,12 @@ public class PlayfieldUpgrade : MonoBehaviour
                 newData.starting_modifiers = MergeModifiers(data1, data2); //combine modifiers
             }
             playerHand.RemoveCard(c2);
-            Destroy(c2.gameObject);
+            c2.transform.position += new Vector3(0, -1000, 0);
             slot2.ResetCardSlot();
             c1.SetCardData(newData); //apply new stats
             c1.Initialize(newData);
             c1.SetSlot(slot1);
-            SaveUpgradedCard(c1);
+            SaveUpgradedCard(data1, c1.GetCardData(), data2);
             upgradePerformed = true;
             Debug.Log("Upgraded");
         }
@@ -125,13 +125,14 @@ public class PlayfieldUpgrade : MonoBehaviour
                 return;
             }
             CardData newData = Instantiate(data1); //will write to this data and then apply to first card
+            CardData oldData = c1.GetCardData();
             newData.attack += 2;
             newData.hp += 2;
             newData.card_name = newData.card_name + "+"; //ex: Ant+
             c1.SetCardData(newData); //apply new stats
             c1.Initialize(newData);
             c1.SetSlot(slot1);
-            SaveUpgradedCard(c1);
+            SaveUpgradedCardSingle(oldData, c1.GetCardData());
             upgradePerformed = true;
             Debug.Log("Upgraded");
             healButton.SetActive(false);
@@ -177,8 +178,18 @@ public class PlayfieldUpgrade : MonoBehaviour
         }
         return merged;
     }
-    private void SaveUpgradedCard(Card card)
+
+    private void SaveUpgradedCard(CardData original, CardData keptCard, CardData sacrificedCard)
     {
-        //todo
+        SaveSystem.RemoveCardFromDeckSave(original, SaveSystemFile.PlayerDeck);
+        SaveSystem.RemoveCardFromDeckSave(sacrificedCard, SaveSystemFile.PlayerDeck);
+
+        SaveSystem.AddCardToDeckSave(keptCard, SaveSystemFile.PlayerDeck);
+    }
+
+    private void SaveUpgradedCardSingle(CardData oldCard, CardData newCard)
+    {
+        SaveSystem.RemoveCardFromDeckSave(oldCard, SaveSystemFile.PlayerDeck);
+        SaveSystem.AddCardToDeckSave(newCard, SaveSystemFile.PlayerDeck);
     }
 }

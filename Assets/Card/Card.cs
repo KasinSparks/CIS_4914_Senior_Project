@@ -285,7 +285,14 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             if (shop != null)
             {
                 shop.selectedUpgradeCard = this;
-                shop.HighlightSlots();
+                if (card_state != CardState.OnPlayfield)
+                {
+                    shop.HighlightSlots();
+                }
+                else
+                {
+                    shop.UnhighlightSlots();
+                }
             }
 
             return;
