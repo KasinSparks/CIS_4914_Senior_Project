@@ -35,6 +35,16 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         this.GetComponent<Renderer>().material.mainTexture = this.data.GetImage();
     }
 
+    public bool HasBeenAssignedPathNodeData()
+    {
+        if (this.data != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     /*
     public void OnPointerEnter(PointerEventData eventData)
     {

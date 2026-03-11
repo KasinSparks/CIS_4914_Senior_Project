@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b48ce4d3e95ab4181c4f51d8c1485c, type: 3}
   m_Name: Campfire
   m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
-  scene_name: TestCampfire
+  scene_name: Campfire
   image: {fileID: 2800000, guid: 6d23e484a23480e4ca53b2d151c24103, type: 3}
