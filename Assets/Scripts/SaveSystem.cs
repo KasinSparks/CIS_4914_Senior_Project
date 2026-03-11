@@ -8,9 +8,13 @@ public enum SaveSystemFile
     None,
     PlayerDeck,
     PlayerConsumables,
+    TotemModifiers,
+    TotemModifierNames,
+    TotemOrders,
     OpponentDeck1,  // Example
     OpponentDeck2,  // Example, can change this to the name of the opponent
 }
+
 
 public class SaveSystem
 {
@@ -21,6 +25,9 @@ public class SaveSystem
 
     private static readonly string CONSUMABLES_FOLDER         = "CONSUMABLES";
     private static readonly string CONSUMABLES_SAVE_LOCATION  = Path.Combine(SAVES_FOLDER, CONSUMABLES_FOLDER);
+
+    private static readonly string TOTEMS_FOLDER = "TOTEMS";
+    private static readonly string TOTEMS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, TOTEMS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -37,6 +44,12 @@ public class SaveSystem
                 return "PLAYER_CONSUMABLES.json";
             case SaveSystemFile.OpponentDeck1:
                 return "OPPONENT1_DECK.json";
+            case SaveSystemFile.TotemModifiers:
+                return "TOTEM_MODIFIERS.json";
+            case SaveSystemFile.TotemOrders:
+                return "TOTEM_ORDERS.json";
+            case SaveSystemFile.TotemModifierNames:
+                return "TOTEM_MODIFIER_NAMES.json";
 
             default:
                 // TODO(KASIN):
@@ -60,6 +73,12 @@ public class SaveSystem
             case SaveSystemFile.OpponentDeck1:
                 // TODO
                 return "";
+            case SaveSystemFile.TotemModifiers:
+                return TOTEMS_SAVE_LOCATION;
+            case SaveSystemFile.TotemModifierNames:
+                return TOTEMS_SAVE_LOCATION;
+            case SaveSystemFile.TotemOrders:
+                return TOTEMS_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -132,7 +151,7 @@ public class SaveSystem
         }
         SaveToJsonFile(sb.ToString(), file);
     }
-    
+
     /**
      * @brief Load the deck of cards from the save file
      * @return The deck of cards
@@ -325,6 +344,142 @@ public class SaveSystem
             }
 
             AppendConsumableToSaveFile(consumables[i], file, add_newline);
+        }
+    }
+
+    public static void SaveTotemOrders(CardOrder[] orders, SaveSystemFile file)
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < orders.Length; ++i)
+        {
+            string json_string = JsonUtility.ToJson(orders[i]);
+            sb.Append(json_string);
+            if (i < orders.Length - 1)
+            {
+                sb.Append("\n");
+            }
+        }
+        SaveToJsonFile(sb.ToString(), file);
+    }
+
+    public static CardOrder[] LoadTotemOrders(SaveSystemFile file)
+    {
+        List<CardOrder> orders = new List<CardOrder>();
+
+        StreamReader reader = null;
+        try
+        {
+
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            return null;
+        }
+
+        string line = reader.ReadLine();
+
+        while (line != null)
+        {
+            CardOrder temp = JsonUtility.FromJson<CardOrder>(line);
+            orders.Add(temp);
+
+            line = reader.ReadLine();
+        }
+        reader.Close();
+
+        return orders.ToArray();
+    }
+
+    public static void SaveTotemModifiers(CardModifier[] modifiers, SaveSystemFile file)
+    {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb_name = new StringBuilder();
+        for (int i = 0; i < modifiers.Length; ++i)
+        {
+            string json_string = JsonUtility.ToJson(modifiers[i]);
+            sb.Append(json_string);
+
+            sb_name.Append(modifiers[i].GetName());
+
+            if (i < modifiers.Length - 1)
+            {
+                sb.Append("\n");
+                sb_name.Append("\n");
+            }
+        }
+        SaveToJsonFile(sb.ToString(), file);
+        SaveToJsonFile(sb_name.ToString(), SaveSystemFile.TotemModifierNames);
+    }
+
+    public static CardModifier[] LoadTotemModifiers(SaveSystemFile file)
+    {
+        List<CardModifier> modifiers = new List<CardModifier>();
+        List<string> modifier_names = new List<string>();
+
+        StreamReader reader = null;
+        StreamReader reader_name = null;
+        try
+        {
+
+            reader = new StreamReader(GetFullPath(file));
+            reader_name = new StreamReader(GetFullPath(SaveSystemFile.TotemModifierNames));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            return null;
+        }
+
+        string line = reader.ReadLine();
+        string line_name = reader_name.ReadLine();
+
+        while (line != null)
+        {
+            CardModifier mod = LoadTotemModifiersHelper(line_name);
+            modifiers.Add(mod);
+            JsonUtility.FromJsonOverwrite(line, modifiers[modifiers.Count - 1]);
+            modifiers[modifiers.Count - 1].name = modifiers[modifiers.Count - 1].GetName();
+
+            line = reader.ReadLine();
+            line_name = reader_name.ReadLine();
+        }
+        reader.Close();
+        reader_name.Close();
+
+        return modifiers.ToArray();
+    }
+
+    private static CardModifier LoadTotemModifiersHelper(string name)
+    {
+        switch (name)
+        {
+            case "Armored":
+                return ScriptableObject.CreateInstance<ArmoredCardModifier>();
+
+            case "Attack Speed":
+                return ScriptableObject.CreateInstance<AttackSpeedCardModifier>();
+
+            case "Chemical Spray":
+                return ScriptableObject.CreateInstance<ChemicalSprayCardModifier>();
+
+            case "Dodge":
+                return ScriptableObject.CreateInstance<DodgeCardModifier>();
+
+            case "Explode on Death":
+                return ScriptableObject.CreateInstance<ExplodeOnDeathModifier>();
+
+            case "Heal on Attack":
+                return ScriptableObject.CreateInstance<HealOnAttackModifier>();
+
+            case "Queen":
+                return ScriptableObject.CreateInstance<QueenModifier>();
+
+            case "Strength in Numbers":
+                return ScriptableObject.CreateInstance<StrengthInNumberModifier>();
+
+            default:
+                // TODO(ALEX):
+                throw new System.NotImplementedException();
         }
     }
 }

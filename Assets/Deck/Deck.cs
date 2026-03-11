@@ -167,4 +167,9 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
+    public List<CardData> GetDeck()
+    {
+        return this.cards;
+    }
+
 }
