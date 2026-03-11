@@ -349,8 +349,6 @@ public class SaveSystem
 
     public static void SaveTotemOrders(CardOrder[] orders, SaveSystemFile file)
     {
-        // TODO(KASIN): For now, each line will represent a different card
-        //    However, this may need to be changed later.
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < orders.Length; ++i)
         {
@@ -368,8 +366,6 @@ public class SaveSystem
     {
         List<CardOrder> orders = new List<CardOrder>();
 
-
-        // TODO(KASIN): See if this throws an execption if file does not exist...
         StreamReader reader = null;
         try
         {
@@ -397,8 +393,6 @@ public class SaveSystem
 
     public static void SaveTotemModifiers(CardModifier[] modifiers, SaveSystemFile file)
     {
-        // TODO(KASIN): For now, each line will represent a different card
-        //    However, this may need to be changed later.
         StringBuilder sb = new StringBuilder();
         StringBuilder sb_name = new StringBuilder();
         for (int i = 0; i < modifiers.Length; ++i)
@@ -423,8 +417,6 @@ public class SaveSystem
         List<CardModifier> modifiers = new List<CardModifier>();
         List<string> modifier_names = new List<string>();
 
-
-        // TODO(KASIN): See if this throws an execption if file does not exist...
         StreamReader reader = null;
         StreamReader reader_name = null;
         try

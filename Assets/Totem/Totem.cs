@@ -14,7 +14,7 @@ public class Totem : MonoBehaviour
     private GameObject totem_prefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         CardModifier[] saved_modifiers = SaveSystem.LoadTotemModifiers(SaveSystemFile.TotemModifiers);
         if (saved_modifiers == null || saved_modifiers.Length < 1)
@@ -69,11 +69,29 @@ public class Totem : MonoBehaviour
         card.AttachModifier(this.selected_modifier);
     }
 
+    public List<CardModifier> GetModifiers()
+    {
+        return this.modifiers;
+    }
+
+    public List<CardOrder> GetOrders()
+    {
+        return this.orders;
+    }
+
+    public void SetSelectedModifier(CardModifier modifier)
+    {
+        this.selected_modifier = modifier;
+    }
+
+    public void SetSelectedOrder(CardOrder order)
+    {
+        this.selected_order = order;
+    }
+
     void OnDestroy()
     {
         SaveSystem.SaveTotemOrders(this.orders.ToArray(), SaveSystemFile.TotemOrders);
         SaveSystem.SaveTotemModifiers(this.modifiers.ToArray(), SaveSystemFile.TotemModifiers);
     }
-
-    // make a way for the player to select a totem (select)
 }
