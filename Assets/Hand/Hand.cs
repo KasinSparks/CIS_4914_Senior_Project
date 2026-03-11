@@ -129,9 +129,10 @@ public class Hand : MonoBehaviour
         // Go through each card an update its' position.
         for (int i = 0; i < this.cards.Count; ++i)
         {
-            this.cards[i].transform.position =
-                this.card_starting_mark.transform.position
-                + (unit_vector * spacing * i);
+            Vector3 pos = this.card_starting_mark.transform.position + (unit_vector * spacing * i);
+
+            pos.y += i * 0.002f; //so cards dont clip
+            this.cards[i].transform.position = pos;
         }
 
         this.front_card = this.cards[0];
