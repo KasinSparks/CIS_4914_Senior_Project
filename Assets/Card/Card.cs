@@ -104,6 +104,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         this.modifiers = new List<ModifierTuple>();
 
         this.num_of_attacks_per_turn = 1;
+
+        this.modifier_start_mark = this.transform.Find("card_modifiers");
     }
 
     /**
@@ -144,7 +146,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // TODO(KASIN): This can lead to attaching another copy of a modifier
         //     that is already attached. For now, a simple compare is used to
         //     prevent duplication of attached modifiers.
-        this.modifier_start_mark = this.transform.Find("card_modifiers");
         for (int i = 0; i < this.card_data.starting_modifiers.Count; ++i)
         {
             this.AttachModifier(this.card_data.starting_modifiers[i]);
@@ -158,7 +159,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Card description text set
         this.SetCardTextField("card_description_text", this.card_data.description);
 
-        this.GetComponentInChildren<HighlightedWords>().Initialize(this.card_data.highlighted_words);
+        this.SetCardTextField("card_order_text",
+            CardOrderInfo.CardOrderString(this.GetOrder()));
+
+        HighlightedWords[] highlighted_word_components =
+            this.GetComponentsInChildren<HighlightedWords>();
+        foreach (HighlightedWords highlighted_word in highlighted_word_components)
+        {
+            highlighted_word.Initialize(this.card_data.highlighted_words);
+        }
 
         this.UpdateCardTextStats();
 

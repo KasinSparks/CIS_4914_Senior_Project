@@ -16,6 +16,7 @@ MonoBehaviour:
   description: A fast beetle.
   highlighted_words:
   - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
+  - {fileID: 11400000, guid: 47fadcdb5b71db54e9bec16c9b2438e4, type: 2}
   order: 0
   hp: 3
   attack: 2

@@ -2905,6 +2905,7 @@ MonoBehaviour:
   words:
   - {fileID: 11400000, guid: 0058ae39bc8a06b4783ac51305c60162, type: 2}
   - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
+  - {fileID: 11400000, guid: 47fadcdb5b71db54e9bec16c9b2438e4, type: 2}
 --- !u!61 &513039228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9012,10 +9013,12 @@ SceneRoots:
   - {fileID: 826431936}
   - {fileID: 363630410}
   - {fileID: 1142255947}
+  - {fileID: 976764612}
   - {fileID: 2081642590}
+  - {fileID: 406524355}
   - {fileID: 723690304}
   - {fileID: 708981499}
-  - {fileID: 976764612}
+  - {fileID: 11993129}
   - {fileID: 1949458451}
   - {fileID: 1004096598}
   - {fileID: 406524355}
