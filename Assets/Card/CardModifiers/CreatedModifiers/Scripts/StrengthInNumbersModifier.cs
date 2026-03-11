@@ -3,7 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Card/Modifier/Strength in Numbers")]
 public class StrengthInNumberModifier : CardModifier
 {
-    private int num_of_hymenopteras = 0;
+    // Number of cards on the playfield with the strength in number modifier
+    private int num_of_str_in_num = 0;
     private int old_num = 0;
 
     public override void Initialize()
@@ -12,16 +13,16 @@ public class StrengthInNumberModifier : CardModifier
         //this.SetImage();
     }
 
-    public void SetNumberOfHymenopteras(int num)
+    public void SetNumberOfStrInNumMods(int num)
     {
-        this.num_of_hymenopteras = num;
+        this.num_of_str_in_num = num;
     }
 
     override public void ApplyModifier(Card card, Card other)
     {
         card._RemoveAttackBonusDamage(old_num);
-        old_num = num_of_hymenopteras;
-        card._AddAttackBonusDamage(num_of_hymenopteras);
+        old_num = num_of_str_in_num;
+        card._AddAttackBonusDamage(num_of_str_in_num);
         this.modifier_state = ModifierState.ReadyToApply;
     }
 
