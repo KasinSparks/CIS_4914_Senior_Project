@@ -101,7 +101,7 @@ public class PlayfieldUpgrade : MonoBehaviour
             c1.SetCardData(newData); //apply new stats
             c1.Initialize(newData);
             c1.SetSlot(slot1);
-            SaveUpgradedCard(c1, c2);
+            SaveUpgradedCard(data1, c1.GetCardData(), data2);
             upgradePerformed = true;
             Debug.Log("Upgraded");
         }
@@ -125,14 +125,14 @@ public class PlayfieldUpgrade : MonoBehaviour
                 return;
             }
             CardData newData = Instantiate(data1); //will write to this data and then apply to first card
-            Card oldData = c1;
+            CardData oldData = c1.GetCardData();
             newData.attack += 2;
             newData.hp += 2;
             newData.card_name = newData.card_name + "+"; //ex: Ant+
             c1.SetCardData(newData); //apply new stats
             c1.Initialize(newData);
             c1.SetSlot(slot1);
-            SaveUpgradedCardSingle(oldData, c1);
+            SaveUpgradedCardSingle(oldData, c1.GetCardData());
             upgradePerformed = true;
             Debug.Log("Upgraded");
             healButton.SetActive(false);
@@ -179,17 +179,17 @@ public class PlayfieldUpgrade : MonoBehaviour
         return merged;
     }
 
-    private void SaveUpgradedCard(Card keptCard, Card sacrificedCard)
+    private void SaveUpgradedCard(CardData original, CardData keptCard, CardData sacrificedCard)
     {
-        SaveSystem.RemoveCardFromDeckSave(keptCard.GetCardData(), SaveSystemFile.PlayerDeck);
-        SaveSystem.RemoveCardFromDeckSave(sacrificedCard.GetCardData(), SaveSystemFile.PlayerDeck);
+        SaveSystem.RemoveCardFromDeckSave(original, SaveSystemFile.PlayerDeck);
+        SaveSystem.RemoveCardFromDeckSave(sacrificedCard, SaveSystemFile.PlayerDeck);
 
-        SaveSystem.AddCardToDeckSave(keptCard.GetCardData(), SaveSystemFile.PlayerDeck);
+        SaveSystem.AddCardToDeckSave(keptCard, SaveSystemFile.PlayerDeck);
     }
 
-    private void SaveUpgradedCardSingle(Card oldCard, Card newCard)
+    private void SaveUpgradedCardSingle(CardData oldCard, CardData newCard)
     {
-        SaveSystem.RemoveCardFromDeckSave(oldCard.GetCardData(), SaveSystemFile.PlayerDeck);
-        SaveSystem.AddCardToDeckSave(newCard.GetCardData(), SaveSystemFile.PlayerDeck);
+        SaveSystem.RemoveCardFromDeckSave(oldCard, SaveSystemFile.PlayerDeck);
+        SaveSystem.AddCardToDeckSave(newCard, SaveSystemFile.PlayerDeck);
     }
 }
