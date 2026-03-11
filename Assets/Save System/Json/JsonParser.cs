@@ -133,9 +133,9 @@ public class JsonParser
         return ret;
     }
 
-    private JsonLiteral<string> ParseJsonString()
+    private JsonString ParseJsonString()
     {
-        JsonLiteral<string> ret = new JsonLiteral<string>();
+        JsonString ret = new JsonString();
 
         JsonToken string_token = this.ConsumeToken(current_index, 1)[0];
 
@@ -144,17 +144,17 @@ public class JsonParser
         return ret;
     }
 
-    private JsonLiteral<JsonBool> ParseJsonBool()
+    private JsonBool ParseJsonBool()
     {
-        JsonLiteral<JsonBool> ret = new JsonLiteral<JsonBool>();
+        JsonBool ret = new JsonBool();
         JsonToken token = this.ConsumeToken(this.current_index, 1)[0];
         switch (token.token_type)
         {
             case JsonTokenTypes.True:
-                ret.value.value = true;
+                ret.value = true;
                 break;
             case JsonTokenTypes.False:
-                ret.value.value = false;
+                ret.value = false;
                 break;
             default:
                 throw new JsonParseError("Expected a JsonBool type");
@@ -163,9 +163,9 @@ public class JsonParser
         return ret;
     }
 
-    private JsonLiteral<JsonNull> ParseJsonNull()
+    private JsonNull ParseJsonNull()
     {
-        JsonLiteral<JsonNull> ret = new JsonLiteral<JsonNull>();
+        JsonNull ret = new JsonNull();
         JsonToken token = this.ConsumeToken(this.current_index, 1)[0];
         switch (token.token_type)
         {
@@ -178,9 +178,9 @@ public class JsonParser
         return ret;
     }
 
-    private JsonLiteral<int> ParseJsonInt()
+    private JsonInt ParseJsonInt()
     {
-        JsonLiteral<int> ret = new JsonLiteral<int>();
+        JsonInt ret = new JsonInt();
         JsonToken token = this.ConsumeToken(this.current_index, 1)[0];
         switch (token.token_type)
         {
@@ -194,9 +194,9 @@ public class JsonParser
         return ret;
     }
 
-    private JsonLiteral<float> ParseJsonFloat()
+    private JsonFloat ParseJsonFloat()
     {
-        JsonLiteral<float> ret = new JsonLiteral<float>();
+        JsonFloat ret = new JsonFloat();
         JsonToken token = this.ConsumeToken(this.current_index, 1)[0];
         switch (token.token_type)
         {
