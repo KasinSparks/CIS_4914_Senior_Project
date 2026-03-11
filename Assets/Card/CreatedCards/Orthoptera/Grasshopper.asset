@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Grasshopper
-  description: 
+  description: Powerful rear legs allow the Grasshopper to jump great distances.
   highlighted_words: []
   order: 8
   hp: 2
   attack: 2
   nektar_cost: 1
   nektar_given_when_scarificed: 1
-  image: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+  image: {fileID: 2800000, guid: e9ec9deefca66e1498bbce3f867fda2a, type: 3}
   card_rarity: 1
   starting_modifiers:
   - {fileID: 11400000, guid: 9a611389446ac154f8351bfaf7a4b630, type: 2}

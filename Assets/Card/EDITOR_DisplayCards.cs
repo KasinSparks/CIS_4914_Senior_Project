@@ -51,7 +51,6 @@ public class EDITOR_DisplayCards : MonoBehaviour, IDragHandler, IScrollHandler
             ),
             this.transform.rotation
         );
-        Debug.Log("Drag delta: " + eventData.delta);
     }
 
     public void OnScroll(PointerEventData eventData)
@@ -64,6 +63,5 @@ public class EDITOR_DisplayCards : MonoBehaviour, IDragHandler, IScrollHandler
             ),
             this.transform.rotation
         );
-        Debug.Log("Scroll delta: " + eventData.scrollDelta);
     }
 }

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Wolf Spider
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Wolf Spider
-  description: 
+  description: An introverted spider that typically does not produce webs. Females
+    carry their young on her back.
   highlighted_words: []
   order: 5
   hp: 3
   attack: 2
   nektar_cost: 2
   nektar_given_when_scarificed: 1
-  image: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+  image: {fileID: 2800000, guid: 6190cd06fbf4c344c91852fd21d2615f, type: 3}
   card_rarity: 1
   starting_modifiers:
-  - {fileID: 11400000, guid: b425aec539e5ed84f94e51362a4301bf, type: 2}
   - {fileID: 11400000, guid: 13a12a5192264c84fb0eee5f5204ef1c, type: 2}
