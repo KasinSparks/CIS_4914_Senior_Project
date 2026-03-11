@@ -12,7 +12,6 @@ public class ShopBehavior : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private string nextSceneName; //scene to load after exit
     [SerializeField] private float cardScale = 1f; //scale for playfield display
-    [SerializeField] private List<CardData> availableCards;
     [SerializeField] private List<CardData> shopCards; //cards to be placed in shop
     [SerializeField] private Material highlightMaterial; //to highlight wanted slots green to show where card can be placed
     [SerializeField] private Material defaultMaterial;
@@ -23,7 +22,8 @@ public class ShopBehavior : MonoBehaviour
 
     void Start()
     {
-        foreach (CardData cardData in availableCards)
+        CardData[] playerCards = SaveSystem.LoadDeck(SaveSystemFile.PlayerDeck); //for save data
+        foreach (CardData cardData in playerCards) //changed to save data cards
         {
             playerHand.AddCardForUpgrade(cardData);
         }
@@ -52,7 +52,9 @@ public class ShopBehavior : MonoBehaviour
             slot.SetCard(card); //place in 0, 2, ... 10 slot so that there will be a slot next to it
             slot.SetIsCardPlaced(true);
             card.transform.SetParent(this.transform);
-            card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
+            Vector3 pos = slot.transform.position; //new cards screwed with placement so i have to shift it up a little
+            pos.y += 0.002f;
+            card.transform.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, 0));
             card.transform.localScale = Vector3.one * cardScale;
             card.SetSlot(slot);
             card.SetState(CardState.OnPlayfield);
@@ -83,7 +85,7 @@ public class ShopBehavior : MonoBehaviour
         slot.SetIsCardPlaced(true);
         slot.SetCard(card);
         card.transform.SetParent(this.transform);
-        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 90));
+        card.transform.SetPositionAndRotation(slot.transform.position, Quaternion.Euler(0, 0, 0));
         card.transform.localScale = Vector3.one * cardScale;
         card.SetSlot(slot);
         card.SetState(CardState.OnPlayfield);
@@ -130,16 +132,12 @@ public class ShopBehavior : MonoBehaviour
         Card c2 = pairSlot2.GetCard();
         CardData data1 = c1.GetCardData();
         CardData data2 = c2.GetCardData();
-        CardData newData = Instantiate(data1);
+        SaveUpgradedCard(c2, c1);
         pairSlot2.ResetCardSlot();
-
-        c2.SetCardData(newData); //copying purhcased card data to players card, so i dont have to create a new card, and this card should already have save data configured for it
-        c2.Initialize(newData);
         c2.SetSlot(pairSlot1);
-        c2.transform.position = c1.transform.position; //after copying the card, switch the places to make it seem like purchased card is flying into your hand
-        Destroy(c1.gameObject);
-        Debug.Log("Purchased " + newData.card_name);
-        StartCoroutine(FloatToHand(c2.transform));
+        Debug.Log("Purchased " + c2.card_name);
+        StartCoroutine(FloatToHand(c1.transform));
+        c2.transform.position += new Vector3(0, -1000, 0);
         pairSlot1.transform.position += new Vector3(0, -1000, 0); //move off screen
         pairSlot2.transform.position += new Vector3(0, -1000, 0);
         UnhighlightSlots();
@@ -192,8 +190,9 @@ public class ShopBehavior : MonoBehaviour
         SceneManager.LoadScene(nextSceneName);
     }
 
-    private void SaveUpgradedCard(Card card)
+    private void SaveUpgradedCard(Card oldCard, Card newCard)
     {
-        //todo
+        SaveSystem.RemoveCardFromDeckSave(oldCard.GetCardData(), SaveSystemFile.PlayerDeck);
+        SaveSystem.AddCardToDeckSave(newCard.GetCardData(), SaveSystemFile.PlayerDeck);
     }
 }
