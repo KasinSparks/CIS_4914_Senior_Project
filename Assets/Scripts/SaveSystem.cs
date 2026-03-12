@@ -86,6 +86,21 @@ public class SaveSystem
         }
     }
 
+    private static void _CheckForFolderStructure(SaveSystemFile file)
+    {
+        // Check if the save folders exists
+        if (!Directory.Exists(SAVES_FOLDER))
+        {
+            Directory.CreateDirectory(SAVES_FOLDER);
+        }
+
+        // Check if the path save subfolder exists
+        if (!Directory.Exists(_GetSaveFileLocation(file)))
+        {
+            Directory.CreateDirectory(_GetSaveFileLocation(file));
+        }
+    }
+
     /**
      * @brief Gets the directory path including the file name.
      * @param The save file type.
@@ -164,6 +179,7 @@ public class SaveSystem
         StreamReader reader = null;
         try
         {
+            _CheckForFolderStructure(file);
             reader = new StreamReader(GetFullPath(file));
         }
         catch (System.IO.FileNotFoundException)
@@ -292,6 +308,7 @@ public class SaveSystem
         StreamReader reader = null;
         try
         {
+            _CheckForFolderStructure(file);
             reader = new StreamReader(GetFullPath(file));
         }
         catch (System.IO.FileNotFoundException)
@@ -369,7 +386,7 @@ public class SaveSystem
         StreamReader reader = null;
         try
         {
-
+            _CheckForFolderStructure(file);
             reader = new StreamReader(GetFullPath(file));
         }
         catch (System.IO.FileNotFoundException)
@@ -421,7 +438,7 @@ public class SaveSystem
         StreamReader reader_name = null;
         try
         {
-
+            _CheckForFolderStructure(file);
             reader = new StreamReader(GetFullPath(file));
             reader_name = new StreamReader(GetFullPath(SaveSystemFile.TotemModifierNames));
         }
