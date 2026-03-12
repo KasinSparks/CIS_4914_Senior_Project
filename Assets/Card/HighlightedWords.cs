@@ -110,7 +110,7 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
 
             this.ui_book.SetActive(true);
             this.book_text.text = AddColorTags(word_info.GetInfo(), this.book_text.transform.GetComponent<HighlightedWords>().GetDict());
-            this.book_text_name.text = "<color=blue>" + click_word.ToUpper() + "</color>";
+            this.book_text_name.text = "<color=blue><u>" + click_word.ToUpper() + "</u></color>";
             this.book_image.sprite = word_info.GetSprite();
         }
     }
@@ -163,9 +163,9 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
 
             if (dict.ContainsKey(token.ToUpper()))
             {
-                sb.Append("<color=\"blue\">");
+                sb.Append("<color=\"blue\"><u>");
                 sb.Append(token);
-                sb.Append("</color>");
+                sb.Append("</u></color>");
             }
             else
             {
