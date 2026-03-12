@@ -15,6 +15,8 @@ public class CardData : ScriptableObject
     public int attack;
     public int nektar_cost;
 
+    public int nektar_given_when_scarificed;
+
     public Texture image;
 
     public CardRarity card_rarity;

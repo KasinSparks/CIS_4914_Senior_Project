@@ -35,6 +35,9 @@ public class Playfield : MonoBehaviour
     [SerializeField] private GameState game_state;
     [SerializeField] private Opponent opponent;
 
+    private List<CardSlot> player_lanes_attacked;
+    private List<CardSlot> opponent_lanes_attacked;
+
     void Awake()
     {
         this.sacrifice_ui_button = GameObject.Find("-----UI-----/EndTurnCanvas/SacrificeCancelButton");
@@ -50,6 +53,8 @@ public class Playfield : MonoBehaviour
         this.queue_card_slots = new List<CardSlot>();
         this.current_sacrifice = new List<Card>();
         this.current_sacrifice_cost = 0;
+        this.player_lanes_attacked = new List<CardSlot>();
+        this.opponent_lanes_attacked = new List<CardSlot>();
 
         // Sets up each row (player, opponent, queue)
         for (int i = 0; i < NUM_ROWS; i++)
@@ -372,9 +377,13 @@ public class Playfield : MonoBehaviour
 
     public bool HasSacrificeRequirementBeenMet()
     {
-        // TODO: This may change if we want certain cards to give more than one
-        //     nektar
-        return (this.current_sacrifice.Count >= this.current_sacrifice_cost);
+        int current_nektar_amount_proposed = 0;
+        foreach (Card c in this.current_sacrifice)
+        {
+            current_nektar_amount_proposed += c.GetCardData().nektar_given_when_scarificed;
+        }
+
+        return current_nektar_amount_proposed >= this.current_sacrifice_cost;
     }
 
     public void ResetSacrificeRequirements()
@@ -409,5 +418,154 @@ public class Playfield : MonoBehaviour
     public void SetSacrificeButtonActive(bool active)
     {
         this.sacrifice_ui_button.SetActive(active);
+    }
+    
+    /**
+     * @brief Get the lanes that were attacked in a given turn.
+     * @param owner The owner of the lane you want to get the attack data for.
+     * @return The lanes that were attacked by a card on a given turn.
+     */
+    public CardSlot[] GetLanesAttacked(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                return this.player_lanes_attacked.ToArray();
+            case CardOwnership.Opponent:
+                return this.opponent_lanes_attacked.ToArray();
+        }
+
+        return null;
+    }
+
+    /**
+     * @brief Clear the list of the lanes that were attacked in a given turn.
+     * @param owner The owner of the lane to reset.
+     */
+    public void ResetLanesAttacked(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                this.player_lanes_attacked.Clear();
+                break;
+            case CardOwnership.Opponent:
+                this.opponent_lanes_attacked.Clear();
+                break;
+        }
+    }
+
+    public void AddLaneToAttackedList(CardSlot slot, CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                this.player_lanes_attacked.Add(slot);
+                break;
+            case CardOwnership.Opponent:
+                this.opponent_lanes_attacked.Add(slot);
+                break;
+        }
+    }
+    
+    /**
+     * @breif Finds the empty card slots for a given owner.
+     * @param owner The owner of the card slots you want to get.
+     * @return The open card slots. Will be empty if no card slots are open.
+     * Will return null if there was an error.
+     */
+    public CardSlot[] GetOpenLanes(CardOwnership owner)
+    {
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                return this._GetCardSlotHelper(this.player_card_slots);
+            case CardOwnership.Opponent:
+                return this._GetCardSlotHelper(this.opponent_card_slots);
+        }
+
+        return null;
+    }
+
+    private CardSlot[] _GetCardSlotHelper(List<CardSlot> current_slots)
+    {
+        List<CardSlot> ret = new List<CardSlot>();
+        
+        foreach (CardSlot slot in current_slots)
+        {
+            if (!slot.GetIsCardPlaced())
+            {
+                ret.Add(slot);
+            }
+        }
+
+        return ret.ToArray();
+    }
+
+    public float GetCardScaleAmount()
+    {
+        return this.card_scale;
+    }
+
+    /**
+     * @brief Gets the open slots to the left and right of a given slot.
+     * @return The LHS in index 0 and RHS slot in index 1 of the returned array.
+     * @param owner The owner of the lane
+     * @param slot The reference slot for position.
+     * @note This only works of the slot lists are in order.
+     */
+    public CardSlot[] GetLeftAndRightOpenSlots(CardOwnership owner, CardSlot slot)
+    {
+        CardSlot[] ret = new CardSlot[2] {null, null};
+        List<CardSlot> card_slots = null;
+
+        switch (owner)
+        {
+            case CardOwnership.Player:
+                card_slots = this.player_card_slots;
+                break;
+            case CardOwnership.Opponent:
+                card_slots = this.opponent_card_slots;
+                break;
+        }
+
+        if (card_slots == null)
+        {
+            return new CardSlot[] { null, null };
+        }
+
+        int card_slot_position = -1;
+
+        // Find the given slot position
+        for (int i = 0; i < card_slots.Count; ++i)
+        {
+            if (slot.Equals(card_slots[i]))
+            {
+                card_slot_position = i;
+                break;
+            }
+        }
+        
+        // LHS
+        if ((card_slot_position - 1 >= 0) && (card_slot_position - 1 < card_slots.Count))
+        {
+            ret[0] = card_slots[card_slot_position - 1];
+            if (ret[0].GetIsCardPlaced())
+            {
+                ret[0] = null;
+            }
+        }
+        
+        // RHS
+        if ((card_slot_position + 1 >= 0) && (card_slot_position + 1 < card_slots.Count))
+        {
+            ret[1] = card_slots[card_slot_position + 1];
+            if (ret[1].GetIsCardPlaced())
+            {
+                ret[1] = null;
+            }
+        }
+
+        return ret;
     }
 }

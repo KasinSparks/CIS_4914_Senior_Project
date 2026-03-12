@@ -16,5 +16,5 @@ MonoBehaviour:
   description: Take XXX less damage.
   image: {fileID: 2800000, guid: 0316790f5430a234b870bda24dce8a7d, type: 3}
   modifier_type: 2
-  modifier_state: 1
+  modifier_state: 0
   damage_reduction: 1

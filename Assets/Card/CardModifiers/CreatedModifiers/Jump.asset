@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c10329b4da97af4d8e2774cfb3e554c, type: 3}
+  m_Name: Jump
+  m_EditorClassIdentifier: Assembly-CSharp::JumpModifier
+  modifier_name: Jump
+  description: Will jump into the left or right slot, if open.
+  image: {fileID: 2800000, guid: 9a051b3ac08ea974296a4cbf535ff7a5, type: 3}
+  modifier_type: 9
+  modifier_state: 0

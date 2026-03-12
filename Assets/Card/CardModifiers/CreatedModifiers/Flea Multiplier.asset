@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b57596809ef4c41b4cfe10e112d262, type: 3}
+  m_Name: Flea Multiplier
+  m_EditorClassIdentifier: Assembly-CSharp::QueenModifier
+  modifier_name: Flea Multiplier
+  description: Adds a flee to your hand each turn, while this card is alive.
+  image: {fileID: 2800000, guid: 26e632a9eea6f4d418c1d9fa7627dad2, type: 3}
+  modifier_type: 9
+  modifier_state: 0
+  spwan_card: {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}

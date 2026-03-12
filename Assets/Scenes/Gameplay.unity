@@ -2905,6 +2905,7 @@ MonoBehaviour:
   words:
   - {fileID: 11400000, guid: 0058ae39bc8a06b4783ac51305c60162, type: 2}
   - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
+  - {fileID: 11400000, guid: 47fadcdb5b71db54e9bec16c9b2438e4, type: 2}
 --- !u!61 &513039228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8075,6 +8076,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
   - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: c9528b940a1906d49822f84c5967cc0e, type: 2}
+  - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
+  - {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}
+  - {fileID: 11400000, guid: fd74b69f0ca63f64e8e4ec26863c41d7, type: 2}
+  - {fileID: 11400000, guid: ef93ccc55bf64874a98409e2744bac54, type: 2}
+  - {fileID: 11400000, guid: 828e7ad6cfe662640bdde533eb7213a5, type: 2}
+  - {fileID: 11400000, guid: 21a6a758f543d1543b817beca7c5b9e3, type: 2}
+  - {fileID: 11400000, guid: 5f7c34b516d8d8741928e050549737c2, type: 2}
+  - {fileID: 11400000, guid: c461655c198a4fc4eb82bd3fc4013a98, type: 2}
+  - {fileID: 11400000, guid: 6848922cde034024187ff1be00b50935, type: 2}
+  - {fileID: 11400000, guid: aebb029544d2e044e95496d46edc9daf, type: 2}
+  - {fileID: 11400000, guid: 39e6e3a8d0dd1d249b5c0f2e5705a916, type: 2}
+  - {fileID: 11400000, guid: 7c6759326e8d2f54da13198965d4d0b9, type: 2}
+  - {fileID: 11400000, guid: d706f7165b6da134a80e0e11dc9c7510, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!1 &1838678334
@@ -8974,6 +8989,7 @@ MonoBehaviour:
   current_turn_state: 1
   attack_sys: {fileID: 1032196872}
   opponent: {fileID: 406524356}
+  playfield: {fileID: 1460760515}
 --- !u!4 &2081642590
 Transform:
   m_ObjectHideFlags: 0
@@ -8997,10 +9013,12 @@ SceneRoots:
   - {fileID: 826431936}
   - {fileID: 363630410}
   - {fileID: 1142255947}
+  - {fileID: 976764612}
   - {fileID: 2081642590}
+  - {fileID: 406524355}
   - {fileID: 723690304}
   - {fileID: 708981499}
-  - {fileID: 976764612}
+  - {fileID: 11993129}
   - {fileID: 1949458451}
   - {fileID: 1004096598}
   - {fileID: 406524355}

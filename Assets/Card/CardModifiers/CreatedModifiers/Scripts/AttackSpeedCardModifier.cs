@@ -40,6 +40,7 @@ public class AttackSpeedCardModifier : CardModifier
 
     public void SetData(AttackSpeedCardModifier other)
     {
-
+        base.SetData(other);
+        this.num_of_additional_attacks = other.num_of_additional_attacks;
     }
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016305395433f1541b07f602262ea41e, type: 3}
+  m_Name: Move to Lane Attacked 1
+  m_EditorClassIdentifier: Assembly-CSharp::MoveToLaneAttackedModifier
+  modifier_name: Move to Lane Attacked
+  description: Moves to a lane that was attacked last turn
+  image: {fileID: 2800000, guid: 7496eb8e535f55046a87940b0a46d57c, type: 3}
+  modifier_type: 9
+  modifier_state: 0

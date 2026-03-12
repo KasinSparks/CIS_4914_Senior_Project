@@ -7,6 +7,9 @@ public class GameState : MonoBehaviour
     public AttackSystem attack_sys;
     public Opponent opponent;
 
+    [SerializeField]
+    private Playfield playfield;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,6 +69,13 @@ public class GameState : MonoBehaviour
 
             case TurnStates.PlayerDrawCard:
                 {
+                    if (this.current_turn_state == TurnStates.PlayerSacrifice)
+                    {
+                        // Don't reload the on turn start modifiers
+                        this.current_turn_state = TurnStates.PlayerDrawCard;
+                        break;
+                    }
+
                     this.current_turn_state = TurnStates.PlayerDrawCard;
                     List<Card> player_cards = attack_sys.GetCards(CardOwnership.Player);
                     for (int i = 0; i < player_cards.Count; ++i)
@@ -73,6 +83,7 @@ public class GameState : MonoBehaviour
                         Debug.Log("Owner: " + player_cards[i].GetOwnership());
                         player_cards[i].OnTurnStart();
                     }
+                    playfield.ResetLanesAttacked(CardOwnership.Player);
                 }
                 break;
 
@@ -86,6 +97,7 @@ public class GameState : MonoBehaviour
                         opponent_cards[i].OnTurnStart();
                     }
                     this.UpdateTurnState(TurnStates.OpponentTurn);
+                    playfield.ResetLanesAttacked(CardOwnership.Opponent);
                 }
                 break;
             case TurnStates.OpponentTurn:

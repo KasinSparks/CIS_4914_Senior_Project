@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9b57596809ef4c41b4cfe10e112d262, type: 3}
-  m_Name: Queen
+  m_Name: BeeQueen
   m_EditorClassIdentifier: Assembly-CSharp::QueenModifier
   modifier_name: Queen
   description: Spawns a XXX card into hand each turn.
   image: {fileID: 2800000, guid: ef9e8b0a01742664290da0cfb48b12cc, type: 3}
   modifier_type: 9
   modifier_state: 0
-  spwan_card: {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  spwan_card: {fileID: 11400000, guid: 1ce0d5581b527584db242ad64d350000, type: 2}
