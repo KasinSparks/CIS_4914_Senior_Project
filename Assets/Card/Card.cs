@@ -88,6 +88,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private bool has_side_strike = false;
 
+    private bool isRaised = false;
+    private static Card currentlyRaisedCard = null; //to keep track of what card is currently raise in alt scenes
+
     private void Awake()
     {
         this.num_of_attacks_per_turn = 1;
@@ -188,6 +191,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
         modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
+
     }
 
 
@@ -259,15 +263,46 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
     }
 
+    private void RaiseCard() //these are for raising and lowering in campfire,sac,shop
+    {
+        transform.position += new Vector3(0, .05f, 0);
+        isRaised = true;
+    }
+
+    private void LowerCard()
+    {
+        transform.position -= new Vector3(0, .05f, 0);
+        isRaised = false;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         //Debug.Log("Mouse Click.");
         if (context == CardContext.Upgrade)
-        {
+        { //raise logic is seperate because it does not use hand and such like the normal playfield
+            if (currentlyRaisedCard != null && currentlyRaisedCard != this && currentlyRaisedCard.card_state != CardState.OnPlayfield)
+            { //if raise card inst this (no double click infinitely raising card) and not already on playfield (only raise or lower cards in hand)
+                currentlyRaisedCard.LowerCard();
+            }
+            if (card_state != CardState.OnPlayfield)
+            {
+                if (!isRaised)
+                {
+                    RaiseCard();
+                    currentlyRaisedCard = this;
+                }
+                else
+                {
+                    LowerCard();
+                    currentlyRaisedCard = null;
+                }
+            }
+
             PlayfieldUpgrade playfeildUpgrade = FindObjectOfType<PlayfieldUpgrade>();
             if (playfeildUpgrade != null)
             {
                 playfeildUpgrade.selectedUpgradeCard = this;
+                this.player_hand.SetSelectedCard(this.card_ownership, this);
             }
 
             ShopBehavior shop = FindObjectOfType<ShopBehavior>();
