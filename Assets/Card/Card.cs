@@ -1029,6 +1029,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         context = ctx;
     }
 
+    public CardContext GetContext()
+    {
+        return this.context;
+    }
+
     public void SetNektarAmountAdjustment(int amount)
     {
         this.nektar_cost_amt_modifier = amount;

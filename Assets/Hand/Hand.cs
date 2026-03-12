@@ -60,8 +60,11 @@ public class Hand : MonoBehaviour
         card.SetState(CardState.InHand);
         card.SetOwnership(owner);
 
-        // adds totem modifier temporarily (won't be saved to card)
-        this.totem.AttachModifier(card);
+        if (card.GetContext() == Card.CardContext.Gameplay)
+        {
+            // adds totem modifier temporarily (won't be saved to card)
+            this.totem.AttachModifier(card);
+        }
 
         // Add the card to the hand
         this.cards.Add(card);
