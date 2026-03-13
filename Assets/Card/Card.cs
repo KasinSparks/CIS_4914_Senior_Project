@@ -761,8 +761,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 return;
             }
         }
-
-        CardModifier new_mod = Instantiate(base_modifier);
+        
+        CardModifier new_mod = Instantiate<CardModifier>(base_modifier);
         new_mod.Initialize();
 
         // TODO(KASIN): Change this so the card modifier list only holds data.
