@@ -13,7 +13,7 @@ public class SaveSystemTest : MonoBehaviour
 
     void RunTests()
     {
-        //this.TestWordInfoSave();
+        this.TestWordInfoSave();
         this.TestLoadFromTable();
         //this.TestAddToSaveTable();
     }
@@ -33,19 +33,16 @@ public class SaveSystemTest : MonoBehaviour
         SaveSystemTable.WriteTableToDisk();
     }
 
+
     void TestLoadFromTable()
     {
         SaveSystemTable.ReadTableFromDisk();
-        WordInfo info = SaveSystemTable.Get<WordInfo>(System.Guid.Parse("b4c9e3da-aa17-49ed-a6ec-6d6a51d070d9"));
+        WordInfo info = SaveSystemTable.Get<WordInfo>(System.Guid.Parse("d484fed4-b2a3-482e-8a5f-c1d9735d4711"));
         Debug.Log(info.GetInfo());
         Debug.Log(info.GetWords());
         HighlightedWords hw = GameObject.Find("-----UI-----/UI_Book/Panel/Info").GetComponent<HighlightedWords>();
         hw.GetDict().Add(info.GetWords()[0].ToUpper(), info);
         hw.GetDict().Add(info.GetWords()[1].ToUpper(), info);
-        WordInfo[] temp = hw.words;
-        hw.words = new WordInfo[2];
-        hw.words[0] = info;
-        hw.words[1] = temp[0];
-        hw.TEST();
+        hw.TEST(info);
     }
 }

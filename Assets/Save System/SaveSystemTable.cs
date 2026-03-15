@@ -124,17 +124,87 @@ public static class SaveSystemTable
         // Here it should be fine because we do not want the object to be an
         // object in the game scene. Rather, it is used inside of other object
         // as data.
-        #pragma warning disable UNT0011
         ISavable ret = null;
         switch (type)
         {
             case "WordInfo":
-                ret = new WordInfo();
+                ret = ScriptableObject.CreateInstance<WordInfo>();
+                break;
+            case "CardModifier":
+                ret = ScriptableObject.CreateInstance<CardModifier>();
+                break;
+            case "CardData":
+                ret = ScriptableObject.CreateInstance<CardData>();
                 break;
         }
-        #pragma warning restore UNT0011
 
         return ret;
+    }
+
+
+    // TODO(KASIN): Move this to another file
+    public static byte[] ReadImageFile(string file)
+    {
+        // Try to guess the file extension
+        string[] supported_image_extensions = new string[] {
+            ".png",
+            ".jpg",
+            ".jpeg",
+        };
+
+        bool found_file = false;
+        foreach (string extension in supported_image_extensions)
+        {
+            if (File.Exists(file + extension))
+            {
+                file = file + extension;
+                found_file = true;
+                break;
+            }
+        }
+
+        if (!found_file)
+        {
+            throw new SaveSystemException("Unable to find file: " + file);
+        }
+
+        return File.ReadAllBytes(file);
+        
+    }
+
+
+    // TODO(KASIN): Move this to another file
+    public static JsonObject GetJsonForTexture2D(Texture2D texture)
+    {
+        JsonObject image_data = new JsonObject();
+
+        string image_file_name = texture.name;
+
+        string image_file = Path.Combine(
+            new string[] {
+                "SAVES",
+                "IMAGES",
+                image_file_name
+            }
+        );
+
+        Debug.Log("texture.name: " + texture.name);
+        image_data.value.Add("width", new JsonInt() { value = texture.width });
+        image_data.value.Add("height", new JsonInt() { value = texture.height });
+        image_data.value.Add("file", new JsonString() { value = image_file });
+
+        return image_data;
+    }
+
+    public static Texture2D GetTexture2DFromJsonImage(JsonObject image_data)
+    {
+        int width   = ((JsonInt)image_data["width"]).value;
+        int height  = ((JsonInt)image_data["height"]).value;
+        string file = ((JsonString)image_data["file"]).value;
+
+        Texture2D tex = new Texture2D(width, height);
+        (tex).LoadImage(ReadImageFile(file));
+        return tex;
     }
 }
 
