@@ -35,6 +35,11 @@ public class JsonObject : JsonValue
 {
     public Dictionary<string, JsonValue> value;
 
+    public JsonObject()
+    {
+        this.value = new Dictionary<string, JsonValue>();
+    }
+
     public JsonValue this[string key]
     {
         get { return this.value[key]; }
@@ -83,6 +88,11 @@ public class JsonObject : JsonValue
 public class JsonArray : JsonValue
 {
     public List<JsonValue> value;
+
+    public JsonArray()
+    {
+        this.value = new List<JsonValue>();
+    }
 
     public JsonValue this[int index]
     {
