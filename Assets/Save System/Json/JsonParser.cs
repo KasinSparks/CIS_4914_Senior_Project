@@ -58,7 +58,6 @@ public class JsonParser
     private JsonObject ParseJsonObject()
     {
         JsonObject ret = new JsonObject();
-        ret.value = new Dictionary<string, JsonValue>();
 
         // Consume the opening currly
         this.ConsumeToken(current_index, 1);
@@ -99,7 +98,6 @@ public class JsonParser
     private JsonArray ParseJsonArray()
     {
         JsonArray ret = new JsonArray();
-        ret.value = new List<JsonValue>();
 
         // Consume the opening square bracket 
         this.ConsumeToken(current_index, 1);
