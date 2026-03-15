@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Card/WordInfo")]
@@ -47,7 +48,7 @@ public class WordInfo : ScriptableObject, ISavable
     {
         JsonObject json_obj = new JsonObject();
 
-        json_obj.value.Add("Type", new JsonString() { value = typeof(WordInfo).ToString() });
+        json_obj.value.Add("Type", new JsonString() { value = this.GetType().ToString() });
 
         JsonObject json_data = new JsonObject();
 
@@ -57,10 +58,14 @@ public class WordInfo : ScriptableObject, ISavable
             word_array.value.Add(new JsonString() { value = word });
         }
 
+
         json_data.value.Add("words", word_array);
         json_data.value.Add("info", new JsonString() { value = this.info });
-        json_data.value.Add("image", new JsonString() { value = this.image.ToString() });
 
+        JsonObject image_data =
+            SaveSystemTable.GetJsonForTexture2D((Texture2D)this.image);
+        json_data.value.Add("image", image_data);
+        
         json_obj.value.Add("Data", json_data);
 
         return json_obj;
@@ -77,6 +82,9 @@ public class WordInfo : ScriptableObject, ISavable
         }
 
         this.info = ((JsonString)data["info"]).value;
-        //throw new System.NotImplementedException();
+
+        JsonObject image_data = (JsonObject)data["image"];
+
+        this.image = SaveSystemTable.GetTexture2DFromJsonImage(image_data);
     }
 }

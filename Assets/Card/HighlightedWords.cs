@@ -49,6 +49,12 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         this.description_text.text = this.AddColorTags(this.description_text.text, this.dict_word_info);
     }
 
+    public void TEST(WordInfo w)
+    {
+        this.book_text.text = AddColorTags(this.GetDict()["beetle".ToUpper()].GetInfo(), this.GetDict());
+        this.book_image.sprite = w.GetSprite();
+    }
+
     void Awake()
     {
         this.ui_book = GameObject.Find("-----UI-----/UI_Book/Panel");
@@ -168,7 +174,6 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
 
             if (dict.ContainsKey(token.ToUpper()))
             {
-                Debug.Log("here");
                 sb.Append("<color=\"blue\">");
                 sb.Append(token);
                 sb.Append("</color>");
