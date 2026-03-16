@@ -87,15 +87,15 @@ public abstract class CardModifier : ScriptableObject, ICardModifierEvents, ISav
 
     public abstract void UnapplyModifier(Card card, Card other);
 
-    public JsonValue ToJsonObject()
+    public virtual JsonValue ToJsonObject()
     {
         JsonObject json_object = new JsonObject();
         JsonString type_info = new JsonString() { value = this.GetType().ToString() };
         JsonObject data = new JsonObject();
         data["modifier_name"] = new JsonString() { value = this.modifier_name };
         data["description"]   = new JsonString() { value = this.description };
-        data["ModiferType"]   = new JsonInt() { value = (int)this.modifier_type };
-        data["ModiferState"]  = new JsonInt() { value = (int)this.modifier_state};
+        data["ModifierType"]   = new JsonInt() { value = (int)this.modifier_type };
+        data["ModifierState"]  = new JsonInt() { value = (int)this.modifier_state};
         data["image"] = SaveSystemTable.GetJsonForTexture2D(this.image);
 
         json_object["Type"] = type_info;
@@ -104,10 +104,9 @@ public abstract class CardModifier : ScriptableObject, ICardModifierEvents, ISav
         return json_object;
     }
 
-    public void OverrideValuesFromJson(JsonValue json)
+    public virtual void OverrideValuesFromJson(JsonValue json)
     {
-        JsonObject json_obj  = (JsonObject)json;
-        JsonObject json_data = (JsonObject)json_obj["Data"];
+        JsonObject json_data = (JsonObject)json;
 
         this.modifier_name  = ((JsonString)json_data["modifier_name"]).value;
         this.description    = ((JsonString)json_data["description"]).value;

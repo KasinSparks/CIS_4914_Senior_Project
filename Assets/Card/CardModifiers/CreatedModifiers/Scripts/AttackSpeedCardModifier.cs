@@ -42,4 +42,23 @@ public class AttackSpeedCardModifier : CardModifier
     {
 
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["num_of_additional_attacks"] =
+            new JsonInt() { value = this.num_of_additional_attacks};
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        this.num_of_additional_attacks =
+            ((JsonInt)base_data["num_of_additional_attacks"]).value;
+        
+    }
 }

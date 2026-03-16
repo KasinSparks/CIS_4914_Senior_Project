@@ -71,4 +71,31 @@ public class QueenModifier : CardModifier
     {
         base.SetData(other);
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        System.Guid spawn_card_guid =
+            SaveSystemTable.FindGuid(this.spwan_card.GetInstanceID());
+        if (spawn_card_guid.Equals(System.Guid.Empty))
+        {
+            spawn_card_guid = SaveSystemTable.Add(this.spwan_card, this.spwan_card.GetInstanceID());
+        }
+
+        ((JsonObject)base_obj["Data"])["spawn_card"] =
+            new JsonString() { value = spawn_card_guid.ToString() };
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        System.Guid spawn_card_guid =
+            System.Guid.Parse(((JsonString)base_data["spawn_card"]).value);
+        this.spwan_card = SaveSystemTable.Get<CardData>(spawn_card_guid);
+        
+    }
 }

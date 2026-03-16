@@ -43,6 +43,5 @@ public class SaveSystemTest : MonoBehaviour
         HighlightedWords hw = GameObject.Find("-----UI-----/UI_Book/Panel/Info").GetComponent<HighlightedWords>();
         hw.GetDict().Add(info.GetWords()[0].ToUpper(), info);
         hw.GetDict().Add(info.GetWords()[1].ToUpper(), info);
-        hw.TEST(info);
     }
 }

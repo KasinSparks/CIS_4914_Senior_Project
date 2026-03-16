@@ -36,4 +36,23 @@ public class ExplodeOnDeathModifier : CardModifier
     {
         base.SetData(other);
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["damage_on_death"] =
+            new JsonInt() { value = this.damage_on_death};
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        this.damage_on_death =
+            ((JsonInt)base_data["damage_on_death"]).value;
+        
+    }
 }

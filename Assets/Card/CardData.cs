@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(menuName = "Card/Card")]
 public class CardData : ScriptableObject, ISavable
@@ -37,7 +38,10 @@ public class CardData : ScriptableObject, ISavable
 
         return false;
     }
-
+    
+    // TODO(KASIN): Change these hardcoded strings to Constant variables.
+    //    If a string in the ToJsonObject doesn't match the string in the
+    //    OverrideValuesFromJson, which is easy to do, errors happen.
     public JsonValue ToJsonObject()
     {
         JsonObject json_object = new JsonObject();
@@ -65,7 +69,7 @@ public class CardData : ScriptableObject, ISavable
 
             json_highlighted_words.value.Add(new JsonString() { value = guid.ToString() });
         }
-        json_data.value.Add("highlighed_words", json_highlighted_words);
+        json_data.value.Add("highlighted_words", json_highlighted_words);
 
         JsonArray json_starting_modifiers = new JsonArray(); 
         foreach (CardModifier card_mod in this.starting_modifiers)
@@ -81,12 +85,50 @@ public class CardData : ScriptableObject, ISavable
         }
         json_data.value.Add("starting_modifiers", json_starting_modifiers);
 
+        json_data.value.Add("image",
+            SaveSystemTable.GetJsonForTexture2D((Texture2D)this.image));
+
         return json_object;
     }
 
     public void OverrideValuesFromJson(JsonValue json)
     {
-        throw new System.NotImplementedException();
+        JsonObject json_data = (JsonObject)json;
+
+        this.card_name   = ((JsonString)(json_data["card_name"])).value;
+        this.description = ((JsonString)(json_data["description"])).value;
+
+        this.hp          = ((JsonInt)(json_data["hp"])).value;
+        this.attack      = ((JsonInt)(json_data["attack"])).value;
+        this.nektar_cost = ((JsonInt)(json_data["nektar_cost"])).value;
+
+        this.order = (CardOrder) ((JsonInt)(json_data["order"])).value;
+        this.card_rarity = (CardRarity) ((JsonInt)(json_data["card_rarity"])).value;
+        
+        JsonArray saved_words = (JsonArray)json_data["highlighted_words"];
+        int num_of_saved_words = saved_words.value.Count;
+        List<WordInfo> temp_words = new List<WordInfo>(num_of_saved_words);
+        for (int i = 0; i < num_of_saved_words; ++i)
+        {
+            Guid guid = Guid.Parse(((JsonString)saved_words[i]).value);
+            WordInfo retrieved_word = SaveSystemTable.Get<WordInfo>(guid);
+            temp_words.Add(retrieved_word); 
+        }
+        this.highlighted_words = temp_words.ToArray();
+
+
+        JsonArray saved_mods = (JsonArray)json_data["starting_modifiers"];
+        int num_of_saved_mods = saved_mods.value.Count;
+        this.starting_modifiers = new List<CardModifier>(num_of_saved_mods);
+        for (int i = 0; i < num_of_saved_mods; ++i)
+        {
+            Guid guid = Guid.Parse(((JsonString)saved_mods[i]).value);
+            CardModifier retrieved_mod = SaveSystemTable.Get<CardModifier>(guid);
+            this.starting_modifiers.Add(retrieved_mod); 
+        }
+
+        JsonObject image_data = (JsonObject)json_data["image"];
+        this.image = SaveSystemTable.GetTexture2DFromJsonImage(image_data);
     }
 
 }
