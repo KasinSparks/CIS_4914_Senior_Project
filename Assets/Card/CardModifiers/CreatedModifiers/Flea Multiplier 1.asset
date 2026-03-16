@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b57596809ef4c41b4cfe10e112d262, type: 3}
-  m_Name: Flea Multiplier
-  m_EditorClassIdentifier: Assembly-CSharp::QueenModifier
+  m_Script: {fileID: 11500000, guid: bb74a9bceac3b0f44a14c94b34960f9c, type: 3}
+  m_Name: Flea Multiplier 1
+  m_EditorClassIdentifier: Assembly-CSharp::AddCardCopyToHandModifier
   modifier_name: Flea Multiplier
   description: Adds a flee to your hand each turn, while this card is alive.
   image: {fileID: 2800000, guid: 26e632a9eea6f4d418c1d9fa7627dad2, type: 3}
   modifier_type: 9
   modifier_state: 0
-  spwan_card: {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}

@@ -44,6 +44,11 @@ public static class SaveSystemTable
             throw new SaveSystemException("Tried to get an object from the save data with a guid of zero.");
         }
 
+        if (!save_info_table.ContainsKey(guid))
+        {
+            throw new KeyNotFoundException("Could not find key: " + guid.ToString()  + " in save_info_table.");
+        }
+        
         return (T) save_info_table[guid];
     }
 
@@ -61,12 +66,34 @@ public static class SaveSystemTable
         JsonAST ast = new JsonAST();
         ast.value = new JsonObject();
 
+        Queue<Guid> saved_keys = new Queue<Guid>();
+        Queue<Guid> todo_keys = new Queue<Guid>();
+
         foreach (Guid key in save_info_table.Keys)
         {
-            ((JsonObject)ast.value).value.Add(
-                key.ToString(),
-                save_info_table[key].ToJsonObject()
-            );
+            todo_keys.Enqueue(key);
+        }
+
+        while (todo_keys.Count > 0)
+        {
+            while (todo_keys.Count > 0)
+            {
+                Guid current_key = todo_keys.Dequeue();
+                ((JsonObject)ast.value).value.Add(
+                    current_key.ToString(),
+                    save_info_table[current_key].ToJsonObject()
+                );
+                saved_keys.Enqueue(current_key);
+            }
+
+            foreach (Guid key in save_info_table.Keys)
+            {
+                if (!saved_keys.Contains(key))
+                {
+                    todo_keys.Enqueue(key);
+                }
+            }
+
         }
 
         // TODO(KASIN): Error checking
@@ -82,10 +109,12 @@ public static class SaveSystemTable
         JsonParser json_parser = new JsonParser();
         JsonAST json_ast = null;
 
+        Debug.Log("ReadTableFromDisk");
+
         try
         {
             // TODO(KASIN): File path
-             json_ast = json_parser.Parse(Path.Combine("SAVES", "reference_table.json"));
+            json_ast = json_parser.Parse(Path.Combine("SAVES", "reference_table.json"));
         }
         catch (Exception ex)
         {
@@ -96,42 +125,126 @@ public static class SaveSystemTable
         JsonObject json_dict = (JsonObject)json_ast.value;
         save_info_table.Clear();
 
-        foreach (string key in json_dict.value.Keys) {
-            Guid guid_key = Guid.Parse(key);
-            JsonObject obj_info = ((JsonObject)json_dict.value[key]);
-            Type obj_type = Type.GetType(((JsonString)obj_info.value["Type"]).value);
-            JsonObject obj_data = ((JsonObject)obj_info.value["Data"]);
+        // TODO(KASIN): Dependency order may cause issues here
+        // TODO(KASIN): See if there is a better way to handle dependencies 
+        //     rather than just defering them. This could be really slow.
+        // NOTE(KASIN): Will result in an infinite loop if there are any
+        //     circular dependency
+        Queue<string> keys = new Queue<string>();
+        Queue<string> keys_defered = new Queue<string>();
 
-            Debug.Log("obj_type: " + obj_type);
-            ISavable obj_with_type_info = CastToISavable(obj_type.Name);
-            if (obj_type.IsAssignableFrom(typeof(ISavable)))
+        foreach (string key in json_dict.value.Keys)
+        {
+            keys.Enqueue(key);
+        }
+        
+        while (keys.Count > 0)
+        {
+            while (keys.Count > 0)
             {
-                throw new SaveSystemException("Error loading Reference Table; Only types that implement ISavable can be stored in the save file.");
+                string key = keys.Dequeue(); 
+                Guid guid_key = Guid.Parse(key);
+                JsonObject obj_info = ((JsonObject)json_dict.value[key]);
+                Type obj_type = Type.GetType(((JsonString)obj_info.value["Type"]).value);
+                JsonObject obj_data = ((JsonObject)obj_info.value["Data"]);
+
+                Debug.Log("Key: " + key);
+                Debug.Log("obj_type: " + obj_type);
+                ISavable obj_with_type_info = CastToISavable(obj_type.Name);
+                Debug.Log("obj_with_type_info: " + obj_with_type_info);
+
+                try
+                {
+                    obj_with_type_info.OverrideValuesFromJson(obj_data);
+                    save_info_table.Add(guid_key, obj_with_type_info);
+                    unityid_to_guid_table.Add(
+                        ((UnityEngine.Object)obj_with_type_info).GetInstanceID(),
+                        guid_key
+                    );
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    if (!key.Equals(Guid.Empty))
+                    {
+                        // Add to defer list and try again later
+                        Debug.Log("Defering: " + key);
+                        keys_defered.Enqueue(key);
+                    }
+                }
             }
             
-            obj_with_type_info.OverrideValuesFromJson(obj_data);
-            save_info_table.Add(guid_key, obj_with_type_info);
-            unityid_to_guid_table.Add(
-                ((UnityEngine.Object)obj_with_type_info).GetInstanceID(),
-                guid_key
-            );
+            foreach (string key in keys_defered)
+            {
+                keys.Enqueue(key);
+            }
+            keys_defered.Clear();
         }
     }
 
     public static ISavable CastToISavable(string type)
     {
-        // Disable the warning about Instantiate of Unity Objects.
-        // Here it should be fine because we do not want the object to be an
-        // object in the game scene. Rather, it is used inside of other object
-        // as data.
         ISavable ret = null;
         switch (type)
         {
             case "WordInfo":
                 ret = ScriptableObject.CreateInstance<WordInfo>();
                 break;
-            case "CardModifier":
-                ret = ScriptableObject.CreateInstance<CardModifier>();
+            case "AddCardCopyToHandModifier":
+                ret = ScriptableObject.CreateInstance<AddCardCopyToHandModifier>();
+                break;
+            case "AfricanDerivedQueenModifier":
+                ret = ScriptableObject.CreateInstance<AfricanDerivedQueenModifier>();
+                break;
+            case "AntiInsectModifier":
+                ret = ScriptableObject.CreateInstance<AntiInsectModifier>();
+                break;
+            case "ArmoredCardModifier":
+                ret = ScriptableObject.CreateInstance<ArmoredCardModifier>();
+                break;
+            case "AttackSpeedCardModifier":
+                ret = ScriptableObject.CreateInstance<AttackSpeedCardModifier>();
+                break;
+            case "ChemicalSprayCardModifier":
+                ret = ScriptableObject.CreateInstance<ChemicalSprayCardModifier>();
+                break;
+            case "ChemicalSprayEffect":
+                ret = ScriptableObject.CreateInstance<ChemicalSprayEffect>();
+                break;
+            case "DodgeCardModifier":
+                ret = ScriptableObject.CreateInstance<DodgeCardModifier>();
+                break;
+            case "ExplodeOnDeathModifier":
+                ret = ScriptableObject.CreateInstance<ExplodeOnDeathModifier>();
+                break;
+            case "Flutter":
+                ret = ScriptableObject.CreateInstance<Flutter>();
+                break;
+            case "HealOnAttackModifier":
+                ret = ScriptableObject.CreateInstance<HealOnAttackModifier>();
+                break;
+            case "JumpModifier":
+                ret = ScriptableObject.CreateInstance<JumpModifier>();
+                break;
+            case "MoveToLaneAttackedModifier":
+                ret = ScriptableObject.CreateInstance<MoveToLaneAttackedModifier>();
+                break;
+            case "NektarReductionModifier":
+                ret = ScriptableObject.CreateInstance<NektarReductionModifier>();
+                break;
+            case "QueenModifier":
+                ret = ScriptableObject.CreateInstance<QueenModifier>();
+                break;
+            case "SideStrikeModifier":
+                ret = ScriptableObject.CreateInstance<SideStrikeModifier>();
+                break;
+            case "SpawnChildModifier":
+                ret = ScriptableObject.CreateInstance<SpawnChildModifier>();
+                break;
+            case "StingerDetachModifier":
+                ret = ScriptableObject.CreateInstance<StingerDetachModifier>();
+                break;
+            case "StrengthInNumberModifier":
+                ret = ScriptableObject.CreateInstance<StrengthInNumberModifier>();
                 break;
             case "CardData":
                 ret = ScriptableObject.CreateInstance<CardData>();
@@ -204,7 +317,49 @@ public static class SaveSystemTable
 
         Texture2D tex = new Texture2D(width, height);
         (tex).LoadImage(ReadImageFile(file));
+        string[] path_split = file.Split(Path.DirectorySeparatorChar);
+        tex.name = path_split[path_split.Length - 1];
         return tex;
+    }
+
+    public static void SaveDeck(CardData[] cards)
+    {
+        JsonAST ast = new JsonAST();
+        ast.value = new JsonArray();
+
+        foreach (CardData card in cards)
+        {
+            ((JsonArray)ast.value).value.Add(card.ToJsonObject());
+        }
+
+        File.WriteAllText(Path.Combine("SAVES", "DECKS", "PLAYER_DECK_CUSTOM_SAVE_SYSTEM.json"),
+            ast.ToStringJson());
+
+        WriteTableToDisk();
+    }
+
+    public static CardData[] LoadDeck()
+    {
+        if (!File.Exists(Path.Combine("SAVES", "DECKS", "PLAYER_DECK_CUSTOM_SAVE_SYSTEM.json")))
+        {
+            return null;
+        }
+
+        ReadTableFromDisk();
+
+        JsonParser parser = new JsonParser();
+        JsonAST ast = parser.Parse(Path.Combine("SAVES", "DECKS", "PLAYER_DECK_CUSTOM_SAVE_SYSTEM.json"));
+
+        JsonArray save_data_array = (JsonArray)ast.value;
+        CardData[] ret = new CardData[save_data_array.value.Count];
+        for (int i = 0; i < save_data_array.value.Count; ++i)
+        {
+            JsonObject save_data = (JsonObject)(save_data_array[i]);
+            ret[i] = ScriptableObject.CreateInstance<CardData>();
+            ret[i].OverrideValuesFromJson(save_data["Data"]);
+        }
+
+        return ret;
     }
 }
 

@@ -161,7 +161,12 @@ public class JsonFloat : JsonValue
 
     override public string ToStringJson(int tab_level, bool pretty_print = true)
     {
-        return value.ToString();
+        // TODO(KASIN): Eight digits after the float might not be enough.
+        //    I will have to implement the float to also us scientific
+        //    notations as per the Json spec.
+        // https://www.json.org/json-en.html
+        // https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings
+        return value.ToString("F8");
     }
 }
 

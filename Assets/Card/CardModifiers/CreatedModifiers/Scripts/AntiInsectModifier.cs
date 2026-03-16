@@ -46,4 +46,23 @@ public class AntiInsectModifier : CardModifier
         base.SetData(other);
         this.addtional_damage = other.addtional_damage;
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["additional_damage"] =
+            new JsonInt() { value = this.addtional_damage};
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        JsonObject base_data = (JsonObject)json;
+        this.addtional_damage =
+            ((JsonInt)base_data["additional_damage"]).value;
+        
+        base.OverrideValuesFromJson(json);
+    }
 }

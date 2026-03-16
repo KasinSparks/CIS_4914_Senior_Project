@@ -4,11 +4,9 @@ using UnityEngine.SceneManagement;
 /**
  * @brief The modifier for Queen cards. Allows them to spawn a card each turn.
  */
-[CreateAssetMenu(menuName = "Card/Modifier/Queen")]
-public class QueenModifier : CardModifier
+[CreateAssetMenu(menuName = "Card/Modifier/Add Card Copy to Hand")]
+public class AddCardCopyToHandModifier : CardModifier
 {
-    public CardData spwan_card;
-
     private Hand hand;
     private Opponent opponent_ref;
 
@@ -25,7 +23,7 @@ public class QueenModifier : CardModifier
             this.opponent_ref = GameObject.Find("Opponent").GetComponent<Opponent>();
         }
 
-        SetDisplayDescription(this.description.Replace("XXX", spwan_card.card_name));
+        SetDisplayDescription(this.description);
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -35,7 +33,7 @@ public class QueenModifier : CardModifier
             case CardOwnership.Player:
                 // NOTE: The hand AddCard function handles the instantiation of
                 //    the GameObject.
-                this.hand.AddCard(this.spwan_card, card.GetOwnership());
+                this.hand.AddCard(card, card.GetOwnership());
                 break;
 
             case CardOwnership.Opponent:
@@ -43,7 +41,7 @@ public class QueenModifier : CardModifier
                 // hand.
                 Card card_prefab = Resources.Load<Card>("Card");
                 Card new_card = Instantiate(card_prefab, opponent_ref.gameObject.transform);
-                new_card.SetCardData(this.spwan_card);
+                new_card.SetCardData(card.GetCardData());
                 new_card.gameObject.SetActive(false);
                 new_card.SetState(CardState.InHand);
                 new_card.SetOwnership(CardOwnership.Opponent);
@@ -76,46 +74,11 @@ public class QueenModifier : CardModifier
     {
         JsonObject base_obj = (JsonObject)base.ToJsonObject();
 
-        if (this.spwan_card == null)
-        {
-            ((JsonObject)base_obj["Data"])["spawn_card"] =
-                new JsonString() { value = System.Guid.Empty.ToString() };
-
-            return base_obj;
-        }
-        
-        // NOTE(KASIN):
-        // This can cause circular dependency issue, which will result in an
-        // infinite loop in the SaveSystemTable. For now, the spawn card will
-        // just load the defualt data for the card instead of trying to read
-        // the save data for the given card.
-        System.Guid spawn_card_guid =
-            SaveSystemTable.FindGuid(this.spwan_card.GetInstanceID());
-        if (spawn_card_guid.Equals(System.Guid.Empty))
-        {
-            spawn_card_guid = SaveSystemTable.Add(this.spwan_card, this.spwan_card.GetInstanceID());
-        }
-
-        ((JsonObject)base_obj["Data"])["spawn_card"] =
-            new JsonString() { value = spawn_card_guid.ToString() };
-
-
         return base_obj;
     }
 
     public override void OverrideValuesFromJson(JsonValue json)
     {
-        JsonObject base_data = (JsonObject)json;
-
-        // NOTE(KASIN): See note in ToJsonString() above.
-        this.spwan_card = null;
-        System.Guid spawn_card_guid =
-            System.Guid.Parse(((JsonString)base_data["spawn_card"]).value);
-        if (!spawn_card_guid.Equals(System.Guid.Empty))
-        {
-            this.spwan_card = SaveSystemTable.Get<CardData>(spawn_card_guid);
-        }
-        
         base.OverrideValuesFromJson(json);
     }
 }

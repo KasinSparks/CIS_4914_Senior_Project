@@ -24,4 +24,4 @@ MonoBehaviour:
   card_rarity: 1
   starting_modifiers:
   - {fileID: 11400000, guid: 9a611389446ac154f8351bfaf7a4b630, type: 2}
-  - {fileID: 11400000, guid: 074b285df05d70343ac3bc2ff07eb7ed, type: 2}
+  - {fileID: 11400000, guid: 7a8cefff9f4ac4f4e8b011571b94baaa, type: 2}

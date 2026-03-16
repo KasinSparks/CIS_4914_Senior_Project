@@ -56,4 +56,23 @@ public class NektarReductionModifier : CardModifier
         base.SetData(other);
         this.nektar_reduction = other.nektar_reduction;
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["nektar_reduction"] =
+            new JsonInt() { value = this.nektar_reduction};
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        JsonObject base_data = (JsonObject)json;
+        this.nektar_reduction =
+            ((JsonInt)base_data["nektar_reduction"]).value;
+        
+        base.OverrideValuesFromJson(json);
+    }
 }

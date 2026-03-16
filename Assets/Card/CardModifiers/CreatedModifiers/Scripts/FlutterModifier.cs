@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -84,5 +85,47 @@ public class Flutter : CardModifier
     override public void UnapplyModifier(Card card, Card other)
     {
         this.modifier_state = ModifierState.ReadyToApply;
+    }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        if (this.leave_behind_card == null)
+        {
+            ((JsonObject)base_obj["Data"])["leave_behind_card"] =
+                new JsonString() { value = Guid.Empty.ToString() };
+
+            return base_obj;
+        }
+
+        System.Guid leave_behind_card_guid =
+            SaveSystemTable.FindGuid(this.leave_behind_card.GetInstanceID());
+        if (leave_behind_card_guid.Equals(System.Guid.Empty))
+        {
+            leave_behind_card_guid = SaveSystemTable.Add(this.leave_behind_card,
+                this.leave_behind_card.GetInstanceID());
+        }
+
+        ((JsonObject)base_obj["Data"])["leave_behind_card"] =
+            new JsonString() { value = leave_behind_card_guid.ToString() };
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        JsonObject base_data = (JsonObject)json;
+        System.Guid leave_behind_card_guid =
+            System.Guid.Parse(((JsonString)base_data["leave_behind_card"]).value);
+
+        this.leave_behind_card = null;
+
+        if (!leave_behind_card_guid.Equals(Guid.Empty))
+        {
+            this.leave_behind_card = SaveSystemTable.Get<CardData>(leave_behind_card_guid);
+        }
+
+        base.OverrideValuesFromJson(json);
     }
 }

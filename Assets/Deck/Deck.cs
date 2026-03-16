@@ -19,10 +19,13 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         this.cards = new List<CardData>();
 
-        CardData[] saved_deck = SaveSystem.LoadDeck(SaveSystemFile.PlayerDeck);
+        Debug.Log("Attempting to load deck data");
+        //CardData[] saved_deck = SaveSystem.LoadDeck(SaveSystemFile.PlayerDeck);
+        CardData[] saved_deck = SaveSystemTable.LoadDeck();
 
         if (saved_deck == null || saved_deck.Length < 1)
         {
+            Debug.Log("Deck data not found. Using default values.");
             foreach (CardData c in this.starting_cards)
             {
                 this.AddCard(c);
@@ -54,7 +57,8 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     void OnDestroy()
     {
-        SaveSystem.SaveDeck(this.cards.ToArray(), SaveSystemFile.PlayerDeck);
+        //SaveSystem.SaveDeck(this.cards.ToArray(), SaveSystemFile.PlayerDeck);
+        SaveSystemTable.SaveDeck(this.cards.ToArray());
     }
 
     public void OnPointerEnter(PointerEventData eventData) {}
