@@ -35,4 +35,22 @@ public class DodgeCardModifier : CardModifier
     {
         base.SetData(other);
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["dodge_chance"] =
+            new JsonFloat() { value = this.dodge_chance };
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        this.dodge_chance = ((JsonFloat)base_data["dodge_chance"]).value;
+        
+    }
 }

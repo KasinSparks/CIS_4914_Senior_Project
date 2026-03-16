@@ -40,4 +40,22 @@ public class ArmoredCardModifier : CardModifier
         base.SetData(other);
         this.damage_reduction = other.damage_reduction;
     }
+
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["damage_reduction"] =
+            new JsonInt() { value = this.damage_reduction };
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        this.damage_reduction = ((JsonInt)base_data["damage_reduction"]).value;
+        
+    }
 }

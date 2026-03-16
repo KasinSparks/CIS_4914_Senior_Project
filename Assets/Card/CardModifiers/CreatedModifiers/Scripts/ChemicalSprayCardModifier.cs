@@ -46,4 +46,35 @@ public class ChemicalSprayCardModifier : CardModifier
     {
         base.SetData(other);
     }
+    
+    override public JsonValue ToJsonObject()
+    {
+        JsonObject base_obj = (JsonObject)base.ToJsonObject();
+
+        ((JsonObject)base_obj["Data"])["damage"] =
+            new JsonInt() { value = this.damage};
+
+        ((JsonObject)base_obj["Data"])["num_of_turns"] =
+            new JsonInt() { value = this.num_of_turns};
+
+        ((JsonObject)base_obj["Data"])["image"] =
+            SaveSystemTable.GetJsonForTexture2D(this.image);
+
+        return base_obj;
+    }
+
+    public override void OverrideValuesFromJson(JsonValue json)
+    {
+        base.OverrideValuesFromJson(json);
+        JsonObject base_data = (JsonObject)json;
+        this.damage =
+            ((JsonInt)base_data["damage"]).value;
+
+        this.num_of_turns =
+            ((JsonInt)base_data["num_of_turns"]).value;
+
+        this.image = SaveSystemTable.GetTexture2DFromJsonImage(
+            ((JsonObject)base_data["image"])
+        );
+    }
 }

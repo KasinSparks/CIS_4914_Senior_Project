@@ -1,6 +1,8 @@
+using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class CardModifier : ScriptableObject, ICardModifierEvents
+public abstract class CardModifier : ScriptableObject, ICardModifierEvents, ISavable
 {
     public string modifier_name;
     public string description;
@@ -84,4 +86,34 @@ public abstract class CardModifier : ScriptableObject, ICardModifierEvents
     public abstract void UpdateModifier(Card card);
 
     public abstract void UnapplyModifier(Card card, Card other);
+
+    public virtual JsonValue ToJsonObject()
+    {
+        JsonObject json_object = new JsonObject();
+        JsonString type_info = new JsonString() { value = this.GetType().ToString() };
+        JsonObject data = new JsonObject();
+        data["modifier_name"] = new JsonString() { value = this.modifier_name };
+        data["description"]   = new JsonString() { value = this.description };
+        data["ModifierType"]   = new JsonInt() { value = (int)this.modifier_type };
+        data["ModifierState"]  = new JsonInt() { value = (int)this.modifier_state};
+        data["image"] = SaveSystemTable.GetJsonForTexture2D(this.image);
+
+        json_object["Type"] = type_info;
+        json_object["Data"] = data;
+
+        return json_object;
+    }
+
+    public virtual void OverrideValuesFromJson(JsonValue json)
+    {
+        JsonObject json_data = (JsonObject)json;
+
+        this.modifier_name  = ((JsonString)json_data["modifier_name"]).value;
+        this.description    = ((JsonString)json_data["description"]).value;
+        this.modifier_type  = (ModifierType) ((JsonInt)json_data["ModifierType"]).value;
+        this.modifier_state = (ModifierState) ((JsonInt)json_data["ModifierState"]).value;
+
+        JsonObject image_data = (JsonObject)json_data["image"];
+        this.image = SaveSystemTable.GetTexture2DFromJsonImage(image_data);
+    }
 }
