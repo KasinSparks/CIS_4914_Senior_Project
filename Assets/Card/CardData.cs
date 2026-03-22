@@ -58,6 +58,7 @@ public class CardData : ScriptableObject, ISavable
         json_data.value.Add("hp", new JsonInt() { value = this.hp});
         json_data.value.Add("attack", new JsonInt() { value = this.attack});
         json_data.value.Add("nektar_cost", new JsonInt() { value = this.nektar_cost});
+        json_data.value.Add("nektar_given", new JsonInt() { value = this.nektar_given_when_scarificed });
 
         JsonArray json_highlighted_words = new JsonArray(); 
         foreach (WordInfo word_info in this.highlighted_words)
@@ -103,6 +104,8 @@ public class CardData : ScriptableObject, ISavable
         this.hp          = ((JsonInt)(json_data["hp"])).value;
         this.attack      = ((JsonInt)(json_data["attack"])).value;
         this.nektar_cost = ((JsonInt)(json_data["nektar_cost"])).value;
+        this.nektar_given_when_scarificed =
+            ((JsonInt)(json_data["nektar_given"])).value;
 
         this.order = (CardOrder) ((JsonInt)(json_data["order"])).value;
         this.card_rarity = (CardRarity) ((JsonInt)(json_data["card_rarity"])).value;

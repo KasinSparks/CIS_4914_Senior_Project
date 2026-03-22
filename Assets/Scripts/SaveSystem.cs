@@ -15,9 +15,15 @@ public enum SaveSystemFile
     OpponentDeck2,  // Example, can change this to the name of the opponent
 }
 
+public enum SaveSystemType
+{
+    Default,
+    Custom,
+}
 
 public class SaveSystem
 {
+
     private static readonly string SAVES_FOLDER = "SAVES";
 
     private static readonly string DECK_FOLDER         = "DECKS";
@@ -28,6 +34,9 @@ public class SaveSystem
 
     private static readonly string TOTEMS_FOLDER = "TOTEMS";
     private static readonly string TOTEMS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, TOTEMS_FOLDER);
+    
+    // Change this to use the different save systems
+    private static SaveSystemType current_save_system = SaveSystemType.Default;
 
     /**
      * @breif Gets the save file name for the given save file type.

@@ -5,9 +5,24 @@ using UnityEngine;
 
 public static class SaveSystemTable
 {
+    // TODO(KASIN): Need to keep track of number of references to an object in
+    //    the save_info_table so the object can be deleted from the table if
+    //    there are no references to the object.
+
+    // Basic structure of the save reference table:
+    /*
+     * {
+     *      "GUID" : {
+     *          "Data" : { ... }
+     *          "Type" : "type as a string"
+     *      }
+     * }
+     */
+    // If the objects in the Data field reference other objects, use the GUID
     static Dictionary<Guid, ISavable> save_info_table =
         new Dictionary<Guid, ISavable>();
     static Dictionary<int, Guid> unityid_to_guid_table = new Dictionary<int, Guid>();
+    static Dictionary<string, Texture2D> texture_table = new Dictionary<string, Texture2D>();
 
 
     public static Guid FindGuid(int unity_id)
@@ -123,7 +138,7 @@ public static class SaveSystemTable
         }
 
         JsonObject json_dict = (JsonObject)json_ast.value;
-        save_info_table.Clear();
+        //save_info_table.Clear();
 
         // TODO(KASIN): Dependency order may cause issues here
         // TODO(KASIN): See if there is a better way to handle dependencies 
@@ -148,26 +163,23 @@ public static class SaveSystemTable
                 Type obj_type = Type.GetType(((JsonString)obj_info.value["Type"]).value);
                 JsonObject obj_data = ((JsonObject)obj_info.value["Data"]);
 
-                Debug.Log("Key: " + key);
-                Debug.Log("obj_type: " + obj_type);
                 ISavable obj_with_type_info = CastToISavable(obj_type.Name);
-                Debug.Log("obj_with_type_info: " + obj_with_type_info);
 
                 try
                 {
                     obj_with_type_info.OverrideValuesFromJson(obj_data);
-                    save_info_table.Add(guid_key, obj_with_type_info);
-                    unityid_to_guid_table.Add(
-                        ((UnityEngine.Object)obj_with_type_info).GetInstanceID(),
-                        guid_key
-                    );
+                    save_info_table[guid_key] = obj_with_type_info;
+
+                    int obj_unity_id =
+                        ((UnityEngine.Object)obj_with_type_info).GetInstanceID();
+                    
+                    unityid_to_guid_table[obj_unity_id] = guid_key;
                 }
-                catch (KeyNotFoundException ex)
+                catch (KeyNotFoundException)
                 {
                     if (!key.Equals(Guid.Empty))
                     {
                         // Add to defer list and try again later
-                        Debug.Log("Defering: " + key);
                         keys_defered.Enqueue(key);
                     }
                 }
@@ -183,75 +195,7 @@ public static class SaveSystemTable
 
     public static ISavable CastToISavable(string type)
     {
-        ISavable ret = null;
-        switch (type)
-        {
-            case "WordInfo":
-                ret = ScriptableObject.CreateInstance<WordInfo>();
-                break;
-            case "AddCardCopyToHandModifier":
-                ret = ScriptableObject.CreateInstance<AddCardCopyToHandModifier>();
-                break;
-            case "AfricanDerivedQueenModifier":
-                ret = ScriptableObject.CreateInstance<AfricanDerivedQueenModifier>();
-                break;
-            case "AntiInsectModifier":
-                ret = ScriptableObject.CreateInstance<AntiInsectModifier>();
-                break;
-            case "ArmoredCardModifier":
-                ret = ScriptableObject.CreateInstance<ArmoredCardModifier>();
-                break;
-            case "AttackSpeedCardModifier":
-                ret = ScriptableObject.CreateInstance<AttackSpeedCardModifier>();
-                break;
-            case "ChemicalSprayCardModifier":
-                ret = ScriptableObject.CreateInstance<ChemicalSprayCardModifier>();
-                break;
-            case "ChemicalSprayEffect":
-                ret = ScriptableObject.CreateInstance<ChemicalSprayEffect>();
-                break;
-            case "DodgeCardModifier":
-                ret = ScriptableObject.CreateInstance<DodgeCardModifier>();
-                break;
-            case "ExplodeOnDeathModifier":
-                ret = ScriptableObject.CreateInstance<ExplodeOnDeathModifier>();
-                break;
-            case "Flutter":
-                ret = ScriptableObject.CreateInstance<Flutter>();
-                break;
-            case "HealOnAttackModifier":
-                ret = ScriptableObject.CreateInstance<HealOnAttackModifier>();
-                break;
-            case "JumpModifier":
-                ret = ScriptableObject.CreateInstance<JumpModifier>();
-                break;
-            case "MoveToLaneAttackedModifier":
-                ret = ScriptableObject.CreateInstance<MoveToLaneAttackedModifier>();
-                break;
-            case "NektarReductionModifier":
-                ret = ScriptableObject.CreateInstance<NektarReductionModifier>();
-                break;
-            case "QueenModifier":
-                ret = ScriptableObject.CreateInstance<QueenModifier>();
-                break;
-            case "SideStrikeModifier":
-                ret = ScriptableObject.CreateInstance<SideStrikeModifier>();
-                break;
-            case "SpawnChildModifier":
-                ret = ScriptableObject.CreateInstance<SpawnChildModifier>();
-                break;
-            case "StingerDetachModifier":
-                ret = ScriptableObject.CreateInstance<StingerDetachModifier>();
-                break;
-            case "StrengthInNumberModifier":
-                ret = ScriptableObject.CreateInstance<StrengthInNumberModifier>();
-                break;
-            case "CardData":
-                ret = ScriptableObject.CreateInstance<CardData>();
-                break;
-        }
-
-        return ret;
+        return (ISavable) ScriptableObject.CreateInstance(type);
     }
 
 
@@ -301,7 +245,6 @@ public static class SaveSystemTable
             }
         );
 
-        Debug.Log("texture.name: " + texture.name);
         image_data.value.Add("width", new JsonInt() { value = texture.width });
         image_data.value.Add("height", new JsonInt() { value = texture.height });
         image_data.value.Add("file", new JsonString() { value = image_file });
@@ -309,19 +252,33 @@ public static class SaveSystemTable
         return image_data;
     }
 
+    // TODO(KASIN): Move this to another file
     public static Texture2D GetTexture2DFromJsonImage(JsonObject image_data)
     {
         int width   = ((JsonInt)image_data["width"]).value;
         int height  = ((JsonInt)image_data["height"]).value;
         string file = ((JsonString)image_data["file"]).value;
 
+        if (texture_table == null)
+        {
+            texture_table = new Dictionary<string, Texture2D>();
+        }
+
+        // See if the texture has already been loaded into a texture table
+        if (texture_table.ContainsKey(file))
+        {
+            return texture_table[file];
+        }
+
         Texture2D tex = new Texture2D(width, height);
         (tex).LoadImage(ReadImageFile(file));
         string[] path_split = file.Split(Path.DirectorySeparatorChar);
         tex.name = path_split[path_split.Length - 1];
+        texture_table.Add(file, tex);
         return tex;
     }
 
+    // TODO(KASIN): Move this to another file
     public static void SaveDeck(CardData[] cards)
     {
         JsonAST ast = new JsonAST();
@@ -338,6 +295,7 @@ public static class SaveSystemTable
         WriteTableToDisk();
     }
 
+    // TODO(KASIN): Move this to another file
     public static CardData[] LoadDeck()
     {
         if (!File.Exists(Path.Combine("SAVES", "DECKS", "PLAYER_DECK_CUSTOM_SAVE_SYSTEM.json")))

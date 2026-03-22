@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb74a9bceac3b0f44a14c94b34960f9c, type: 3}
   m_Name: Locust Multiplier 1
   m_EditorClassIdentifier: Assembly-CSharp::AddCardCopyToHandModifier
-  modifier_name: Locus Swarm
-  description: Adds a Locus to your hand at the beginning of each turn
+  modifier_name: Locust Swarm
+  description: Adds a Locust to your hand at the beginning of each turn
   image: {fileID: 2800000, guid: 0fb51dc1c4dab4247a511ab23207440f, type: 3}
   modifier_type: 9
   modifier_state: 0
