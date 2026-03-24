@@ -2027,6 +2027,7 @@ GameObject:
   - component: {fileID: 376948361}
   - component: {fileID: 376948360}
   - component: {fileID: 376948362}
+  - component: {fileID: 376948363}
   m_Layer: 5
   m_Name: UI_Book
   m_TagString: Untagged
@@ -2117,6 +2118,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &376948363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376948358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220103aa289f0cd468e9dd2276de3696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BookWordInitialize
+  word_obj: {fileID: 513039227}
 --- !u!1 &401770688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9156826644330562135, guid: cb2e83fba003d974a88999133bf2e816, type: 3}
