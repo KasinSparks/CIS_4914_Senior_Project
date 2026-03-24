@@ -66,7 +66,7 @@ public class AttackSystem : MonoBehaviour
         Debug.Log("Get additional attack count: " + card._GetNumAdditionalAttacks());
         for (int a = 0; a < card._GetNumAdditionalAttacks(); ++a)
         {
-            if (delay > 0.5f)
+            if (delay > 0.1f && a < 1)
             {
                 // Artificial delay. This is useful for the side strike.
                 yield return new WaitForSeconds(delay);
@@ -139,6 +139,8 @@ public class AttackSystem : MonoBehaviour
                 break;
         }
 
+        float prev_delay = 0.0f;
+
 
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
         {
@@ -181,7 +183,7 @@ public class AttackSystem : MonoBehaviour
                                 offset += aas_opponent_offset;
                             }
 
-                            StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset));
+                            StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                             playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                             attcked_lhs = true;
                         }
@@ -218,11 +220,13 @@ public class AttackSystem : MonoBehaviour
                     {
                         offset += aas_opponent_offset;
                     }
-                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, delay));
+                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay + delay));
                     if (target_card_slot_ref != null)
                     {
                         playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                     }
+
+                    prev_delay += delay + 2.0f;
                 }
                 else
                 {
@@ -234,8 +238,10 @@ public class AttackSystem : MonoBehaviour
                     {
                         offset += aas_opponent_offset;
                     }
-                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset));
+                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                     playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
+
+                    prev_delay += (2.0f * card_ref._GetNumAdditionalAttacks());
                 }
             }
             else
