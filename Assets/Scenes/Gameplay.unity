@@ -908,6 +908,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!114 &11993142
@@ -927,6 +928,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &11993145
@@ -1116,6 +1118,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &123962374
@@ -1673,6 +1676,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &224458880
@@ -1954,6 +1958,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &342202352
@@ -2022,6 +2027,7 @@ GameObject:
   - component: {fileID: 376948361}
   - component: {fileID: 376948360}
   - component: {fileID: 376948362}
+  - component: {fileID: 376948363}
   m_Layer: 5
   m_Name: UI_Book
   m_TagString: Untagged
@@ -2112,6 +2118,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &376948363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376948358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220103aa289f0cd468e9dd2276de3696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BookWordInitialize
+  word_obj: {fileID: 513039227}
 --- !u!1 &401770688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9156826644330562135, guid: cb2e83fba003d974a88999133bf2e816, type: 3}
@@ -2134,6 +2153,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &401770698
@@ -3082,6 +3102,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &553253033
@@ -5015,6 +5036,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1002743207
@@ -6388,6 +6410,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1308849405
@@ -7113,6 +7136,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1396579130
@@ -7815,6 +7839,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1564557393
@@ -8497,6 +8522,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1931579806
@@ -9021,6 +9047,4 @@ SceneRoots:
   - {fileID: 11993129}
   - {fileID: 1949458451}
   - {fileID: 1004096598}
-  - {fileID: 406524355}
   - {fileID: 834328207}
-  - {fileID: 11993129}

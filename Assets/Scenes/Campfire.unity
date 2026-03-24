@@ -590,6 +590,7 @@ GameObject:
   - component: {fileID: 368199149}
   - component: {fileID: 368199148}
   - component: {fileID: 368199147}
+  - component: {fileID: 368199150}
   m_Layer: 5
   m_Name: UI_Book
   m_TagString: Untagged
@@ -680,6 +681,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &368199150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368199145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220103aa289f0cd468e9dd2276de3696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BookWordInitialize
+  word_obj: {fileID: 661770109}
 --- !u!1 &426161312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,10 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HighlightedWords
   description_text: {fileID: 0}
   card: {fileID: 0}
-  words:
-  - {fileID: 11400000, guid: 0058ae39bc8a06b4783ac51305c60162, type: 2}
-  - {fileID: 11400000, guid: bf5464c829ef473449e58e0b517c1fe8, type: 2}
-  - {fileID: 11400000, guid: 47fadcdb5b71db54e9bec16c9b2438e4, type: 2}
+  words: []
 --- !u!114 &661770110
 MonoBehaviour:
   m_ObjectHideFlags: 0
