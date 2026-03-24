@@ -1,11 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 /**
  *  @brief Used to store the modifier object and the gameobject that displays
@@ -661,6 +659,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
+
+        StartCoroutine(this.DeathAnimation());
+    }
+
+    private IEnumerator DeathAnimation()
+    {
+        float target_time = 2.0f;
+        float time_elapsed = 0.0f;
+
+        Material curr_material = this.GetComponent<Renderer>().material;
+
+        while (time_elapsed < target_time)
+        {
+            curr_material.SetFloat("_amount_shown", 1 - (time_elapsed / target_time));
+            time_elapsed += Time.deltaTime;
+            yield return null;
+        }
 
         // Destroy the card
         Destroy(this.gameObject);
