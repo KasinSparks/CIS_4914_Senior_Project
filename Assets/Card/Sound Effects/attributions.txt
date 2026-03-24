@@ -1,0 +1,9 @@
+card_death.ogg : https://pixabay.com/sound-effects/film-special-effects-paper-tearing-252620/
+fly_attack.ogg : https://pixabay.com/sound-effects/nature-fly-insect-381879/
+hit.ogg : https://pixabay.com/sound-effects/film-special-effects-hit-flesh-01-266311/
+clicking.ogg : https://pixabay.com/sound-effects/film-special-effects-fast-typing-1-393910/
+bee.ogg : https://pixabay.com/sound-effects/nature-flight-of-the-bumblebee-336397/
+mosquito.ogg : https://pixabay.com/sound-effects/nature-mosquito-22808/
+cricket.ogg : https://pixabay.com/sound-effects/nature-cricket-chirp-56209/
+grasshopper.ogg : https://pixabay.com/sound-effects/nature-grasshopper-70334/
+dragonfly.ogg : https://pixabay.com/sound-effects/nature-dragonfly-6796/

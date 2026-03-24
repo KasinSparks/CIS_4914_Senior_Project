@@ -89,6 +89,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private bool isRaised = false;
     private static Card currentlyRaisedCard = null; //to keep track of what card is currently raise in alt scenes
 
+    [SerializeField]
+    private AudioSource audio_source;
+
+    [SerializeField]
+    private AudioClip death_audio;
+    [SerializeField]
+    private AudioClip direct_hit_audio;
+
+    public readonly float HIT_SFX_TIME = 0.2f;
+    private _AudioClipData current_audio_clip = null;
+
     private void Awake()
     {
         this.num_of_attacks_per_turn = 1;
@@ -393,6 +404,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
+        // Play the hit sound
+        this.PlaySound(this.direct_hit_audio, HIT_SFX_TIME);
+
         int damage = this.card_data.attack + this.attack_damage_bonus;
         // Update player stats
         if (this.GetOwnership() == CardOwnership.Player)
@@ -500,6 +514,118 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
         */
+    }
+
+    private class _AudioClipData
+    {
+        public AudioClip clip;
+        public float time_elapsed;
+        public float target_time;
+        public Guid coroutine;
+    }
+
+    Dictionary<Guid, Coroutine> current_sound_coroutines =
+        new Dictionary<Guid, Coroutine>();
+    
+    /**
+     * @brief Play the audio clip for the given duration
+     * @param clip The audio clip to be played
+     * @param duraton The length of time the audio clip will be played
+     */
+    public void PlaySound(AudioClip clip, float duration)
+    {
+        Guid guid = Guid.NewGuid();
+        Coroutine routine = StartCoroutine(this.StartPlayingSound(clip, duration, guid));
+        this.current_sound_coroutines.Add(guid, routine);
+    }
+
+    // NOTE(KASIN): This can have a race-condition if this coroutine is called
+    //    more than once before a previous call has finished. I have attempted
+    //    to mitigate this by creating the PlaySound and StopPlayingSound
+    //    functions. 
+    private IEnumerator StartPlayingSound(AudioClip clip, float duration, Guid guid)
+    {
+        float target_time = duration;
+        float time_elapsed = 0.0f;
+
+        Queue<_AudioClipData> clip_queue = new Queue<_AudioClipData>();
+        
+        // Interrupt the current clip
+        if (this.current_audio_clip != null)
+        {
+            clip_queue.Enqueue(this.current_audio_clip);
+            this.audio_source.Pause();
+
+            while (clip_queue.Count > 0)
+            {
+                _AudioClipData data = clip_queue.Dequeue();
+                if (data == null)
+                {
+                    continue;
+                }
+                
+                this.audio_source.clip = data.clip;
+                this.audio_source.time = data.time_elapsed;
+                this.audio_source.Play();
+                time_elapsed = data.time_elapsed;
+                while (time_elapsed < data.target_time)
+                {
+                    time_elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                this.audio_source.Stop();
+            }
+        }
+
+        if (clip == null)
+        {
+            yield break;
+        }
+
+        _AudioClipData clip_data = new _AudioClipData()
+        {
+            clip = clip,
+            time_elapsed = time_elapsed,
+            target_time = duration,
+            coroutine = guid
+        };
+        this.current_audio_clip = clip_data;
+
+
+        // Play the sound
+        this.audio_source.clip = clip;
+        this.audio_source.Play();
+
+        while (time_elapsed < target_time)
+        {
+            time_elapsed += Time.deltaTime;
+            this.current_audio_clip.time_elapsed = time_elapsed;
+            yield return null;
+        }
+
+        this.audio_source.Stop();
+
+        // Done, remove from the current routines
+        this.current_sound_coroutines.Remove(guid);
+    }
+
+    /**
+     * @brief Stops playing the current audio clip
+     */
+    public void StopPlayingSound()
+    {
+        // Stop all sound routines playing
+        foreach (Coroutine routine in this.current_sound_coroutines.Values)
+        {
+            if (routine != null)
+            {
+                StopCoroutine(routine);
+            }
+        }
+        this.current_sound_coroutines.Clear();
+
+        this.audio_source.Stop();
+        this.current_audio_clip = null;
     }
 
     // To be used by the Defense Modifier(s)
@@ -679,10 +805,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private IEnumerator DeathAnimation()
     {
-        float target_time = 2.0f;
+        float target_time = 1.0f;
         float time_elapsed = 0.0f;
 
         Material curr_material = this.GetComponent<Renderer>().material;
+
+        // Play the death sound
+        if (this.death_audio != null)
+        {
+            this.audio_source.clip = this.death_audio;
+            this.audio_source.Play();
+        }
 
         while (time_elapsed < target_time)
         {
@@ -690,6 +823,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             time_elapsed += Time.deltaTime;
             yield return null;
         }
+
+        this.audio_source.Stop();
 
         // Destroy the card
         Destroy(this.gameObject);
