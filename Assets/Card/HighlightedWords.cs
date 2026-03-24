@@ -46,7 +46,10 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
     {
         this.words = words;
         this.InitDict();
-        this.description_text.text = this.AddColorTags(this.description_text.text, this.dict_word_info);
+        if (this.description_text != null)
+        {
+            this.description_text.text = this.AddColorTags(this.description_text.text, this.dict_word_info);
+        }
     }
 
     void Awake()
@@ -178,11 +181,15 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
     
     /**
      * @brief Get the dictionary with the word information
-     * @reutrn The current word information dictionary
+     * @return The current word information dictionary
      */
     public Dictionary<string, WordInfo> GetDict()
     {
         return this.dict_word_info;
     }
 
+    public WordInfo[] GetDefaultWords()
+    {
+        return this.words;
+    }
 }
