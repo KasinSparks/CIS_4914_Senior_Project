@@ -24,3 +24,4 @@ MonoBehaviour:
   card_rarity: 1
   starting_modifiers:
   - {fileID: 11400000, guid: 9a611389446ac154f8351bfaf7a4b630, type: 2}
+  attack_audio: {fileID: 8300000, guid: 9a3c057287324e849acff5fa007baf59, type: 3}

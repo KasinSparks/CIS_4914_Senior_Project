@@ -26,3 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83ed999be4706834894ecfe31a312523, type: 2}
   - {fileID: 11400000, guid: 9b2f637469104024ab31ff4397150512, type: 2}
   - {fileID: 11400000, guid: 0adc983be36bbf348a74f30d40d6c638, type: 2}
+  attack_audio: {fileID: 8300000, guid: 7301c4c2fb9d87c43913b946f4b32bd8, type: 3}

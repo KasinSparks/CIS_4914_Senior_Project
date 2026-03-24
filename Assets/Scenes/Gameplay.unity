@@ -908,6 +908,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!114 &11993142
@@ -927,6 +928,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &11993145
@@ -1116,6 +1118,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &123962374
@@ -1673,6 +1676,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &224458880
@@ -1954,6 +1958,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &342202352
@@ -2134,6 +2139,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &401770698
@@ -3082,6 +3088,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &553253033
@@ -5015,6 +5022,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1002743207
@@ -6388,6 +6396,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1308849405
@@ -7113,6 +7122,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1396579130
@@ -7815,6 +7825,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1564557393
@@ -8497,6 +8508,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1931579806
@@ -8990,6 +9002,8 @@ MonoBehaviour:
   attack_sys: {fileID: 1032196872}
   opponent: {fileID: 406524356}
   playfield: {fileID: 1460760515}
+  player_hp_system: {fileID: 0}
+  opponent_hp_system: {fileID: 0}
 --- !u!4 &2081642590
 Transform:
   m_ObjectHideFlags: 0
@@ -9021,6 +9035,4 @@ SceneRoots:
   - {fileID: 11993129}
   - {fileID: 1949458451}
   - {fileID: 1004096598}
-  - {fileID: 406524355}
   - {fileID: 834328207}
-  - {fileID: 11993129}

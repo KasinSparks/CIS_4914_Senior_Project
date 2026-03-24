@@ -24,6 +24,8 @@ public class CardData : ScriptableObject
     // NOTE: This list is only used to add modifiers in the editor. If you need to get
     //       modifiers on this card during game runtime, use the GetModifiers function.
     public List<CardModifier> starting_modifiers;
+
+    public AudioClip attack_audio;
     
     /**
      * @brief A very simple comparison. Compares name and order to determine
