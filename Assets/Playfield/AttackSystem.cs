@@ -68,7 +68,7 @@ public class AttackSystem : MonoBehaviour
             if (delay > 0.1f && a < 1)
             {
                 // Artificial delay. This is useful for the side strike.
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
             }
 
             if (opponent_slot == null)
@@ -89,7 +89,7 @@ public class AttackSystem : MonoBehaviour
             //Transform original = card.transform; this is a moving point
 
             // Play the attack sound
-            card.PlaySound(card.GetCardData().attack_audio, ATTACK_DURATION);
+            card.PlaySound(card.GetCardData().attack_audio);
 
             float target_time = ATTACK_DURATION / 2.0f;
             float time_elapsed = 0.0f;
@@ -108,8 +108,12 @@ public class AttackSystem : MonoBehaviour
 
             card.Attack(opponent_slot.GetCard());
 
+            // Wait for the direct hit audio to finish
+            yield return new WaitForSecondsRealtime(card.HIT_SFX_TIME);
+
+            card.PlaySound(card.GetCardData().attack_audio, time_elapsed);
             time_elapsed = 0.0f;
-            while (time_elapsed < target_time + card.HIT_SFX_TIME)
+            while (time_elapsed < target_time)
             {
                 time_elapsed += Time.deltaTime;
                 if (card == null) {
