@@ -11,13 +11,15 @@ public class UI_PlayerStatInsectOrder : MonoBehaviour
     private CardData[] cards;
 
     private float height;
+    private float width;
 
-    private RectTransform transform;
+    private RectTransform rect_transform;
 
     void Awake()
     {
-        this.transform = GetComponent<RectTransform>();
-        this.height = transform.sizeDelta.y;    
+        this.rect_transform = GetComponent<RectTransform>();
+        this.height = rect_transform.sizeDelta.y;    
+        this.width  = rect_transform.sizeDelta.x;    
     }
 
     public float GetHeight()
@@ -25,13 +27,19 @@ public class UI_PlayerStatInsectOrder : MonoBehaviour
         return this.height;
     }
 
-    public void SetYPosition(float y)
+    public float GetWidth()
     {
-        this.transform.localPosition = new Vector3(
-            this.transform.localPosition.x,
-            this.transform.localPosition.y + y,
-            this.transform.localPosition.z
-        ); 
+        return this.width;
+    }
+
+    public void AddToYPosition(float y)
+    {
+        this.rect_transform.localPosition += new Vector3(0, y, 0);
+    }
+
+    public void AddToXPosition(float x)
+    {
+        this.rect_transform.localPosition += new Vector3(x, 0, 0);
     }
 
     public void SetCards(CardData[] cards)
@@ -41,19 +49,23 @@ public class UI_PlayerStatInsectOrder : MonoBehaviour
 
     public void DisplayCards()
     {
-        float offset = 0.0f;
+        float offset = -((width) / 2.0f);
         foreach (CardData card in cards)
         {
             UI_PlayerStatInsectDisplayPrefab prefab =
                 Instantiate<UI_PlayerStatInsectDisplayPrefab>(display_prefab,
-                    this.transform);
+                    this.rect_transform);
+
+            offset += prefab.GetWidth();
+
 
             prefab.SetImage(card.image);
             prefab.SetName(card.name);
 
             prefab.SetXPosition(offset);
+            prefab.AddToYPosition(-64.0f);
 
-            offset += prefab.GetWidth() + 32.0f;
+            offset += 32.0f;
         }
     }
 
