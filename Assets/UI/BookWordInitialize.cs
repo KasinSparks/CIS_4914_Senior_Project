@@ -8,6 +8,9 @@ public class BookWordInitialize : MonoBehaviour
 
     void Awake()
     {
+        // Hide the book by default
+        this.transform.Find("Panel").gameObject.SetActive(false);
+
         // Load the word info if it exist
         if (SaveSystem.CheckForFileExistence(SaveSystemFile.WordInfo))
         {
