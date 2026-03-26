@@ -393,6 +393,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
+        int damage = this.card_data.attack + this.attack_damage_bonus;
+        // Update player stats
+        if (this.GetOwnership() == CardOwnership.Player)
+        {
+            PlayerStats.player_data.AddToDamageDealt(damage);
+        }
+
         // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent
         //    directly. If we want modifier(s) applied before attacking the
         //    player or opponent directly, then this logic needs to go into
@@ -403,16 +410,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
-                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.player_hp_system.DirectHit(damage);
                     if(this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
+                        PlayerStats.player_data.AddToOpponentsDefeated(1);
                     }
                     break;
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
-                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.opponent_hp_system.DirectHit(damage);
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
@@ -659,6 +667,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
+
+        // Update the player stats
+        if (this.GetOwnership() != CardOwnership.Player)
+        {
+            PlayerStats.player_data.AddToInsectsDefeated(1);
+        }
 
         StartCoroutine(this.DeathAnimation());
     }
