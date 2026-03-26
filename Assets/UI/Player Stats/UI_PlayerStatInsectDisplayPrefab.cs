@@ -30,6 +30,11 @@ public class UI_PlayerStatInsectDisplayPrefab : MonoBehaviour
         );
     }
 
+    public void AddToYPosition(float y)
+    {
+        this.rect_transform.localPosition += new Vector3(0.0f, y, 0.0f);
+    }
+
     public void SetName(string name)
     {
         this.card_name.text = name;
