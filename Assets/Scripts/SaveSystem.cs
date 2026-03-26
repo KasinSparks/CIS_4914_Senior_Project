@@ -14,6 +14,7 @@ public enum SaveSystemFile
     OpponentDeck1,  // Example
     OpponentDeck2,  // Example, can change this to the name of the opponent
     WordInfo,
+    PlayerStats,
 }
 
 
@@ -32,6 +33,9 @@ public class SaveSystem
 
     private static readonly string WORD_INFO_FOLDER        = "WORDS";
     private static readonly string WORD_INFO_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, WORD_INFO_FOLDER);
+
+    private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
+    private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -56,6 +60,8 @@ public class SaveSystem
                 return "TOTEM_MODIFIER_NAMES.json";
             case SaveSystemFile.WordInfo:
                 return "WORD_INFO.json";
+            case SaveSystemFile.PlayerStats:
+                return "PLAYER_STATS.json";
 
             default:
                 // TODO(KASIN):
@@ -87,6 +93,8 @@ public class SaveSystem
                 return TOTEMS_SAVE_LOCATION;
             case SaveSystemFile.WordInfo:
                 return WORD_INFO_SAVE_LOCATION;
+            case SaveSystemFile.PlayerStats:
+                return PLAYER_STATS_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -568,4 +576,42 @@ public class SaveSystem
     {
         return File.Exists(GetFullPath(file));
     }
+
+    /**
+     * @brief Save the player stats to a file
+     * @param player_data The stats for the during the game
+     */
+
+    public static void SavePlayerStats(PlayerData player_data)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static PlayerData LoadPlayerStats()
+    {
+        PlayerData ret = new PlayerData();
+        SaveSystemFile file = SaveSystemFile.PlayerStats;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        return ret;
+    }
+
 }
