@@ -61,6 +61,12 @@ public class PlayerData
         return this.nodes_traversed;
     }
 
+    public Dictionary<string, CardData> GetCardsDiscovered()
+    {
+        // TODO(KASIN): Consider changing this to not be a reference
+        return this.cards_discovered;
+    }
+
     public void AddCardToDiscoveredList(CardData card)
     {
         this.cards_discovered.TryAdd(card.card_name, card);
