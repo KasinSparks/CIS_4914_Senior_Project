@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
   m_Name: cricket
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
-  words: []
+  words:
+  - cricket
+  - crickets
   info: 
   image: {fileID: 0}

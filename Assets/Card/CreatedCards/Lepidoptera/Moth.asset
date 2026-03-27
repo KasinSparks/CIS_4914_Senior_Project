@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Moth
   description: Attracted to light, however most are nocturnal.
-  highlighted_words: []
+  highlighted_words:
+  - {fileID: 11400000, guid: fe0a6245c0d0d8648810a4798e19b172, type: 2}
+  - {fileID: 11400000, guid: 10a7c96f03b129545a166eabb889a127, type: 2}
   order: 4
   hp: 1
   attack: 1

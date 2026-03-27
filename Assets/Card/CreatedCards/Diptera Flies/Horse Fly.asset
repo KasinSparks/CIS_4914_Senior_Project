@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Horse Fly
   description: Larger than a typical fly.
-  highlighted_words: []
+  highlighted_words:
+  - {fileID: 11400000, guid: 510cc3abac1e03a4fb24e7e1c54dd1f5, type: 2}
+  - {fileID: 11400000, guid: f7d4629114b4f0b4fb84087c85207538, type: 2}
   order: 1
   hp: 3
   attack: 2
