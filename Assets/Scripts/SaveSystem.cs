@@ -424,6 +424,19 @@ public class SaveSystem
         return orders.ToArray();
     }
 
+    public static void AddTotemOrderToSaveFile(CardOrder order, SaveSystemFile file)
+    {
+        CardOrder[] orders = LoadTotemOrders(file);
+        CardOrder[] new_orders = new CardOrder[orders.Length + 1];
+        for (int i = 0; i < orders.Length; ++i)
+        {
+            new_orders[i] = orders[i];
+        }
+        new_orders[new_orders.Length - 1] = order;
+
+        SaveTotemOrders(new_orders, file);
+    }
+
     public static void SaveTotemModifiers(CardModifier[] modifiers, SaveSystemFile file)
     {
         StringBuilder sb = new StringBuilder();
@@ -486,6 +499,15 @@ public class SaveSystem
     {
         switch (name)
         {
+            case "African Derived Queen Defence":
+                return ScriptableObject.CreateInstance<AfricanDerivedQueenModifier>();
+
+            case "Queen":
+                return ScriptableObject.CreateInstance<QueenModifier>();
+
+            case "Anti-Insect":
+                return ScriptableObject.CreateInstance<AntiInsectModifier>();
+
             case "Armored":
                 return ScriptableObject.CreateInstance<ArmoredCardModifier>();
 
@@ -501,19 +523,62 @@ public class SaveSystem
             case "Explode on Death":
                 return ScriptableObject.CreateInstance<ExplodeOnDeathModifier>();
 
+            case "Flea Multiplier":
+                return ScriptableObject.CreateInstance<QueenModifier>();
+
+            case "Flutter":
+                return ScriptableObject.CreateInstance<FlutterModifier>();
+
+            case "Flutter+":
+                return ScriptableObject.CreateInstance<FlutterModifier>();
+
             case "Heal on Attack":
                 return ScriptableObject.CreateInstance<HealOnAttackModifier>();
 
-            case "Queen":
+            case "Jump":
+                return ScriptableObject.CreateInstance<JumpModifier>();
+
+            case "Locus Swarm":
                 return ScriptableObject.CreateInstance<QueenModifier>();
+
+            case "Move to Lane Attacked":
+                return ScriptableObject.CreateInstance<MoveToLaneAttackedModifier>();
+
+            case "Nektar Redution":
+                return ScriptableObject.CreateInstance<NektarReductionModifier>();
+
+            case "Side Strike":
+                return ScriptableObject.CreateInstance<SideStrikeModifier>();
+
+            case "Spawn Child":
+                return ScriptableObject.CreateInstance<SpawnChildModifier>();
+
+            case "Stinger Detach":
+                return ScriptableObject.CreateInstance<StingerDetachModifier>();
 
             case "Strength in Numbers":
                 return ScriptableObject.CreateInstance<StrengthInNumberModifier>();
+
+            case "Web":
+                return ScriptableObject.CreateInstance<ArmoredCardModifier>();
 
             default:
                 // TODO(ALEX):
                 throw new System.NotImplementedException();
         }
+    }
+
+    public static void AddTotemModifierToSaveFile(CardModifier modifier, SaveSystemFile file)
+    {
+        CardModifier[] modifiers = LoadTotemModifiers(file);
+        CardModifier[] new_modifiers = new CardModifier[modifiers.Length + 1];
+        for (int i = 0; i < modifiers.Length; ++i)
+        {
+            new_modifiers[i] = modifiers[i];
+        }
+        new_modifiers[new_modifiers.Length - 1] = modifier;
+
+        SaveTotemModifiers(new_modifiers, file);
     }
 
 
@@ -613,5 +678,4 @@ public class SaveSystem
         JsonUtility.FromJsonOverwrite(line, ret);
         return ret;
     }
-
 }

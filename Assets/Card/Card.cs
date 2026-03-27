@@ -32,7 +32,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             Gameplay,
             Upgrade,
-            Creator
+            Creator,
+            Reward
         }
 
     private CardContext context = CardContext.Gameplay; //default to gameplay
@@ -143,7 +144,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.game_state = this.GetObject<GameState>("GameState");
         }
         
-        if (this.context != CardContext.Creator)
+        if (this.context != CardContext.Creator && this.context != CardContext.Reward)
         {
             this.player_hand = this.GetObject<Hand>("Hand");
 
@@ -327,6 +328,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 }
             }
 
+            return;
+
+        // if reward card and clicked, set card as selected card in reward
+        } else if (context == CardContext.Reward)
+        {
+            this.slot.GetReward().SetSelectedCard(this);
             return;
         }
 
