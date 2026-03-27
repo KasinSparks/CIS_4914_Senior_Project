@@ -15,7 +15,9 @@ MonoBehaviour:
   card_name: Young Wolf Spider
   description: A baby wolf spider. Usually, stays on the back of its mother until
     it is older.
-  highlighted_words: []
+  highlighted_words:
+  - {fileID: 11400000, guid: 794d41fb583acc649951561e2755034d, type: 2}
+  - {fileID: 11400000, guid: b6805e99c56877a41b38bfb617967e36, type: 2}
   order: 5
   hp: 1
   attack: 1
