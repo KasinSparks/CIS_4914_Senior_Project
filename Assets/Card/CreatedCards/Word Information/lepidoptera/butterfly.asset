@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
   m_Name: butterfly
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
-  words: []
+  words:
+  - butterfly
+  - butterflies
   info: 
   image: {fileID: 0}

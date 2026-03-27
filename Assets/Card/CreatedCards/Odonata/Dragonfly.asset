@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Dragonfly
   description: Can be found in wetlands areas. Larger than a Damselfly.
-  highlighted_words: []
+  highlighted_words:
+  - {fileID: 11400000, guid: 191131fd143d6044b83476341d359bf7, type: 2}
+  - {fileID: 11400000, guid: ec006ca5a8616914fb01e70b232468c2, type: 2}
   order: 6
   hp: 4
   attack: 2
