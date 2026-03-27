@@ -166,11 +166,11 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
      */
     public void OnPointerExit(PointerEventData eventData)
     {
-        // if no modifier and no reward, return
-        if (this.modifier == null && this.reward == null)
+        // if totem isn't reward, return
+        if (this.reward == null)
         {
             return;
-        }
+        } 
 
         Transform obj = this.modifierInfoCanvas.transform.GetChild(1);
         if (!obj.name.Equals("UI_ModifierInfoRef"))
