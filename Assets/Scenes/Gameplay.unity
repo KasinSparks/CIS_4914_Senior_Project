@@ -908,6 +908,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!114 &11993142
@@ -927,6 +928,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &11993145
@@ -1116,6 +1118,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &123962374
@@ -1673,6 +1676,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &224458880
@@ -1954,6 +1958,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &342202352
@@ -2134,6 +2139,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &401770698
@@ -3082,6 +3088,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &553253033
@@ -4359,7 +4366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834328207}
-  - component: {fileID: 834328206}
+  - component: {fileID: 834328208}
   m_Layer: 0
   m_Name: Totem
   m_TagString: Untagged
@@ -4367,32 +4374,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &834328206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834328205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f5606f6d2c87d34fae1cf136547a509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Totem
-  temp_modifiers:
-  - {fileID: 11400000, guid: dc184778c7675d94a999295f033b13ad, type: 2}
-  - {fileID: 11400000, guid: 0045a470fff16b6449747c190ab5daa4, type: 2}
-  - {fileID: 11400000, guid: aba4e90b0667f644abf3ccc976696673, type: 2}
-  - {fileID: 11400000, guid: ffee9998275d8dd4799b3b16d77834cb, type: 2}
-  - {fileID: 11400000, guid: 8df8dc44248a65348887694d7ac36c4c, type: 2}
-  - {fileID: 11400000, guid: a88cdc50e3f0d7949aa851e11f45af42, type: 2}
-  - {fileID: 11400000, guid: faa6c030e1d72d74283e8528ac74206c, type: 2}
-  - {fileID: 11400000, guid: 83ed999be4706834894ecfe31a312523, type: 2}
-  temp_orders: 000000000100000002000000
-  modifiers: []
-  orders: 
-  selected_modifier: {fileID: 11400000, guid: dc184778c7675d94a999295f033b13ad, type: 2}
-  selected_order: 0
 --- !u!4 &834328207
 Transform:
   m_ObjectHideFlags: 0
@@ -4408,6 +4389,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834328208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834328205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4e2bdfd96df254ca12361b15c7f4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TempTotem
+  temp_modifiers:
+  - {fileID: 11400000, guid: 1dc7c4743542f3f4bb32a1b104aad408, type: 2}
+  - {fileID: 11400000, guid: ffee9998275d8dd4799b3b16d77834cb, type: 2}
+  - {fileID: 11400000, guid: 01237a3653a419244a63af6d96d1272f, type: 2}
+  temp_orders: 00000000010000000200000003000000040000000500000006000000
+  modifiers: []
+  orders: 
+  selected_modifier: {fileID: 0}
+  selected_order: 9
 --- !u!1 &835437441
 GameObject:
   m_ObjectHideFlags: 0
@@ -4980,7 +4982,7 @@ MonoBehaviour:
   card_starting_mark: {fileID: 806413649}
   card_ending_mark: {fileID: 1366406595}
   playfield: {fileID: 1460760515}
-  totem: {fileID: 834328206}
+  totem: {fileID: 834328208}
 --- !u!4 &976764612
 Transform:
   m_ObjectHideFlags: 0
@@ -5015,6 +5017,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1002743207
@@ -6388,6 +6391,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1308849405
@@ -7113,6 +7117,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1396579130
@@ -7679,7 +7684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SelectTotem
   order_dropdown: {fileID: 2072229896}
   modifier_dropdown: {fileID: 1916212416}
-  totem: {fileID: 834328206}
+  totem: {fileID: 834328208}
 --- !u!114 &1494774468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7815,6 +7820,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1564557393
@@ -8497,6 +8503,7 @@ MonoBehaviour:
   card_in_slot: {fileID: 0}
   card_ownership: 0
   playfieldUpgrade: {fileID: 0}
+  shopBehavior: {fileID: 0}
   gameState: {fileID: 2081642589}
   playfield: {fileID: 0}
 --- !u!65 &1931579806
@@ -9021,6 +9028,4 @@ SceneRoots:
   - {fileID: 11993129}
   - {fileID: 1949458451}
   - {fileID: 1004096598}
-  - {fileID: 406524355}
   - {fileID: 834328207}
-  - {fileID: 11993129}
