@@ -61,18 +61,18 @@ public class AttackSystem : MonoBehaviour
     // CLEANUP(KASIN):
     // NOTE: If you use the delay, make sure it is longer than the animation or
     //    drifting will occur.
-    IEnumerator AttackAnimation(Card card, Card opponent, int index, float delay = 0.0f)
+    IEnumerator AttackAnimation(Card card, CardSlot opponent_slot, int index, float delay = 0.0f)
     {
         Debug.Log("Get additional attack count: " + card._GetNumAdditionalAttacks());
         for (int a = 0; a < card._GetNumAdditionalAttacks(); ++a)
         {
-            if (delay > 0.5f)
+            if (delay > 0.1f && a < 1)
             {
                 // Artificial delay. This is useful for the side strike.
                 yield return new WaitForSeconds(delay);
             }
 
-            if (opponent == null)
+            if (opponent_slot == null)
             {
                 // Update state
                 this.attack_animation_status |= (1 << index);
@@ -81,7 +81,7 @@ public class AttackSystem : MonoBehaviour
 
             Vector3 original_pos = card.transform.position;
             //Transform target = opponent.transform;
-            Vector3 target = opponent.transform.position;
+            Vector3 target = opponent_slot.transform.position;
             target = new Vector3(
                 target.x,
                 target.y + .01f,
@@ -99,7 +99,7 @@ public class AttackSystem : MonoBehaviour
             }
             card.transform.position = target; //snap to target, eliminate drifting
 
-            card.Attack(opponent);
+            card.Attack(opponent_slot.GetCard());
 
 
             for (int i = 0; i < 175; ++i)
@@ -138,6 +138,8 @@ public class AttackSystem : MonoBehaviour
                 this.attack_animation_status |= (1 << 30);
                 break;
         }
+
+        float prev_delay = 0.0f;
 
 
         for (int i = 0; i < Playfield.NUM_OF_CARDS_IN_ROW; ++i)
@@ -181,7 +183,7 @@ public class AttackSystem : MonoBehaviour
                                 offset += aas_opponent_offset;
                             }
 
-                            StartCoroutine(this.AttackAnimation(card_ref, target_card_ref, offset));
+                            StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                             playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                             attcked_lhs = true;
                         }
@@ -218,11 +220,13 @@ public class AttackSystem : MonoBehaviour
                     {
                         offset += aas_opponent_offset;
                     }
-                    StartCoroutine(this.AttackAnimation(card_ref, target_card_ref, offset, delay));
+                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay + delay));
                     if (target_card_slot_ref != null)
                     {
                         playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                     }
+
+                    prev_delay += delay + 2.0f;
                 }
                 else
                 {
@@ -234,8 +238,10 @@ public class AttackSystem : MonoBehaviour
                     {
                         offset += aas_opponent_offset;
                     }
-                    StartCoroutine(this.AttackAnimation(card_ref, target_card_ref, offset));
+                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                     playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
+
+                    prev_delay += (2.0f * card_ref._GetNumAdditionalAttacks());
                 }
             }
             else

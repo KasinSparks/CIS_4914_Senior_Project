@@ -1,11 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 /**
  *  @brief Used to store the modifier object and the gameobject that displays
@@ -412,10 +410,20 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
+                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    if(this.game_state.player_hp_system.is_defeated == true)
+                    {
+                        UnityEngine.Debug.Log("Opponent is defeated!");
+                    }
                     break;
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
+                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    if (this.game_state.opponent_hp_system.is_defeated == true)
+                    {
+                        UnityEngine.Debug.Log("Player is defeated!");
+                    }
                     break;
             }
             return;
@@ -659,6 +667,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
 
+        StartCoroutine(this.DeathAnimation());
+    }
+
+    private IEnumerator DeathAnimation()
+    {
+        float target_time = 2.0f;
+        float time_elapsed = 0.0f;
+
+        Material curr_material = this.GetComponent<Renderer>().material;
+
+        while (time_elapsed < target_time)
+        {
+            curr_material.SetFloat("_amount_shown", 1 - (time_elapsed / target_time));
+            time_elapsed += Time.deltaTime;
+            yield return null;
+        }
+
         // Destroy the card
         Destroy(this.gameObject);
     }
@@ -768,8 +793,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 return;
             }
         }
-
-        CardModifier new_mod = Instantiate(base_modifier);
+        
+        CardModifier new_mod = Instantiate<CardModifier>(base_modifier);
         new_mod.Initialize();
 
         // TODO(KASIN): Change this so the card modifier list only holds data.
