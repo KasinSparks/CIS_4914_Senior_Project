@@ -22,10 +22,8 @@ MonoBehaviour:
     appearance, and physiology. They begin to reproduce rapidly, forming bands of
     wingless nymphs that later develop into swarms of winged adults. Both the bands
     and the swarms are highly mobile, consuming large amounts of vegetation and causing
-    significant crop damage. Adult locusts are powerful fliers and can travel great
-    distances, feeding on most green vegetation wherever the swarm settles.
+    significant crop damage.
 
 
-    Source:
-    https://en.wikipedia.org/wiki/Locust '
+    Source: https://en.wikipedia.org/wiki/Locust '
   image: {fileID: 2800000, guid: 5f763165fc77d1644a14f48a47f4b39d, type: 3}

@@ -17,10 +17,10 @@ MonoBehaviour:
   - siphonapteras
   - flea
   - fleas
-  info: "Siphonaptera, better known as fleas, are small insects that live as external
-    parasites of mammals and birds. Adults are typically about an eighth of an inch
-    long, allowing them to move easily through their hosts\u2019 fur or feathers.
-    They are excellent jumpers, with some species able to leap up to 50 times their
-    body length. Their mouthparts are specialized for piercing skin and sucking blood
-    from their hosts.\n\nSource: https://en.wikipedia.org/wiki/Flea "
+  info: "The order siphonaptera, better known as fleas, are small insects that live
+    as external parasites of mammals and birds. Adults are typically about an eighth
+    of an inch long, allowing them to move easily through their hosts\u2019 fur or
+    feathers. They are excellent jumpers, with some species able to leap up to 50
+    times their body length. Their mouthparts are specialized for piercing skin and
+    sucking blood from their hosts.\n\nSource: https://en.wikipedia.org/wiki/Flea "
   image: {fileID: 2800000, guid: 67f78deaa064ce54d825c7a33a812719, type: 3}
