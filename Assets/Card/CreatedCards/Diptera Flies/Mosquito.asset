@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Mosquito
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Mosquito
-  description: A blood sucking insect.
-  highlighted_words: []
+  description: A mosquito... a fly known for sucking blood
+  highlighted_words:
+  - {fileID: 11400000, guid: 510cc3abac1e03a4fb24e7e1c54dd1f5, type: 2}
+  - {fileID: 11400000, guid: b4a0f7dab9e5eaf4a9afb828cefa475c, type: 2}
+  - {fileID: 11400000, guid: f7d4629114b4f0b4fb84087c85207538, type: 2}
   order: 1
   hp: 1
   attack: 1

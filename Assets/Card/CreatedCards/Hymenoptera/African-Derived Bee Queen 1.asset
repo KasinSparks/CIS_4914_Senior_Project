@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: African-Derived Bee Queen 1
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: African-Derived Bee Queen
-  description: The Queen Killer Bee
-  highlighted_words: []
+  description: An African-derived bee queen, also known as a "killer bee"
+  highlighted_words:
+  - {fileID: 11400000, guid: f066a045b6d724f45955142013293129, type: 2}
+  - {fileID: 11400000, guid: fea5e3a3c93bdf14aaef2f64e0ec52a3, type: 2}
+  - {fileID: 11400000, guid: 3684935c52c26d54c9de9d420b34c02f, type: 2}
+  - {fileID: 11400000, guid: dcb7bac14494df54c8cb113ee3cb3428, type: 2}
   order: 2
   hp: 4
   attack: 0

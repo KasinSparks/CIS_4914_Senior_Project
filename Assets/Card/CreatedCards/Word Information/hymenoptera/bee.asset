@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: bee
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - bee
+  - bees
+  info: "Bees are winged insects in the order Hymenoptera. The most well-known bee
+    species are bumble bees and honey bees. Bees are known for being social insects
+    that live in hierarchical colonies, but over 90% of bee species are solitary.
+    \n\nHoney bees are known to build hives out of hexagonal cells that can store
+    honey and larvae. Honey bees are also important for the environment as they pollinate
+    35% of the world's crop and 75% of flowering plants.\n\nSources: \nhttps://en.wikipedia.org/wiki/Bee\nhttps://www.unep.org/news-and-stories/story/why-bees-are-essential-people-and-planet"
+  image: {fileID: 2800000, guid: 34e766f3297416a44b7503079d74b01d, type: 3}

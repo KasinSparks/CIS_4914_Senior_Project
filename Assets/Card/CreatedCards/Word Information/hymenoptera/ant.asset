@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: ant
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - ant
+  - ants
+  info: "Ants are eusocial insects in the order Hymenoptera. They can live in colonies
+    consisting of millions of individuals. Ant societies exhibit division of labor,
+    communication between individuals, and the ability to solve complex problems.
+    The main castes in ant colonies include workers, soldiers, drones, and queens.
+    Ant colonies have often been described as \u201Csuperorganisms,\u201D as individuals
+    operate together as a unified entity to support the colony.\n\nSource: https://en.wikipedia.org/wiki/Ant "
+  image: {fileID: 2800000, guid: 6b3d61ec34ff16f4082d0a5e1d94710a, type: 3}

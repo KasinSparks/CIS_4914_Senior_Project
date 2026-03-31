@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Flea
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Flea
-  description: A small insect that sucks blood from a host mammal or bird.
-  highlighted_words: []
+  description: A flea, a small insect that sucks blood from a host
+  highlighted_words:
+  - {fileID: 11400000, guid: 5557452c5a5217e47b27d04a3ae5411e, type: 2}
   order: 7
   hp: 1
   attack: 0
