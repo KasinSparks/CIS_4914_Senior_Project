@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
   words:
   - araneae
-  info: araneae spider moment
+  - spider
+  - spiders
+  info: 'Araneae, commonly known as spiders, are eight-legged Arthropods that can
+    extrude silk through their spinnerets to construct webs. Spiders are found in
+    every continent excluding Antarctica, and live in nearly every land habitat.
+
+
+    Source: 
+    https://en.wikipedia.org/wiki/Spider '
   image: {fileID: 2800000, guid: fee1c79c0085ca346922fd483f15a331, type: 3}
