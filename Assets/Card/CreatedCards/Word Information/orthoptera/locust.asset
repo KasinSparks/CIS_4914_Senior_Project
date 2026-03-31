@@ -15,6 +15,17 @@ MonoBehaviour:
   words:
   - locust
   - locusts
-  info: 'A locust is a type of grasshopper belonging to the order Orthoptera. Under
-    certain curcumstances, typically solitary grasshoppers '
+  info: 'A locust is a type of grasshopper belonging to the order Orthoptera. In
+    their solitary phase, they exist at low population densities. However, under
+    circumstances like drought followed by rapid vegetation growth the serotonin
+    in their nervous systems triggers a phase change that alters their behavior,
+    appearance, and physiology. They begin to reproduce rapidly, forming bands of
+    wingless nymphs that later develop into swarms of winged adults. Both the bands
+    and the swarms are highly mobile, consuming large amounts of vegetation and causing
+    significant crop damage. Adult locusts are powerful fliers and can travel great
+    distances, feeding on most green vegetation wherever the swarm settles.
+
+
+    Source:
+    https://en.wikipedia.org/wiki/Locust '
   image: {fileID: 2800000, guid: 5f763165fc77d1644a14f48a47f4b39d, type: 3}
