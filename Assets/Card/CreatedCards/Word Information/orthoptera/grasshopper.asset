@@ -15,5 +15,13 @@ MonoBehaviour:
   words:
   - grasshopper
   - grasshoppers
-  info: A grasshopper is an insect belonging to the order Orthoptera.
+  info: 'A grasshopper is an insect belonging to the order Orthoptera. They typically
+    live above ground in grassy or vegetated habitats and have strong hind legs that
+    allow them to jump great distances, which is reflected in their name. Some grasshopper
+    species, known as locusts, can change color and form swarms. They are among the
+    more ancient groups of insects, appearing around 250 million years ago and predating
+    grasses by roughly 180 million years.
+
+
+    Source: https://en.wikipedia.org/wiki/Grasshopper '
   image: {fileID: 2800000, guid: e9ec9deefca66e1498bbce3f867fda2a, type: 3}
