@@ -15,5 +15,11 @@ MonoBehaviour:
   words:
   - damselfly
   - damselflies
-  info: 
-  image: {fileID: 0}
+  info: 'A damselfly is a winged insect in the order Odonata. They are closely related
+    to dragonflies but are smaller and slimmer. Like dragonflies, damselflies are
+    skilled predators, though their smaller size limits the size of prey they can
+    capture.
+
+
+    Source: https://en.wikipedia.org/wiki/Damselfly '
+  image: {fileID: 2800000, guid: e9d13bf0db1eaf14ead723e388916551, type: 3}
