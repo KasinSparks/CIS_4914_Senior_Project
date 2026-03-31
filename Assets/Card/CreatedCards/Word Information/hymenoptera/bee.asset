@@ -15,5 +15,10 @@ MonoBehaviour:
   words:
   - bee
   - bees
-  info: 
+  info: "Bees are winged insects in the order Hymenoptera. The most well-known bee
+    species are bumble bees and honey bees. Bees are known for being social insects
+    that live in hierarchical colonies, but over 90% of bee species are solitary.
+    \n\nHoney bees are known to build hives out of hexagonal cells that can store
+    honey and larvae. Honey bees are also important for the environment as they pollinate
+    35% of the world's crop and 75% of flowering plants.\n\nSources: \nhttps://en.wikipedia.org/wiki/Bee\nhttps://www.unep.org/news-and-stories/story/why-bees-are-essential-people-and-planet"
   image: {fileID: 2800000, guid: 34e766f3297416a44b7503079d74b01d, type: 3}

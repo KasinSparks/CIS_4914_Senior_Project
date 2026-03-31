@@ -15,5 +15,10 @@ MonoBehaviour:
   words:
   - ant
   - ants
-  info: ant moment spider moment larva beetle
+  info: "Ants are eusocial insects in the order Hymenoptera. They can live in colonies
+    consisting of millions of individuals. Ant societies exhibit division of labor,
+    communication between individuals, and the ability to solve complex problems.
+    The main castes in ant colonies include workers, soldiers, drones, and queens.
+    Ant colonies have often been described as \u201Csuperorganisms,\u201D as individuals
+    operate together as a unified entity to support the colony.\n\nSource: https://en.wikipedia.org/wiki/Ant "
   image: {fileID: 2800000, guid: 6b3d61ec34ff16f4082d0a5e1d94710a, type: 3}
