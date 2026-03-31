@@ -8343,7 +8343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6945313044365564709, guid: a50fb02793844cc4a9f1dcc29c559339, type: 3}
       propertyPath: m_ScrollSensitivity
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
