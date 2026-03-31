@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
   words:
   - queen
-  info: 
-  image: {fileID: 0}
+  info: 'Insect queens, also known as gynes are the primary female reproductive caste
+    of social insects. They are essential to the colony''s survival, as their main
+    goal is to produce offspring while other members work to protect and sustain
+    them. There can be one or more queens in a colony, depending on species.
+
+
+    Source:
+    https://en.wikipedia.org/wiki/Gyne '
+  image: {fileID: 2800000, guid: cf74d920fdba01c47a86eeed7544a74b, type: 3}

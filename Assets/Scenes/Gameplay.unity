@@ -7204,6 +7204,7 @@ MonoBehaviour:
   owner: 1
   starting_cards:
   - {fileID: 11400000, guid: 39e6e3a8d0dd1d249b5c0f2e5705a916, type: 2}
+  - {fileID: 11400000, guid: 7df6c0c86b1bc53488012eddd8d403d6, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
 --- !u!1 &1838678334
