@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Locust
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Locust
-  description: A locust that can change their behavior to form swarms
-  highlighted_words:
-  - {fileID: 11400000, guid: 1548a88d8651f004593e1ca57c17513f, type: 2}
-  - {fileID: 11400000, guid: b157e867332af144dad6c6ec74fa014e, type: 2}
+  description: Similar to a Grasshopper, can change their behavior to become gregarious.
+  highlighted_words: []
   order: 8
   hp: 2
   attack: 2

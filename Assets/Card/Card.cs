@@ -32,8 +32,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             Gameplay,
             Upgrade,
-            Creator,
-            Reward
+            Creator
         }
 
     private CardContext context = CardContext.Gameplay; //default to gameplay
@@ -134,7 +133,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.game_state = this.GetObject<GameState>("GameState");
         }
         
-        if (this.context != CardContext.Creator && this.context != CardContext.Reward)
+        if (this.context != CardContext.Creator)
         {
             this.player_hand = this.GetObject<Hand>("Hand");
 
@@ -318,12 +317,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 }
             }
 
-            return;
-
-        // if reward card and clicked, set card as selected card in reward
-        } else if (context == CardContext.Reward)
-        {
-            this.slot.GetReward().SetSelectedCard(this);
             return;
         }
 
@@ -807,8 +800,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 return;
             }
         }
-        
-        CardModifier new_mod = Instantiate<CardModifier>(base_modifier);
+
+        CardModifier new_mod = Instantiate(base_modifier);
         new_mod.Initialize();
 
         // TODO(KASIN): Change this so the card modifier list only holds data.

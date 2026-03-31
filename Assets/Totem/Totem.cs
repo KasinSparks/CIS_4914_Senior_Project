@@ -1,209 +1,97 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using TMPro;
 
-public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Totem : MonoBehaviour
 {
-    [SerializeField] private TotemData totem_data;
-    [SerializeField] private CardModifier modifier;
-    [SerializeField] private CardOrder order;
-    [SerializeField] private GameObject totem_prefab;
+    [SerializeField] private List<CardModifier> temp_modifiers;
+    [SerializeField] private List<CardOrder> temp_orders;
+    [SerializeField] private List<CardModifier> modifiers;
+    [SerializeField] private List<CardOrder> orders;
+    [SerializeField] private CardModifier selected_modifier;
+    [SerializeField] private CardOrder selected_order;
 
-    private Reward reward;
+    private GameObject totem_prefab;
 
-    [SerializeField] private string display_description;
-    private string scene_name = "Path";
-    private GameObject modifierInfoCanvas;
-    private GameObject modifierInfoUIWidget;
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        reward = null;
-        modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
-        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
-        
-        // sets position of totem above the table
-        this.transform.SetPositionAndRotation(
-            new Vector3(this.transform.position.x,
-            this.transform.position.y + 0.5f * this.transform.localScale.x,
-            this.transform.position.z),
-            Quaternion.Euler(0, 0, 0)
-        );
-
-        if (this.totem_data == null)
+        CardModifier[] saved_modifiers = SaveSystem.LoadTotemModifiers(SaveSystemFile.TotemModifiers);
+        if (saved_modifiers == null || saved_modifiers.Length < 1)
         {
-            Debug.Log("Totem data not set");
-            return;
+            foreach (CardModifier m in temp_modifiers)
+            {
+                this.modifiers.Add(m);
+            }
+            
+
+        } else
+        {
+            Debug.Log("Loaded mod from file.");
+            foreach (CardModifier m in saved_modifiers)
+            {
+                this.modifiers.Add(m);
+            }
         }
 
-        this.order = this.totem_data.GetOrder();
+        CardOrder[] saved_orders = SaveSystem.LoadTotemOrders(SaveSystemFile.TotemOrders);
+        if (saved_orders == null || saved_orders.Length < 1)
+        {
+            foreach (CardOrder o in temp_orders)
+            {
+                this.orders.Add(o);
+            }
+            
 
-        this.totem_prefab = Instantiate(this.totem_data.GetModel(), this.transform);
+        } else
+        {
+            Debug.Log("Loaded order from file.");
+            foreach (CardOrder o in saved_orders)
+            {
+                this.orders.Add(o);
+            }
+        }
 
+        this.totem_prefab = Resources.Load<GameObject>(selected_order.ToString() + "TotemPrefab");
         if (this.totem_prefab == null)
         {
-            Debug.Log("Totem model not set in totem data.");
+            Debug.LogError("Failed to load Totem model from Resources.");
             return;
         }
 
-        // sets position/rotation of modifier to be flush with totem
-        this.transform.GetChild(0).position = new Vector3(
-            this.transform.position.x,
-            this.transform.position.y,
-            this.transform.GetChild(0).transform.position.z - 0.5f * this.transform.localScale.x
-        );
-  
+        Instantiate(this.totem_prefab, this.gameObject.transform);
     }
 
-    public CardModifier GetModifier()
+    public void AttachModifier(Card card)
     {
-        return this.modifier;
+        if (card.GetOrder() != this.selected_order) return;
+
+        card.AttachModifier(this.selected_modifier);
     }
 
-    /**
-     * @brief Sets this.modifier and updates the totem's display description based on the modifier
-     * 
-     * @param modifier used to set this.modifier
-     */
-    public void SetModifier(CardModifier modifier)
+    public List<CardModifier> GetModifiers()
     {
-        this.modifier = modifier;
-        this.totem_data.SetModifier(this.modifier);
-        this.totem_data.UpdateDisplayDescription();
-        
-        if (this.reward != null)
-        {
-            this.display_description = "Cards of totem's order will have the " + this.modifier.GetName() + " modifier applied: \n " + this.modifier.GetDisplayDescription();
-        } else
-        {
-            this.display_description = this.totem_data.GetDisplayDescription();
-        }
-        
+        return this.modifiers;
     }
 
-    /**
-     * @brief Sets this.order, sets the modifier for the new totem, updates the totem's display description based on the order
-     * 
-     * @param order used to set this.order
-     */
-    public void SetOrder(CardOrder order)
+    public List<CardOrder> GetOrders()
     {
-        this.order = order;
-
-        if (this.totem_prefab != null)
-        {
-            Destroy(this.totem_prefab);
-        }
-        this.totem_prefab = Instantiate(this.totem_data.GetModel(), this.transform);
-
-        if (this.totem_prefab == null)
-        {
-            Debug.LogError("Totem model not set in totem data.");
-            return;
-        }
-        this.SetModifier(this.modifier);
+        return this.orders;
     }
 
-    public Reward GetReward()
+    public void SetSelectedModifier(CardModifier modifier)
     {
-        return this.reward;
+        this.selected_modifier = modifier;
     }
 
-    public void SetReward(Reward reward)
+    public void SetSelectedOrder(CardOrder order)
     {
-        this.reward = reward;
+        this.selected_order = order;
     }
 
-    /**
-     * @brief Displays totem modifier/order when hover over totem
-     * 
-     * @param eventData
-     */
-    public void OnPointerEnter(PointerEventData eventData)
+    void OnDestroy()
     {
-        GameObject modifier_info_widget = Instantiate(this.modifierInfoUIWidget, modifierInfoCanvas.transform);
-        UIModifierInfo modifier_info_widget_data = modifier_info_widget.GetComponent<UIModifierInfo>();
-
-        // if totem isn't reward and doesn't have a modifier, return
-        if (this.modifier == null && this.reward == null)
-        {
-            return;
-        // if totem is order reward, set description and name for order
-        } else if (this.modifier == null && this.reward != null)
-        {
-            this.display_description = "Cards of order " + this.order.ToString() + " will have the totem's modifier applied";
-            modifier_info_widget_data.SetName(this.order.ToString());
-        // if totem isn't an order reward, set name and attach image
-        } else
-        {
-            modifier_info_widget_data.SetImage(this.modifier.GetImage());
-            modifier_info_widget_data.SetName(this.modifier.GetName());
-        }
-
-        // Have a UI Pop-up to show the totem details
-        modifier_info_widget_data.SetDescription(this.display_description);
-        
-        Vector2 widget_size = modifier_info_widget_data.GetRectSize();
-        modifier_info_widget.transform.SetPositionAndRotation(
-            new Vector3(
-                modifierInfoUIWidget.transform.position.x,
-                modifierInfoUIWidget.transform.position.y
-                    - (widget_size.y + 16),
-                modifierInfoUIWidget.transform.position.z
-            ),
-            modifierInfoUIWidget.transform.rotation
-        );        
-    }
-
-    /**
-     * @brief Removes display of totem modifier/order when leave totem
-     * 
-     * @param eventData
-     */
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // if totem isn't reward, return
-        if (this.reward == null)
-        {
-            return;
-        } 
-
-        Transform obj = this.modifierInfoCanvas.transform.GetChild(1);
-        if (!obj.name.Equals("UI_ModifierInfoRef"))
-        {
-            Destroy(obj.gameObject);
-        }        
-    }
-
-    /**
-     * @brief If reward totem, saves order or modifier and loads path scene when clicked
-     * 
-     * @param eventData
-     */
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        // if not reward totem, return
-        if (this.reward == null)
-        {
-            return;
-        // if totem is order reward, add to totem order file
-        } else if (this.modifier == null)
-        {
-            SaveSystem.AddTotemOrderToSaveFile(this.reward.GetSelectedOrder(), SaveSystemFile.TotemOrders);
-        // if totem is modifier reward, add to totem modifier file
-        } else
-        {
-            SaveSystem.AddTotemModifierToSaveFile(this.reward.GetSelectedModifier(), SaveSystemFile.TotemModifiers);
-        }
-
-        // once reward totem clicked, load path
-        if (!string.IsNullOrEmpty(this.scene_name))
-        {
-            SceneManager.LoadScene(this.scene_name);
-        }
+        SaveSystem.SaveTotemOrders(this.orders.ToArray(), SaveSystemFile.TotemOrders);
+        SaveSystem.SaveTotemModifiers(this.modifiers.ToArray(), SaveSystemFile.TotemModifiers);
     }
 }
