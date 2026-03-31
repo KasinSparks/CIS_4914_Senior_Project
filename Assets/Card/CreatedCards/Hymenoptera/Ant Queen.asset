@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ant Queen
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Ant Queen
-  description: A Queen of a colony ant
+  description: A Queen of an ant colony
   highlighted_words:
   - {fileID: 11400000, guid: f066a045b6d724f45955142013293129, type: 2}
   - {fileID: 11400000, guid: c3f104ca42d7d6e44862bd34ccfa2241, type: 2}

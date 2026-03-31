@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Dragonfly
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Dragonfly
-  description: Can be found in wetlands areas. Larger than a Damselfly.
+  description: A dragonfly; an apex predator of the insect world typically residing
+    near fresh water
   highlighted_words:
   - {fileID: 11400000, guid: 191131fd143d6044b83476341d359bf7, type: 2}
   - {fileID: 11400000, guid: ec006ca5a8616914fb01e70b232468c2, type: 2}

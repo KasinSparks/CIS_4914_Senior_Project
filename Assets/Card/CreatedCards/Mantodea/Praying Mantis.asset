@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Praying Mantis
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Praying Mantis
-  description: Typically found in temperate and tropical climates. Closly related
-    to termites and cockroaches.
+  description: A praying mantis; an apex predator of the insect world typically residing
+    in warm, temperate habitats
   highlighted_words:
   - {fileID: 11400000, guid: e175996ae0fc01f4a8bcc69e1184386e, type: 2}
   - {fileID: 11400000, guid: 5da6114d1a0b5be4592debc0edc52cae, type: 2}

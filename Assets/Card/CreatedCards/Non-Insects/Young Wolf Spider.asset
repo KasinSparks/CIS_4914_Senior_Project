@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Young Wolf Spider
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Young Wolf Spider
-  description: A baby wolf spider. Usually, stays on the back of its mother until
-    it is older.
+  description: A baby wolf spider that is no longer on its mother's back
   highlighted_words:
   - {fileID: 11400000, guid: 794d41fb583acc649951561e2755034d, type: 2}
   - {fileID: 11400000, guid: b6805e99c56877a41b38bfb617967e36, type: 2}
