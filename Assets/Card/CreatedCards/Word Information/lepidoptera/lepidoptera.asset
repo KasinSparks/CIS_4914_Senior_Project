@@ -15,5 +15,14 @@ MonoBehaviour:
   words:
   - lepidoptera
   - lepidopteras
-  info: 
-  image: {fileID: 0}
+  info: 'Lepidoptera is an order of winged insects that includes butterflies and
+    moths. Approximately 180,000 species of Lepidoptera have been described, accounting
+    for about 10% of all described species. Butterflies and moths lay eggs on plants,
+    which hatch into larvae called caterpillars. As they mature, caterpillars form
+    a pupa; some spin a silk casing called a cocoon, while others form a chrysalis
+    or develop underground. During this stage, they undergo metamorphosis and transition
+    into their adult butterfly or moth form.
+
+
+    Source: https://en.wikipedia.org/wiki/Lepidoptera '
+  image: {fileID: 2800000, guid: ff3b07490e6358246b34bf54313c079e, type: 3}
