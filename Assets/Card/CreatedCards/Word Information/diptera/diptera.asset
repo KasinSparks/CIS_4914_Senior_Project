@@ -15,5 +15,12 @@ MonoBehaviour:
   words:
   - diptera
   - dipteras
-  info: 
-  image: {fileID: 0}
+  info: 'Diptera is an order of insects known as "true flies." Diptera contains over
+    150,000 species with some of the more known being house flies, horse flies, mosquitos,
+    and gnats. Flies have large, compound eyes and advanced mechanosensory organs
+    that allow for quick reflexes and the ability to manuver with ease.
+
+
+    Source:
+    en.wikipedia.org/wiki/Fly '
+  image: {fileID: 2800000, guid: 48e4f1189669f7047a73957cc2411d37, type: 3}

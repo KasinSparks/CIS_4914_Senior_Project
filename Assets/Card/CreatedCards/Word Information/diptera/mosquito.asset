@@ -15,5 +15,12 @@ MonoBehaviour:
   words:
   - mosquito
   - mosqutios
-  info: 
-  image: {fileID: 0}
+  info: 'Mosquitos, meaning little flies in Spanish, are a species belonging to the
+    order Diptera known for drinking blood. Only females of certain mosquito species
+    can drink blood, but all species of mosquito can drink nectar using their piercing-sucking
+    mouthparts. Mosquitos are also known to be vectors of disease such as Malaria
+    and Yellow fever.
+
+
+    Source: https://en.wikipedia.org/wiki/Mosquito '
+  image: {fileID: 2800000, guid: 9e8ea7e11c5b09e42959adbf193d9197, type: 3}
