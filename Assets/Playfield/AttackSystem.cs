@@ -12,6 +12,8 @@ public class AttackSystem : MonoBehaviour
     private int attack_animation_status = 0;
     private int aas_opponent_offset = 4;
 
+    private const float ATTACK_DURATION = 0.8f;
+
     void Awake()
     {
         // TODO(KASIN): Error handling
@@ -59,17 +61,14 @@ public class AttackSystem : MonoBehaviour
     }
 
     // CLEANUP(KASIN):
-    // NOTE: If you use the delay, make sure it is longer than the animation or
-    //    drifting will occur.
     IEnumerator AttackAnimation(Card card, CardSlot opponent_slot, int index, float delay = 0.0f)
     {
-        Debug.Log("Get additional attack count: " + card._GetNumAdditionalAttacks());
         for (int a = 0; a < card._GetNumAdditionalAttacks(); ++a)
         {
             if (delay > 0.1f && a < 1)
             {
                 // Artificial delay. This is useful for the side strike.
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
             }
 
             if (opponent_slot == null)
@@ -88,22 +87,35 @@ public class AttackSystem : MonoBehaviour
                 target.z
             );
             //Transform original = card.transform; this is a moving point
-            for (int i = 0; i < 175; ++i) //can change i to any number, i though 175 was a good time, the orginal 255 felt too slow
+
+            // Play the attack sound
+            card.PlaySound(card.GetCardData().attack_audio);
+
+            float target_time = ATTACK_DURATION / 2.0f;
+            float time_elapsed = 0.0f;
+            while (time_elapsed < target_time)
             {
+                time_elapsed += Time.deltaTime;
                 card.transform.position = Vector3.Lerp(
                     original_pos, //this orignally used orignal.position, which was always moving
                     target,
-                    (float)i / 175f
+                    time_elapsed / target_time 
                 );
                 yield return null;
             }
+
             card.transform.position = target; //snap to target, eliminate drifting
 
             card.Attack(opponent_slot.GetCard());
 
+            // Wait for the direct hit audio to finish
+            yield return new WaitForSecondsRealtime(card.HIT_SFX_TIME);
 
-            for (int i = 0; i < 175; ++i)
+            card.PlaySound(card.GetCardData().attack_audio, time_elapsed);
+            time_elapsed = 0.0f;
+            while (time_elapsed < target_time)
             {
+                time_elapsed += Time.deltaTime;
                 if (card == null) {
                     // Update state
                     this.attack_animation_status |= (1 << index);
@@ -112,11 +124,12 @@ public class AttackSystem : MonoBehaviour
                 card.transform.position = Vector3.Lerp(
                     target,
                     original_pos,
-                    (float)i / 175f
+                    time_elapsed / target_time
                 );
                 yield return null;
             }
             card.transform.position = original_pos; //ensures no drifting
+            card.StopPlayingSound();
         }
 
         // Update state
@@ -162,6 +175,10 @@ public class AttackSystem : MonoBehaviour
                     {
                         // Ignore
                     }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Ignore
+                    }
 
                     bool attcked_lhs = false;
                     Card target_card_ref = null;
@@ -200,6 +217,10 @@ public class AttackSystem : MonoBehaviour
                     {
                         // Ignore
                     }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Ignore
+                    }
 
                     // Attack RHS
                     target_card_ref = null;
@@ -212,7 +233,7 @@ public class AttackSystem : MonoBehaviour
                     if (attcked_lhs)
                     {
                         // Delay for the LHS Attack animation to finish
-                        delay = 2.0f;
+                        delay = ATTACK_DURATION;
                     }
 
                     offset = i;
@@ -226,7 +247,7 @@ public class AttackSystem : MonoBehaviour
                         playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                     }
 
-                    prev_delay += delay + 2.0f;
+                    prev_delay += delay + ATTACK_DURATION;
                 }
                 else
                 {
@@ -241,7 +262,7 @@ public class AttackSystem : MonoBehaviour
                     StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                     playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
 
-                    prev_delay += (2.0f * card_ref._GetNumAdditionalAttacks());
+                    prev_delay += (ATTACK_DURATION * card_ref._GetNumAdditionalAttacks());
                 }
             }
             else

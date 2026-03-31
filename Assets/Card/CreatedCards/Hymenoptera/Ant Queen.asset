@@ -25,3 +25,4 @@ MonoBehaviour:
   starting_modifiers:
   - {fileID: 11400000, guid: 83ed999be4706834894ecfe31a312523, type: 2}
   - {fileID: 11400000, guid: faa6c030e1d72d74283e8528ac74206c, type: 2}
+  attack_audio: {fileID: 8300000, guid: 422cb9065e6edda49a8db4edf0b1b2c8, type: 3}

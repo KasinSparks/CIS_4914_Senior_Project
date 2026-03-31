@@ -89,6 +89,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private bool isRaised = false;
     private static Card currentlyRaisedCard = null; //to keep track of what card is currently raise in alt scenes
 
+    [SerializeField]
+    private AudioSource audio_source;
+
+    [SerializeField]
+    private AudioClip death_audio;
+    [SerializeField]
+    private AudioClip direct_hit_audio;
+
+    public readonly float HIT_SFX_TIME = 0.2f;
+
     private void Awake()
     {
         this.num_of_attacks_per_turn = 1;
@@ -393,12 +403,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
-        int damage = this.card_data.attack + this.attack_damage_bonus;
-        // Update player stats
-        if (this.GetOwnership() == CardOwnership.Player)
-        {
-            PlayerStats.player_data.AddToDamageDealt(damage);
-        }
+        // Play the hit sound
+        this.PlaySound(this.direct_hit_audio);
 
         // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent
         //    directly. If we want modifier(s) applied before attacking the
@@ -410,17 +416,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
-                    this.game_state.player_hp_system.DirectHit(damage);
+                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
                     if(this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
-                        PlayerStats.player_data.AddToOpponentsDefeated(1);
                     }
                     break;
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
-                    this.game_state.opponent_hp_system.DirectHit(damage);
+                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
@@ -500,6 +505,32 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
         }
         */
+    }
+
+    /**
+     * @brief Play the audio clip for the given duration
+     * @param clip The audio clip to be played
+     * @param seek_time The time in the audio clip will be played from
+     */
+    public void PlaySound(AudioClip clip, float seek_time = 0.0f)
+    {
+        if (clip == null)
+        {
+            return;
+        }
+
+        this.audio_source.Pause();
+        this.audio_source.clip = clip;
+        this.audio_source.time = seek_time;
+        this.audio_source.Play();
+    }
+
+    /**
+     * @brief Stops playing the current audio clip
+     */
+    public void StopPlayingSound()
+    {
+        this.audio_source.Stop();
     }
 
     // To be used by the Defense Modifier(s)
@@ -668,21 +699,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
 
-        // Update the player stats
-        if (this.GetOwnership() != CardOwnership.Player)
-        {
-            PlayerStats.player_data.AddToInsectsDefeated(1);
-        }
 
         StartCoroutine(this.DeathAnimation());
     }
 
     private IEnumerator DeathAnimation()
     {
-        float target_time = 2.0f;
+        float target_time = 1.0f;
         float time_elapsed = 0.0f;
 
         Material curr_material = this.GetComponent<Renderer>().material;
+
+        // Play the death sound
+        if (this.death_audio != null)
+        {
+            this.audio_source.clip = this.death_audio;
+            this.audio_source.Play();
+        }
 
         while (time_elapsed < target_time)
         {
@@ -690,6 +723,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             time_elapsed += Time.deltaTime;
             yield return null;
         }
+
+        this.audio_source.Stop();
 
         // Destroy the card
         Destroy(this.gameObject);
