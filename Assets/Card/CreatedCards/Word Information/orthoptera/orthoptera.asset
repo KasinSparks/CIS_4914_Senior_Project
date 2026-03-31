@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: orthoptera
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - orthoptera
+  - orthopteras
+  info: 'Orthoptera is an order of insects that includes crickets, grasshoppers,
+    and locusts. They are well known for producing sound, called stridulation, by
+    rubbing specialized ridged parts of their wings or legs together. Most Orthoptera
+    species have strong hind legs adapted for jumping, and many also have wings for
+    flying.
+
+
+    Source: https://en.wikipedia.org/wiki/Orthoptera '
+  image: {fileID: 2800000, guid: 893bd58607b37834daa4a00716025671, type: 3}

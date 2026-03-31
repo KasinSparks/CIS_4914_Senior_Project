@@ -16,6 +16,9 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private CardOwnership card_ownership;
     [SerializeField] private PlayfieldUpgrade playfieldUpgrade; //for upgrading
     [SerializeField] private ShopBehavior shopBehavior; //for shop
+
+    private Reward reward; // for reward
+
     private int slot_index;
     [SerializeField] private GameState gameState;
     [SerializeField] private Playfield playfield;
@@ -29,19 +32,6 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
         this.card_in_slot = null;
 
         this.card_ownership = CardOwnership.None;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SetCardSlot(GameObject card_slot)
@@ -67,6 +57,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler
     public void SetShopBehavior(ShopBehavior shop) //for shop
     {
         this.shopBehavior = shop;
+    }
+
+    public void SetReward(Reward reward)
+    {
+        this.reward = reward;
+    }
+
+    public Reward GetReward()
+    {
+        return this.reward;
     }
 
     public bool GetIsCardPlaced()

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Card/Modifier/Flutter")]
-public class Flutter : CardModifier
+public class FlutterModifier : CardModifier
 {
     private Playfield playfield;
 
