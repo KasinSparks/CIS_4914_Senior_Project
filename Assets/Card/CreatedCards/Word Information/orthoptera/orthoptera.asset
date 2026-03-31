@@ -15,5 +15,12 @@ MonoBehaviour:
   words:
   - orthoptera
   - orthopteras
-  info: 
-  image: {fileID: 0}
+  info: 'Orthoptera is an order of insects that includes crickets, grasshoppers,
+    and locusts. They are well known for producing sound, called stridulation, by
+    rubbing specialized ridged parts of their wings or legs together. Most Orthoptera
+    species have strong hind legs adapted for jumping, and many also have wings for
+    flying.
+
+
+    Source: https://en.wikipedia.org/wiki/Orthoptera '
+  image: {fileID: 2800000, guid: 893bd58607b37834daa4a00716025671, type: 3}

@@ -10,10 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
-  m_Name: grasshopper
+  m_Name: order
   m_EditorClassIdentifier: Assembly-CSharp::WordInfo
   words:
-  - grasshopper
-  - grasshoppers
-  info: A grasshopper is an insect belonging to the order Orthoptera.
-  image: {fileID: 2800000, guid: e9ec9deefca66e1498bbce3f867fda2a, type: 3}
+  - order
+  info: 'Orders in Nektar
+
+
+    Insect Orders:
+
+    Coleoptera
+
+    Diptera
+
+    Hymenoptera
+
+    Lepidoptera
+
+    Mantodea
+
+    Odonata
+
+    Orthoptera
+
+    Siphonaptera
+
+
+    Non-insect
+    Orders:
+
+    Araneae'
+  image: {fileID: 2800000, guid: 6b3d61ec34ff16f4082d0a5e1d94710a, type: 3}

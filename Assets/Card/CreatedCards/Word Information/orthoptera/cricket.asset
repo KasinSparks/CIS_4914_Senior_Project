@@ -15,5 +15,12 @@ MonoBehaviour:
   words:
   - cricket
   - crickets
-  info: 
-  image: {fileID: 0}
+  info: 'A cricket is an insect in the order Orthoptera. Crickets have cylindrical
+    bodies, enlarged hind legs adapted for jumping, and in some species, wings. They
+    are typically nocturnal and are best known for their loud, persistent chirping
+    at night, which is produced by males rubbing their wings together to attract
+    a mate. However, some cricket species are silent.
+
+
+    Source: https://en.wikipedia.org/wiki/Cricket_(insect) '
+  image: {fileID: 2800000, guid: 893bd58607b37834daa4a00716025671, type: 3}
