@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Honeypot Ant
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Honeypot Ant
-  description: Stores large amounts of food in their swollen abdomens.
+  description: An ant that stores large amounts of food in their swollen abdomens
   highlighted_words:
   - {fileID: 11400000, guid: f066a045b6d724f45955142013293129, type: 2}
   - {fileID: 11400000, guid: c3f104ca42d7d6e44862bd34ccfa2241, type: 2}

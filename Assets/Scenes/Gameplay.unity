@@ -8159,6 +8159,10 @@ PrefabInstance:
       propertyPath: 'words.Array.data[7]'
       value: 
       objectReference: {fileID: 11400000, guid: b6805e99c56877a41b38bfb617967e36, type: 2}
+    - target: {fileID: 1255017967902505316, guid: f761e39832a145d4fae5548428f7ec85, type: 3}
+      propertyPath: 'words.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b6805e99c56877a41b38bfb617967e36, type: 2}
     - target: {fileID: 1668349854136306141, guid: f761e39832a145d4fae5548428f7ec85, type: 3}
       propertyPath: m_Pivot.x
       value: 0

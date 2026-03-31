@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Damselfly
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Damselfly
-  description: Similar to Dragonflies, but smaller and slimmer.
+  description: A damselfly that is similar to a dragonfly, but smaller and slimmer
   highlighted_words:
   - {fileID: 11400000, guid: e1588afbe9c5aa5409389714adc7c317, type: 2}
   - {fileID: 11400000, guid: ec006ca5a8616914fb01e70b232468c2, type: 2}
