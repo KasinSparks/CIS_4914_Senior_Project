@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5417316250d64fd479b35bc486caf505, type: 3}
-  m_Name: African-Derived Bee Queen 1
+  m_Name: African-Derived Bee Queen
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: African-Derived Bee Queen
   description: The Queen Killer Bee
