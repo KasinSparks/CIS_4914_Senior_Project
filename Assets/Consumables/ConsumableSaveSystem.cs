@@ -10,14 +10,14 @@ public class ConsumableSaveSystem : MonoBehaviour
     void Start()
     {
         // If the save file does not exists, load the default data
-        ScriptableObject[] consumables = SaveSystem.LoadConsumablesFromSaveFile(SaveSystemFile.PlayerConsumables);
-        if (consumables == null)
+        if (!SaveSystem.CheckForConsumableFileExistence(SaveSystemFile.PlayerConsumables))
         {
             return;
         }
         
         // Load the consumables
         Queue<ScriptableObject> consumable_queue = new Queue<ScriptableObject>();
+        ScriptableObject[] consumables = SaveSystem.LoadConsumablesFromSaveFile(SaveSystemFile.PlayerConsumables);
         foreach (ScriptableObject consumable in consumables)
         {
             consumable_queue.Enqueue(consumable);

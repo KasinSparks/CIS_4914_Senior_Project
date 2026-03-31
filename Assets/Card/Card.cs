@@ -32,8 +32,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             Gameplay,
             Upgrade,
-            Creator,
-            Reward
+            Creator
         }
 
     private CardContext context = CardContext.Gameplay; //default to gameplay
@@ -134,7 +133,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             this.game_state = this.GetObject<GameState>("GameState");
         }
         
-        if (this.context != CardContext.Creator && this.context != CardContext.Reward)
+        if (this.context != CardContext.Creator)
         {
             this.player_hand = this.GetObject<Hand>("Hand");
 
@@ -319,12 +318,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
 
             return;
-
-        // if reward card and clicked, set card as selected card in reward
-        } else if (context == CardContext.Reward)
-        {
-            this.slot.GetReward().SetSelectedCard(this);
-            return;
         }
 
         switch (this.card_state)
@@ -400,6 +393,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // directly.
     public void Attack(Card opponent_card)
     {
+        int damage = this.card_data.attack + this.attack_damage_bonus;
+        // Update player stats
+        if (this.GetOwnership() == CardOwnership.Player)
+        {
+            PlayerStats.player_data.AddToDamageDealt(damage);
+        }
+
         // TODO(KASIN): If opponent_card is NULL, deal the damage to the opponent
         //    directly. If we want modifier(s) applied before attacking the
         //    player or opponent directly, then this logic needs to go into
@@ -410,16 +410,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
-                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.player_hp_system.DirectHit(damage);
                     if(this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
+                        PlayerStats.player_data.AddToOpponentsDefeated(1);
                     }
                     break;
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
-                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.opponent_hp_system.DirectHit(damage);
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
@@ -667,6 +668,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Playfield has changed
         playfield_ref.RegisterPlayfieldUpdate(this.card_ownership);
 
+        // Update the player stats
+        if (this.GetOwnership() != CardOwnership.Player)
+        {
+            PlayerStats.player_data.AddToInsectsDefeated(1);
+        }
+
         StartCoroutine(this.DeathAnimation());
     }
 
@@ -793,8 +800,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 return;
             }
         }
-        
-        CardModifier new_mod = Instantiate<CardModifier>(base_modifier);
+
+        CardModifier new_mod = Instantiate(base_modifier);
         new_mod.Initialize();
 
         // TODO(KASIN): Change this so the card modifier list only holds data.

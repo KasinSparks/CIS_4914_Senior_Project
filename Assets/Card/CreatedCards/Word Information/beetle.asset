@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: beetle
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - beetle
+  - beetles
+  info: 'Beetles are a part of the largest animal kingdom orders, Coleoptera. The
+    life cycle of a typical beetle starts with an egg stage. Once hatched, the larva
+    stage begins. The larva will eat and grow eventually turning into a pupa where
+    they will be immobile, typically during the winter months. In the spring, the
+    adult beetle will emerge and continue the cycle by feeding, mating, and laying
+    eggs.
+
+
+    Source: https://www.webmd.com/a-to-z-guides/beetles-what-to-know '
+  image: {fileID: 2800000, guid: 18a17c91437568246a7fdab40582affc, type: 3}

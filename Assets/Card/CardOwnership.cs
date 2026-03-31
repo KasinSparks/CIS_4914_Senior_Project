@@ -5,5 +5,4 @@ public enum CardOwnership
     Opponent  = 2,
     Queue = 3,
     Merchant = 4,
-    Reward = 5,
 }

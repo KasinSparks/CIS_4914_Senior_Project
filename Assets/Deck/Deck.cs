@@ -146,6 +146,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
      */
     public void AddCard(CardData card)
     {
+        PlayerStats.player_data.AddCardToDiscoveredList(card);
         this.cards.Add(card);
     }
     

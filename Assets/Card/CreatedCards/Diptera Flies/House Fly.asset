@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: House Fly
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: House Fly
-  description: A typical house fly
-  highlighted_words:
-  - {fileID: 11400000, guid: 510cc3abac1e03a4fb24e7e1c54dd1f5, type: 2}
+  description: A common fly.
+  highlighted_words: []
   order: 1
   hp: 1
   attack: 1

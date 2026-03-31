@@ -14,6 +14,7 @@ public enum SaveSystemFile
     OpponentDeck1,  // Example
     OpponentDeck2,  // Example, can change this to the name of the opponent
     WordInfo,
+    PlayerStats,
 }
 
 
@@ -32,6 +33,9 @@ public class SaveSystem
 
     private static readonly string WORD_INFO_FOLDER        = "WORDS";
     private static readonly string WORD_INFO_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, WORD_INFO_FOLDER);
+
+    private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
+    private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -56,6 +60,8 @@ public class SaveSystem
                 return "TOTEM_MODIFIER_NAMES.json";
             case SaveSystemFile.WordInfo:
                 return "WORD_INFO.json";
+            case SaveSystemFile.PlayerStats:
+                return "PLAYER_STATS.json";
 
             default:
                 // TODO(KASIN):
@@ -87,6 +93,8 @@ public class SaveSystem
                 return TOTEMS_SAVE_LOCATION;
             case SaveSystemFile.WordInfo:
                 return WORD_INFO_SAVE_LOCATION;
+            case SaveSystemFile.PlayerStats:
+                return PLAYER_STATS_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -416,19 +424,6 @@ public class SaveSystem
         return orders.ToArray();
     }
 
-    public static void AddTotemOrderToSaveFile(CardOrder order, SaveSystemFile file)
-    {
-        CardOrder[] orders = LoadTotemOrders(file);
-        CardOrder[] new_orders = new CardOrder[orders.Length + 1];
-        for (int i = 0; i < orders.Length; ++i)
-        {
-            new_orders[i] = orders[i];
-        }
-        new_orders[new_orders.Length - 1] = order;
-
-        SaveTotemOrders(new_orders, file);
-    }
-
     public static void SaveTotemModifiers(CardModifier[] modifiers, SaveSystemFile file)
     {
         StringBuilder sb = new StringBuilder();
@@ -491,15 +486,6 @@ public class SaveSystem
     {
         switch (name)
         {
-            case "African Derived Queen Defence":
-                return ScriptableObject.CreateInstance<AfricanDerivedQueenModifier>();
-
-            case "Queen":
-                return ScriptableObject.CreateInstance<QueenModifier>();
-
-            case "Anti-Insect":
-                return ScriptableObject.CreateInstance<AntiInsectModifier>();
-
             case "Armored":
                 return ScriptableObject.CreateInstance<ArmoredCardModifier>();
 
@@ -515,44 +501,14 @@ public class SaveSystem
             case "Explode on Death":
                 return ScriptableObject.CreateInstance<ExplodeOnDeathModifier>();
 
-            case "Flea Multiplier":
-                return ScriptableObject.CreateInstance<QueenModifier>();
-
-            case "Flutter":
-                return ScriptableObject.CreateInstance<FlutterModifier>();
-
-            case "Flutter+":
-                return ScriptableObject.CreateInstance<FlutterModifier>();
-
             case "Heal on Attack":
                 return ScriptableObject.CreateInstance<HealOnAttackModifier>();
 
-            case "Jump":
-                return ScriptableObject.CreateInstance<JumpModifier>();
-
-            case "Locus Swarm":
+            case "Queen":
                 return ScriptableObject.CreateInstance<QueenModifier>();
-
-            case "Move to Lane Attacked":
-                return ScriptableObject.CreateInstance<MoveToLaneAttackedModifier>();
-
-            case "Nektar Redution":
-                return ScriptableObject.CreateInstance<NektarReductionModifier>();
-
-            case "Side Strike":
-                return ScriptableObject.CreateInstance<SideStrikeModifier>();
-
-            case "Spawn Child":
-                return ScriptableObject.CreateInstance<SpawnChildModifier>();
-
-            case "Stinger Detach":
-                return ScriptableObject.CreateInstance<StingerDetachModifier>();
 
             case "Strength in Numbers":
                 return ScriptableObject.CreateInstance<StrengthInNumberModifier>();
-
-            case "Web":
-                return ScriptableObject.CreateInstance<ArmoredCardModifier>();
 
             default:
                 // TODO(ALEX):
@@ -560,17 +516,6 @@ public class SaveSystem
         }
     }
 
-    public static void AddTotemModifierToSaveFile(CardModifier modifier, SaveSystemFile file)
-    {
-        CardModifier[] modifiers = LoadTotemModifiers(file);
-        CardModifier[] new_modifiers = new CardModifier[modifiers.Length + 1];
-        for (int i = 0; i < modifiers.Length; ++i)
-        {
-            new_modifiers[i] = modifiers[i];
-        }
-        new_modifiers[new_modifiers.Length - 1] = modifier;
-
-        SaveTotemModifiers(new_modifiers, file);
 
     public static void SaveWordInfo(WordInfo[] words)
     {
@@ -631,4 +576,42 @@ public class SaveSystem
     {
         return File.Exists(GetFullPath(file));
     }
+
+    /**
+     * @brief Save the player stats to a file
+     * @param player_data The stats for the during the game
+     */
+
+    public static void SavePlayerStats(PlayerData player_data)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static PlayerData LoadPlayerStats()
+    {
+        PlayerData ret = new PlayerData();
+        SaveSystemFile file = SaveSystemFile.PlayerStats;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        return ret;
+    }
+
 }

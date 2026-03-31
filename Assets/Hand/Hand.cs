@@ -23,7 +23,7 @@ public class Hand : MonoBehaviour
     private int current_nektar_reduction;
 
     [SerializeField] private Playfield playfield;
-    [SerializeField] private PlayerTotem totem;
+    [SerializeField] private Totem totem;
 
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class Hand : MonoBehaviour
         card.SetState(CardState.InHand);
         card.SetOwnership(owner);
 
-        if (card.GetContext() == Card.CardContext.Gameplay && this.totem != null)
+        if (card.GetContext() == Card.CardContext.Gameplay)
         {
             // adds totem modifier temporarily (won't be saved to card)
             this.totem.AttachModifier(card);
