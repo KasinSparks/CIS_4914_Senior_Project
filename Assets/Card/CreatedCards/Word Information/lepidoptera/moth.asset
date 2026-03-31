@@ -15,5 +15,11 @@ MonoBehaviour:
   words:
   - moth
   - moths
-  info: 
-  image: {fileID: 0}
+  info: 'Moths are winged insects in the order Lepidoptera. They typically have dull
+    or darkly patterned wings. Most moths are nocturnal and are often attracted to
+    light. When a moth caterpillar matures, it spins a silk cocoon in which it pupates.
+
+
+    Source:
+    https://en.wikipedia.org/wiki/Moth '
+  image: {fileID: 2800000, guid: afb67b97a56af6d4b9ea22238a613eae, type: 3}
