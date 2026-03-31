@@ -13,6 +13,8 @@ public enum SaveSystemFile
     TotemOrders,
     OpponentDeck1,  // Example
     OpponentDeck2,  // Example, can change this to the name of the opponent
+    WordInfo,
+    PlayerStats,
 }
 
 
@@ -28,6 +30,12 @@ public class SaveSystem
 
     private static readonly string TOTEMS_FOLDER = "TOTEMS";
     private static readonly string TOTEMS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, TOTEMS_FOLDER);
+
+    private static readonly string WORD_INFO_FOLDER        = "WORDS";
+    private static readonly string WORD_INFO_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, WORD_INFO_FOLDER);
+
+    private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
+    private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -50,6 +58,10 @@ public class SaveSystem
                 return "TOTEM_ORDERS.json";
             case SaveSystemFile.TotemModifierNames:
                 return "TOTEM_MODIFIER_NAMES.json";
+            case SaveSystemFile.WordInfo:
+                return "WORD_INFO.json";
+            case SaveSystemFile.PlayerStats:
+                return "PLAYER_STATS.json";
 
             default:
                 // TODO(KASIN):
@@ -79,6 +91,10 @@ public class SaveSystem
                 return TOTEMS_SAVE_LOCATION;
             case SaveSystemFile.TotemOrders:
                 return TOTEMS_SAVE_LOCATION;
+            case SaveSystemFile.WordInfo:
+                return WORD_INFO_SAVE_LOCATION;
+            case SaveSystemFile.PlayerStats:
+                return PLAYER_STATS_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -499,4 +515,103 @@ public class SaveSystem
                 throw new System.NotImplementedException();
         }
     }
+
+
+    public static void SaveWordInfo(WordInfo[] words)
+    {
+        // TODO(KASIN): For now, each line will represent a different word.
+        //    However, this may need to be changed later.
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.Length; ++i)
+        {
+            string json_string = JsonUtility.ToJson(words[i]);
+            sb.Append(json_string);
+            if (i < words.Length - 1)
+            {
+                sb.Append("\n");
+            }
+        }
+        SaveToJsonFile(sb.ToString(), SaveSystemFile.WordInfo);
+    }
+
+    /**
+     * @brief Load the word information data from the save file
+     * @return The word info of cards
+     */
+    public static WordInfo[] LoadWords()
+    {
+        List<WordInfo> words = new List<WordInfo>();
+
+        // TODO(KASIN): See if this throws an execption if file does not exist...
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(SaveSystemFile.WordInfo);
+            reader = new StreamReader(GetFullPath(SaveSystemFile.WordInfo));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            return null;
+        }
+
+        string line = reader.ReadLine();
+        while (line != null)
+        {
+            words.Add(ScriptableObject.CreateInstance<WordInfo>());
+            JsonUtility.FromJsonOverwrite(line, words[words.Count - 1]);
+            line = reader.ReadLine();
+        }
+
+        reader.Close();
+
+        return words.ToArray();
+    }
+
+    /**
+     * @brief Check to see if the file exists.
+     * @param The file type.
+     * @return True if the file already exists. 
+     */
+    public static bool CheckForFileExistence(SaveSystemFile file)
+    {
+        return File.Exists(GetFullPath(file));
+    }
+
+    /**
+     * @brief Save the player stats to a file
+     * @param player_data The stats for the during the game
+     */
+
+    public static void SavePlayerStats(PlayerData player_data)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static PlayerData LoadPlayerStats()
+    {
+        PlayerData ret = new PlayerData();
+        SaveSystemFile file = SaveSystemFile.PlayerStats;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        return ret;
+    }
+
 }

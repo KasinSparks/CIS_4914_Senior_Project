@@ -66,6 +66,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         {
             path_sys_ref.SetCurrentNode(this);
             path_sys_ref.SavePath();
+            PlayerStats.player_data.AddToNodesTraversed(1);
             SceneManager.LoadScene(this.data.GetSceneName());
         }
     }
