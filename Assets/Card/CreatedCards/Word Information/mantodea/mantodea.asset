@@ -15,5 +15,14 @@ MonoBehaviour:
   words:
   - mantodea
   - mantodeas
-  info: 
-  image: {fileID: 0}
+  - mantis
+  - mantises
+  info: 'Mantodea, or mantises, are an order of insects distributed worldwide in
+    temperate and tropical habitats. Mantises are identified by their triangular
+    heads and large, bulging eyes. They have enlarged forelegs adapted for catching
+    and gripping prey. Mantises are apex predators in the insect world that ambush
+    their prey.
+
+
+    Source: https://en.wikipedia.org/wiki/Mantis '
+  image: {fileID: 2800000, guid: b5bca090a88b6ac45a5cab67f085a11a, type: 3}
