@@ -17,6 +17,7 @@ MonoBehaviour:
   highlighted_words:
   - {fileID: 11400000, guid: e1588afbe9c5aa5409389714adc7c317, type: 2}
   - {fileID: 11400000, guid: ec006ca5a8616914fb01e70b232468c2, type: 2}
+  - {fileID: 11400000, guid: 191131fd143d6044b83476341d359bf7, type: 2}
   order: 6
   hp: 2
   attack: 1

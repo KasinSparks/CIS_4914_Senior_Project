@@ -32,7 +32,7 @@ public class CardOrderInfo
             case CardOrder.Araneae:
                 return "Araneae";
             case CardOrder.Odonata:
-                return "Odonatra";
+                return "Odonata";
             case CardOrder.Siphonaptera:
                 return "Siphonaptera";
             case CardOrder.Orthoptera:
