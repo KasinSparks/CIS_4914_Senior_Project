@@ -579,6 +579,7 @@ public class SaveSystem
         new_modifiers[new_modifiers.Length - 1] = modifier;
 
         SaveTotemModifiers(new_modifiers, file);
+    }
 
     public static void SaveWordInfo(WordInfo[] words)
     {
