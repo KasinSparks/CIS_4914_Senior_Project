@@ -32,6 +32,11 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         this.dict_word_info = new Dictionary<string, WordInfo>();
         foreach (WordInfo word_info in this.words)
         {
+            if (word_info == null)
+            {
+                continue;
+            }
+
             foreach (string word in word_info.GetWords())
             {
                 this.dict_word_info[word.ToUpper()] = word_info;
