@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Grasshopper
-  description: Powerful rear legs allow the Grasshopper to jump great distances.
-  highlighted_words: []
+  description: This grasshopper's powerful rear legs allow it to jump great distances
+  highlighted_words:
+  - {fileID: 11400000, guid: 350aced137411d6439d19d8487536088, type: 2}
+  - {fileID: 11400000, guid: 1548a88d8651f004593e1ca57c17513f, type: 2}
   order: 8
   hp: 2
   attack: 2

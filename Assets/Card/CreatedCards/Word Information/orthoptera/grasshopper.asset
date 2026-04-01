@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: grasshopper
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - grasshopper
+  - grasshoppers
+  info: 'A grasshopper is an insect belonging to the order Orthoptera. They typically
+    live above ground in grassy or vegetated habitats and have strong hind legs that
+    allow them to jump great distances, which is reflected in their name. Some grasshopper
+    species, known as locusts, can change color and form swarms. They are among the
+    more ancient groups of insects, appearing around 250 million years ago and predating
+    grasses by roughly 180 million years.
+
+
+    Source: https://en.wikipedia.org/wiki/Grasshopper '
+  image: {fileID: 2800000, guid: e9ec9deefca66e1498bbce3f867fda2a, type: 3}
