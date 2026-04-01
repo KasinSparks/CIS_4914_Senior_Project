@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Wolf Spider
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   card_name: Wolf Spider
-  description: An introverted spider that typically does not produce webs. Females
-    carry their young on her back.
-  highlighted_words: []
+  description: "A wolf\u200E\u200E spider, an introverted spider that is carrying
+    her children on her back"
+  highlighted_words:
+  - {fileID: 11400000, guid: 794d41fb583acc649951561e2755034d, type: 2}
   order: 5
   hp: 3
   attack: 2

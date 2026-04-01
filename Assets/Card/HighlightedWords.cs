@@ -134,7 +134,7 @@ public class HighlightedWords : MonoBehaviour, IPointerClickHandler
         StringBuilder curr_token = new StringBuilder();
         foreach (char c in str)
         {
-            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '-')
             {
                 curr_token.Append(c);
             }

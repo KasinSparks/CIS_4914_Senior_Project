@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ff147e6b1c6de4bbd6334971b449a4, type: 3}
+  m_Name: locust
+  m_EditorClassIdentifier: Assembly-CSharp::WordInfo
+  words:
+  - locust
+  - locusts
+  info: 'A locust is a type of grasshopper belonging to the order Orthoptera. In
+    their solitary phase, they exist at low population densities. However, under
+    circumstances like drought followed by rapid vegetation growth the serotonin
+    in their nervous systems triggers a phase change that alters their behavior,
+    appearance, and physiology. They begin to reproduce rapidly, forming bands of
+    wingless nymphs that later develop into swarms of winged adults. Both the bands
+    and the swarms are highly mobile, consuming large amounts of vegetation and causing
+    significant crop damage.
+
+
+    Source: https://en.wikipedia.org/wiki/Locust '
+  image: {fileID: 2800000, guid: 5f763165fc77d1644a14f48a47f4b39d, type: 3}
