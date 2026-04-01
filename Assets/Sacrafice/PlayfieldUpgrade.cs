@@ -151,6 +151,8 @@ public class PlayfieldUpgrade : MonoBehaviour
 
     public void ExitScene()
     {
+        PlayerStats.Save();
+        SaveSystem.SavePlayerPathNodeState(nextSceneName);
         SceneManager.LoadScene(nextSceneName);
     }
 

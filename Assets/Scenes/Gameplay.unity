@@ -1849,12 +1849,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
   - {fileID: 11400000, guid: b61b23b3467ae1e4faa6ab607de49ed3, type: 2}
   - {fileID: 11400000, guid: 41220e74d3a63624690e52cd35e5ac70, type: 2}
-  - {fileID: 11400000, guid: f879958b6c270294093748552f24057c, type: 2}
-  - {fileID: 11400000, guid: 93bd8af31692fbb4a8accb6351310847, type: 2}
-  - {fileID: 11400000, guid: df4733ac7a9ec744c8440171244e869a, type: 2}
-  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
-  - {fileID: 11400000, guid: 94444e15942938943bad1531709bc8f0, type: 2}
-  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   cards: []
   hand: []
   playfield: {fileID: 1460760515}
@@ -3828,11 +3822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4e2bdfd96df254ca12361b15c7f4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TempTotem
-  temp_modifiers:
-  - {fileID: 11400000, guid: 1dc7c4743542f3f4bb32a1b104aad408, type: 2}
-  - {fileID: 11400000, guid: ffee9998275d8dd4799b3b16d77834cb, type: 2}
-  - {fileID: 11400000, guid: 01237a3653a419244a63af6d96d1272f, type: 2}
-  temp_orders: 00000000010000000200000003000000040000000500000006000000
   modifiers: []
   orders: 
   selected_modifier: {fileID: 0}
@@ -8314,10 +8303,6 @@ PrefabInstance:
     - target: {fileID: 6524165491244161843, guid: a50fb02793844cc4a9f1dcc29c559339, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6945313044365564709, guid: a50fb02793844cc4a9f1dcc29c559339, type: 3}
-      propertyPath: m_ScrollSensitivity
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
