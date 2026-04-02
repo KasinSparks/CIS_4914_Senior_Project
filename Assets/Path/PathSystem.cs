@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[Serializable]
-public struct PathNodeChances
-{
-    public PathNodeData node;
-    [Range(0.0f, 1.0f)]
-    public float        weight;
-}
-
 /**
  * @brief A GameObject to represent the path system in a given scene
  * @todo Change this to a Scriptable Object, or have the data be a be a
@@ -35,11 +27,6 @@ public class PathSystem : MonoBehaviour
     [SerializeField]
     private string[] start_node_guids; /// The GUIDs of the start nodes
 
-    [SerializeField]
-    private PathNodeChances[] node_types; /// Node types that can be randomly chosen from
-
-    private PathNodeChances[] normalized_node_types;
-    
     [SerializeField, HideInInspector]
     private string current_node_guid = null;
 
@@ -100,22 +87,6 @@ public class PathSystem : MonoBehaviour
         }
         else
         {
-            // TODO(KASIN): Move this to a separate function
-            // Normalize percent chance values
-            float total_weight = 0.0f;
-            for (int i = 0; i < this.node_types.Length; ++i)
-            {
-                total_weight += this.node_types[i].weight;
-            }
-
-            this.normalized_node_types = new PathNodeChances[this.node_types.Length];
-            for (int i = 0; i < this.node_types.Length; ++i)
-            {
-                this.normalized_node_types[i].node = this.node_types[i].node;
-                this.normalized_node_types[i].weight =
-                    this.node_types[i].weight / total_weight;
-            }
-
             // Create a new path
             this.GeneratePath();
         }
@@ -161,7 +132,7 @@ public class PathSystem : MonoBehaviour
             PathNode node = this.gUIDs.GetGameObject(guid).GetComponent<PathNode>();
             if (!(node.HasBeenAssignedPathNodeData()))
             {
-                PathNodeData path_node = this.GetRandomPathNode();
+                PathNodeData path_node = node.GetRandomPathNode();
                 node.SetPathNode(path_node);
             }
             node.UpdateImage();
@@ -183,29 +154,6 @@ public class PathSystem : MonoBehaviour
         this.SavePath();
     }
     
-    /**
-     * @brief Get a random PathNodeData type.
-     * @return Returns a random PathNodeData type based on the normalized weights.
-     * @todo Write a test to verify this produces random nodes that corelate to
-     * the weight given.
-     */
-    private PathNodeData GetRandomPathNode()
-    {
-        float rand = UnityEngine.Random.Range(0.0f, 0.99f);
-        float curr_val = 0.0f;
-        for (int i = 0; i < this.normalized_node_types.Length; ++i)
-        {
-            if (rand >= curr_val && rand < this.normalized_node_types[i].weight + curr_val)
-            {
-                return this.normalized_node_types[i].node;
-            }
-
-            curr_val += this.normalized_node_types[i].weight;
-        }
-        
-        // Should never reach here...
-        return this.normalized_node_types[this.normalized_node_types.Length - 1].node;
-    }
     
     /**
      * @brief Will move the Main Camera to the current node.

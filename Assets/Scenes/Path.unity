@@ -274,6 +274,15 @@ MonoBehaviour:
   next_nodes_guids:
   - TestNode (3)
   - TestNode (6)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &85221034
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1208,6 +1217,15 @@ MonoBehaviour:
   next_nodes_guids:
   - TestNode
   - TestNode (4)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &430477917
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1545,6 +1563,15 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (6)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &460155884
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2663,15 +2690,6 @@ MonoBehaviour:
   end_node_guid: TestNode (7)
   start_node_guids:
   - TestNode (8)
-  node_types:
-  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
   current_node_guid: 
   camera_default_position: {x: 2.17, y: 18.61, z: -22.11}
 --- !u!4 &672170078
@@ -3811,6 +3829,15 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (7)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1033823657
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3944,6 +3971,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids: []
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1071801003
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4442,6 +4478,15 @@ MonoBehaviour:
   next_nodes_guids:
   - TestNode (1)
   - TestNode (2)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1290942465
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4712,6 +4757,15 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (7)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1360921877
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5977,6 +6031,15 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (3)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1804920893
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6146,6 +6209,15 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (5)
+  node_types:
+  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
+    weight: 0.25
+  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.25
 --- !u!64 &1927485692
 MeshCollider:
   m_ObjectHideFlags: 0
