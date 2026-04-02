@@ -37,6 +37,9 @@ public class Opponent : MonoBehaviour
     [SerializeField] private List<Card> hand;
     [SerializeField] private Playfield playfield;
 
+    [Header("Ant Collector's Cards")]
+    [SerializeField] private List<CardData> ant_collector_starting_cards;
+
     private class RowStatus
     {
         public int occupied_count;
@@ -75,9 +78,42 @@ public class Opponent : MonoBehaviour
     {
         this.cards = new List<Card>();
 
-        foreach (CardData c in this.starting_cards)
+        NextOpponentData next_opponent_data = SaveSystem.LoadNextOpponentData();
+        if (next_opponent_data != null && next_opponent_data.opponent != CreatedOpponents.None)
         {
-            this.AddCard(c);
+            this.attack_style = next_opponent_data.opponent_attack_style;
+
+            List<CardData> cards_to_add_to_deck = this.starting_cards;
+
+            switch (next_opponent_data.opponent)
+            {
+                case CreatedOpponents.Default:
+                    // Do nothing
+                    break;
+                case CreatedOpponents.AntCollector:
+                    cards_to_add_to_deck = this.ant_collector_starting_cards;         
+                    break;
+            }
+
+            int count = 0;
+            foreach (CardData c in cards_to_add_to_deck)
+            {
+                if (count > next_opponent_data.difficulty)
+                {
+                    // Be done adding cards
+                    break;
+                }
+
+                this.AddCard(c);
+                count++;
+            }
+        }
+        else
+        {
+            foreach (CardData c in this.starting_cards)
+            {
+                this.AddCard(c);
+            }
         }
 
         this.card_queue = new Queue<Card>();
@@ -545,3 +581,13 @@ public class Opponent : MonoBehaviour
 
 }
 
+/**
+ * @brief The possible opponents the player may face. Will determine the cards
+ * in the opponents starting deck.
+ */
+public enum CreatedOpponents
+{
+    None,
+    Default,
+    AntCollector,
+}

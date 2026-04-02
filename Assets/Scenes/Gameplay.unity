@@ -1852,6 +1852,12 @@ MonoBehaviour:
   cards: []
   hand: []
   playfield: {fileID: 1460760515}
+  ant_collector_starting_cards:
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
+  - {fileID: 11400000, guid: eee9322613d1fbf40b0937d360c5d864, type: 2}
+  - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
 --- !u!1 &426161312
 GameObject:
   m_ObjectHideFlags: 0

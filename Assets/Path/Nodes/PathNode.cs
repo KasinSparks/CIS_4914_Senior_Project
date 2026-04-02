@@ -24,12 +24,13 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private string[] next_nodes_guids; /// GUIDs for the next nodes
-
+    
+    // TODO(KASIN): Don't need this to be serialized, but want it in the inspector
     [SerializeField]
     private PathNodeChances[] node_types; /// Node types that can be randomly chosen from
 
     private PathNodeChances[] normalized_node_types;
-    
+
 
     private bool is_selectable;
 
@@ -83,7 +84,14 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
             PlayerStats.player_data.AddToNodesTraversed(1);
             PlayerStats.Save();
             SaveSystem.SavePlayerPathNodeState(this.data.GetSceneName());
-            SceneManager.LoadScene(this.data.GetSceneName());
+
+            string next_scene = this.data.GetSceneName();
+            if (next_scene.Equals("Gameplay"))
+            {
+                SaveSystem.SaveNextOpponentData(this.data.next_opponent);
+            }
+
+            SceneManager.LoadScene(next_scene);
         }
     }
     

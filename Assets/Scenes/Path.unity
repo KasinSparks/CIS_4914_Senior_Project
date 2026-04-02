@@ -283,6 +283,8 @@ MonoBehaviour:
     weight: 0.25
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
     weight: 0.25
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
 --- !u!64 &85221034
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6211,13 +6213,15 @@ MonoBehaviour:
   - TestNode (5)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
+    weight: 0
   - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 0
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
 --- !u!64 &1927485692
 MeshCollider:
   m_ObjectHideFlags: 0

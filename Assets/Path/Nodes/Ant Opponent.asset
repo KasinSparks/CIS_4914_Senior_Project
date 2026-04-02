@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29b48ce4d3e95ab4181c4f51d8c1485c, type: 3}
-  m_Name: Opponent
+  m_Name: Ant Opponent
   m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
   scene_name: Gameplay
   next_opponent:
-    opponent: 1
-    opponent_attack_style: 0
-    difficulty: 1000
+    opponent: 2
+    opponent_attack_style: 1
+    difficulty: 2
   image: {fileID: 2800000, guid: 2399fbb601bb73549b192473a813a2d2, type: 3}
