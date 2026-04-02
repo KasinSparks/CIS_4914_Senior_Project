@@ -16,6 +16,7 @@ public enum SaveSystemFile
     WordInfo,
     PlayerStats,
     PlayerScene,  // The current scene the player is in
+    VolumeData,
 }
 
 
@@ -39,6 +40,7 @@ public class SaveSystem
     private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
     
     private static readonly string PLAYER_SCENE_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    private static readonly string PLAYER_VOLUME_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -67,6 +69,8 @@ public class SaveSystem
                 return "PLAYER_STATS.json";
             case SaveSystemFile.PlayerScene:
                 return "PLAYER_SCENE.json";
+            case SaveSystemFile.VolumeData:
+                return "VOLUME_DATA.json";
 
             default:
                 // TODO(KASIN):
@@ -102,7 +106,8 @@ public class SaveSystem
                 return PLAYER_STATS_SAVE_LOCATION;
             case SaveSystemFile.PlayerScene:
                 return PLAYER_SCENE_SAVE_LOCATION;
-
+            case SaveSystemFile.VolumeData:
+                return PLAYER_VOLUME_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -726,6 +731,45 @@ public class SaveSystem
         JsonUtility.FromJsonOverwrite(line, s);
         Debug.Log(s);
         return s.curr_scene;
+    }
+
+    /**
+     * @brief Save the player volume settings to a file
+     * @param VolumeData The volume levels set in the menu
+     */
+
+    public static void SaveVolumeData(VolumeControl.VolumeData volume_data)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(volume_data), SaveSystemFile.VolumeData);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static VolumeControl.VolumeData LoadVolumeData()
+    {
+        VolumeControl.VolumeData ret = new VolumeControl.VolumeData();
+        SaveSystemFile file = SaveSystemFile.VolumeData;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            Debug.Log("Failed to load Volume Data from file: " + GetFullPath(file));
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        Debug.Log("Loaded Volume Data from file.");
+        return ret;
     }
 
 }
