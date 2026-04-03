@@ -273,7 +273,6 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids:
   - TestNode (3)
-  - TestNode (6)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 0.25
