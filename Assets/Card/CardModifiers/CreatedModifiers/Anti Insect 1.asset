@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Anti Insect 1
   m_EditorClassIdentifier: Assembly-CSharp::AntiInsectModifier
   modifier_name: Anti-Insect
-  description: Deal XXX bouns damage to other insects.
+  description: Deal XXX bonus damage to other insects.
   image: {fileID: 2800000, guid: 00cb20e84bfe3e040a0d05e1e9299ac5, type: 3}
   modifier_type: 4
   modifier_state: 0
