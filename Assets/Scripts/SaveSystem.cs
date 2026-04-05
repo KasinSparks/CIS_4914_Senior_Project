@@ -38,7 +38,7 @@ public class SaveSystem
     private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
-     * @breif Gets the save file name for the given save file type.
+     * @brief Gets the save file name for the given save file type.
      * @param The save file type.
      * @return The actual save file name.
      */
