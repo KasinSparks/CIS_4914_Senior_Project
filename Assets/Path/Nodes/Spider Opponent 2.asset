@@ -15,6 +15,6 @@ MonoBehaviour:
   scene_name: Gameplay
   next_opponent:
     opponent: 8
-    opponent_attack_style: 3
+    opponent_attack_style: 1
     difficulty: 5
   image: {fileID: 2800000, guid: 2399fbb601bb73549b192473a813a2d2, type: 3}

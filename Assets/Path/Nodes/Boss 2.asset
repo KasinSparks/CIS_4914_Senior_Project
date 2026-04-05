@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNodeData
   scene_name: Gameplay
   next_opponent:
-    opponent: 3
+    opponent: 11
     opponent_attack_style: 2
     difficulty: 10
   image: {fileID: 2800000, guid: 2399fbb601bb73549b192473a813a2d2, type: 3}
