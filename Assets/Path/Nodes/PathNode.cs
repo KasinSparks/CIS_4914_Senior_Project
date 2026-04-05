@@ -20,6 +20,7 @@ public struct PathNodeChances
 public class PathNode : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
+    [Tooltip("Don't assign to this unless you want to override the node_types.")]
     private PathNodeData data;
 
     [SerializeField]
@@ -88,6 +89,11 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
             string next_scene = this.data.GetSceneName();
             if (next_scene.Equals("Gameplay"))
             {
+                Debug.Log("Loading " +
+                    Enum.GetName(typeof(CreatedOpponents), this.data.next_opponent.opponent) +
+                    " Opponent with difficulty: " +
+                    this.data.next_opponent.difficulty
+                );
                 SaveSystem.SaveNextOpponentData(this.data.next_opponent);
             }
 

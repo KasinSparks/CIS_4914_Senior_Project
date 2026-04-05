@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class Opponent : MonoBehaviour
 {
@@ -37,8 +38,28 @@ public class Opponent : MonoBehaviour
     [SerializeField] private List<Card> hand;
     [SerializeField] private Playfield playfield;
 
+    [Header("Opponent Name")]
+    [Tooltip("Debugging, can change to an image or other thing later")]
+    [SerializeField] private TextMeshPro opponent_name;
+
+    
+    [Header("Tutorial Cards")]
+    [SerializeField] private List<CardData> tutorial_starting_cards;
+
     [Header("Ant Collector's Cards")]
     [SerializeField] private List<CardData> ant_collector_starting_cards;
+
+    [Header("Orthoptera Collector's Cards")]
+    [SerializeField] private List<CardData> orthoptera_collector_starting_cards;
+
+    [Header("Coleoptera Collector's Cards")]
+    [SerializeField] private List<CardData> coleoptera_collector_starting_cards;
+
+    [Header("Diptera Collector's Cards")]
+    [SerializeField] private List<CardData> diptera_collector_starting_cards;
+
+    [Header("Variety Collector's Cards")]
+    [SerializeField] private List<CardData> variety_collector_starting_cards;
 
     private class RowStatus
     {
@@ -85,13 +106,32 @@ public class Opponent : MonoBehaviour
 
             List<CardData> cards_to_add_to_deck = this.starting_cards;
 
+            this.opponent_name.text =
+                Enum.GetName(typeof(CreatedOpponents), next_opponent_data.opponent) +
+                " (" + next_opponent_data.difficulty.ToString() + ")";
+
             switch (next_opponent_data.opponent)
             {
                 case CreatedOpponents.Default:
                     // Do nothing
                     break;
+                case CreatedOpponents.Tutorial:
+                    cards_to_add_to_deck = this.tutorial_starting_cards;
+                    break;
                 case CreatedOpponents.AntCollector:
                     cards_to_add_to_deck = this.ant_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.OrthopteraCollector:
+                    cards_to_add_to_deck = this.orthoptera_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.ColeopteraCollector:
+                    cards_to_add_to_deck = this.coleoptera_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.DipteraCollector:
+                    cards_to_add_to_deck = this.diptera_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.VarietyCollector:
+                    cards_to_add_to_deck = this.variety_collector_starting_cards;         
                     break;
             }
 
@@ -589,5 +629,10 @@ public enum CreatedOpponents
 {
     None,
     Default,
+    Tutorial,
     AntCollector,
+    OrthopteraCollector,
+    ColeopteraCollector,
+    DipteraCollector,
+    VarietyCollector,
 }

@@ -275,14 +275,20 @@ MonoBehaviour:
   - TestNode (3)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
     weight: 1
 --- !u!64 &85221034
 MeshCollider:
@@ -1214,19 +1220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7826c3f151b29d6448e86d63e95aef22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
-  data: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+  data: {fileID: 11400000, guid: c9c301ac1e957cd4b8919191125876b9, type: 2}
   next_nodes_guids:
   - TestNode
   - TestNode (4)
   node_types:
-  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+  - node: {fileID: 11400000, guid: c9c301ac1e957cd4b8919191125876b9, type: 2}
     weight: 1
-  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
 --- !u!64 &430477917
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1566,13 +1566,21 @@ MonoBehaviour:
   - TestNode (6)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+    weight: 1
 --- !u!64 &460155884
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3832,13 +3840,21 @@ MonoBehaviour:
   - TestNode (7)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+    weight: 1
 --- !u!64 &1033823657
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3973,14 +3989,8 @@ MonoBehaviour:
   data: {fileID: 0}
   next_nodes_guids: []
   node_types:
-  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
+  - node: {fileID: 11400000, guid: 3a272f3bc0ff6be49b363bbcf455924c, type: 2}
     weight: 1
-  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
 --- !u!64 &1071801003
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4481,13 +4491,21 @@ MonoBehaviour:
   - TestNode (2)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+    weight: 1
 --- !u!64 &1290942465
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4760,13 +4778,21 @@ MonoBehaviour:
   - TestNode (7)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+    weight: 1
 --- !u!64 &1360921877
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6034,13 +6060,21 @@ MonoBehaviour:
   - TestNode (3)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0.25
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0.25
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0.25
+    weight: 1
+  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+    weight: 1
 --- !u!64 &1804920893
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6212,14 +6246,20 @@ MonoBehaviour:
   - TestNode (5)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 0
-  - node: {fileID: 11400000, guid: e8d062fca057960479f94cd23d8da8a5, type: 2}
-    weight: 0
+    weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 0
+    weight: 1
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 0
+    weight: 1
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
     weight: 1
 --- !u!64 &1927485692
 MeshCollider:
