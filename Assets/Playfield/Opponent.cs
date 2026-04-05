@@ -61,6 +61,18 @@ public class Opponent : MonoBehaviour
     [Header("Variety Collector's Cards")]
     [SerializeField] private List<CardData> variety_collector_starting_cards;
 
+    [Header("Spider Collector's Cards")]
+    [SerializeField] private List<CardData> spider_collector_starting_cards;
+
+    [Header("Forest Specialist's Cards")]
+    [SerializeField] private List<CardData> forest_specialist_starting_cards;
+
+    [Header("Plains Specialist's Cards")]
+    [SerializeField] private List<CardData> plains_specialist_starting_cards;
+
+    [Header("Boss 2 Cards")]
+    [SerializeField] private List<CardData> boss_2_starting_cards;
+
     private class RowStatus
     {
         public int occupied_count;
@@ -132,6 +144,18 @@ public class Opponent : MonoBehaviour
                     break;
                 case CreatedOpponents.VarietyCollector:
                     cards_to_add_to_deck = this.variety_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.SpiderCollector:
+                    cards_to_add_to_deck = this.spider_collector_starting_cards;         
+                    break;
+                case CreatedOpponents.ForestSpecialist:
+                    cards_to_add_to_deck = this.forest_specialist_starting_cards;         
+                    break;
+                case CreatedOpponents.PlainsSpecialist:
+                    cards_to_add_to_deck = this.plains_specialist_starting_cards;         
+                    break;
+                case CreatedOpponents.Boss2:
+                    cards_to_add_to_deck = this.boss_2_starting_cards;
                     break;
             }
 
@@ -635,4 +659,8 @@ public enum CreatedOpponents
     ColeopteraCollector,
     DipteraCollector,
     VarietyCollector,
+    SpiderCollector,
+    ForestSpecialist,
+    PlainsSpecialist,
+    Boss2,
 }

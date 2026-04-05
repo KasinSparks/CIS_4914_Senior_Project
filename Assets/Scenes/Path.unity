@@ -1303,11 +1303,11 @@ MonoBehaviour:
   - TestNode (3)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
@@ -1466,13 +1466,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (27)
+  - TestNode (21)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f58ca8d760ed01a46a16ea97556fc58b, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
     weight: 1
 --- !u!64 &92240835
 MeshCollider:
@@ -3860,14 +3867,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
-  next_nodes_guids:
-  - 
+  next_nodes_guids: []
   node_types:
-  - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+  - node: {fileID: 11400000, guid: 2df044ee472fc81469fcef02553a0701, type: 2}
     weight: 1
 --- !u!64 &336795263
 MeshCollider:
@@ -4039,23 +4041,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (28)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: dbdbd6f400946074bb80f9c1866c8177, type: 2}
     weight: 1
-  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &358777974
 MeshCollider:
@@ -5531,13 +5527,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (21)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f58ca8d760ed01a46a16ea97556fc58b, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
     weight: 1
 --- !u!64 &442508146
 MeshCollider:
@@ -5944,11 +5944,11 @@ MonoBehaviour:
   - TestNode (6)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
@@ -7836,13 +7836,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (20)
+  - TestNode (29)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: dbdbd6f400946074bb80f9c1866c8177, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &586742371
 MeshCollider:
@@ -8039,13 +8044,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (19)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f5167f5fb4bf9a44ca99b476b50b9c20, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
     weight: 1
 --- !u!64 &596980236
 MeshCollider:
@@ -9565,7 +9574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathSystem
   type: 1
   path_name: Test Path
-  end_node_guid: TestNode (7)
+  end_node_guid: TestNode (25)
   start_node_guids:
   - TestNode (8)
   current_node_guid: 
@@ -11740,13 +11749,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (17)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: dbdbd6f400946074bb80f9c1866c8177, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &804639937
 MeshCollider:
@@ -11876,14 +11889,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (25)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 9faa984667f53624c8acb182df7b82a6, type: 2}
+    weight: 0.2
 --- !u!64 &804845317
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12938,13 +12957,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (24)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 9faa984667f53624c8acb182df7b82a6, type: 2}
     weight: 1
 --- !u!64 &871919788
 MeshCollider:
@@ -13136,13 +13161,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (18)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f5167f5fb4bf9a44ca99b476b50b9c20, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &882242075
 MeshCollider:
@@ -15563,13 +15592,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (24)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 9faa984667f53624c8acb182df7b82a6, type: 2}
     weight: 1
 --- !u!64 &1001828139
 MeshCollider:
@@ -16373,19 +16406,19 @@ MonoBehaviour:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
-    weight: 1
+    weight: 0.2
 --- !u!64 &1033823657
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16829,13 +16862,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (23)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f58ca8d760ed01a46a16ea97556fc58b, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
     weight: 1
 --- !u!64 &1062477919
 MeshCollider:
@@ -17781,13 +17818,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (14)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.5
+  - node: {fileID: 11400000, guid: dbdbd6f400946074bb80f9c1866c8177, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &1121009039
 MeshCollider:
@@ -18823,6 +18864,7 @@ Transform:
   - {fileID: 884911562}
   - {fileID: 667768981}
   - {fileID: 1167626731}
+  - {fileID: 1961452656}
   - {fileID: 633572669}
   - {fileID: 2058168742}
   - {fileID: 2009247420}
@@ -19318,13 +19360,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (16)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 93b94a209edec2d4b868ec80c34a764a, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &1253769437
 MeshCollider:
@@ -19516,13 +19562,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (19)
+  - TestNode (20)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 93b94a209edec2d4b868ec80c34a764a, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &1254765053
 MeshCollider:
@@ -20003,13 +20054,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (30)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 9faa984667f53624c8acb182df7b82a6, type: 2}
     weight: 1
 --- !u!64 &1288006107
 MeshCollider:
@@ -20128,11 +20183,11 @@ MonoBehaviour:
   - TestNode (2)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
@@ -20789,19 +20844,19 @@ MonoBehaviour:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
-    weight: 1
+    weight: 0.2
 --- !u!64 &1360921877
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21111,13 +21166,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (15)
+  - TestNode (26)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f5167f5fb4bf9a44ca99b476b50b9c20, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &1365618073
 MeshCollider:
@@ -23942,23 +24002,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (13)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 93b94a209edec2d4b868ec80c34a764a, type: 2}
     weight: 1
-  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &1575503085
 MeshCollider:
@@ -24150,14 +24204,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (25)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0
+  - node: {fileID: 11400000, guid: f58ca8d760ed01a46a16ea97556fc58b, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
+    weight: 0.2
 --- !u!64 &1577670898
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -24379,14 +24439,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (25)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0
+  - node: {fileID: 11400000, guid: f58ca8d760ed01a46a16ea97556fc58b, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
+    weight: 0.2
 --- !u!64 &1585846519
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25759,6 +25825,25 @@ MonoBehaviour:
   - {fileID: 2027604076}
   - {fileID: 1575503082}
   - {fileID: 358777972}
+  - {fileID: 1365618070}
+  - {fileID: 1253769434}
+  - {fileID: 804639934}
+  - {fileID: 882242072}
+  - {fileID: 1254765050}
+  - {fileID: 586742368}
+  - {fileID: 442508143}
+  - {fileID: 92240832}
+  - {fileID: 1819313472}
+  - {fileID: 1062477916}
+  - {fileID: 871919785}
+  - {fileID: 1585846516}
+  - {fileID: 804845314}
+  - {fileID: 336795260}
+  - {fileID: 596980233}
+  - {fileID: 1577670895}
+  - {fileID: 1121009036}
+  - {fileID: 1288006104}
+  - {fileID: 1001828136}
 --- !u!1001 &1711010963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27070,31 +27155,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14
+      value: -14.000077
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 51.79
+      value: 51.789993
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.955557
+      value: 0.8868244
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000020884361
+      value: 0.000000019382165
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.29480654
+      value: -0.46210656
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000006443201
+      value: -0.00000001009966
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -27102,7 +27187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -34.292
+      value: -55.046
       objectReference: {fileID: 0}
     - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -27403,11 +27488,11 @@ MonoBehaviour:
   - TestNode (3)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0.5
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
@@ -27700,13 +27785,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (22)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: 9506e2ca7524750429df6facdaafced7, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 1c95f50b03daeed4d89026f9c663cd3e, type: 2}
+    weight: 1
+  - node: {fileID: 11400000, guid: 9faa984667f53624c8acb182df7b82a6, type: 2}
     weight: 1
 --- !u!64 &1819313475
 MeshCollider:
@@ -29694,11 +29785,11 @@ MonoBehaviour:
   - TestNode (5)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
     weight: 1
   - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
@@ -30274,6 +30365,68 @@ Transform:
   - {fileID: 1820094949}
   m_Father: {fileID: 1572832790}
   m_LocalEulerAnglesHint: {x: 0, y: 6.085, z: 0}
+--- !u!1001 &1961452655
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1213374605}
+    m_Modifications:
+    - target: {fileID: 192044, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_Name
+      value: Fir_Tree (93)
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.050095
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60.849968
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8481688
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000001853732
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.52972615
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000011577532
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -63.974
+      objectReference: {fileID: 0}
+    - target: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+--- !u!4 &1961452656 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 471828, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
+  m_PrefabInstance: {fileID: 1961452655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1974730907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30695,23 +30848,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
   next_nodes_guids:
-  - 
+  - TestNode (12)
   node_types:
   - node: {fileID: 11400000, guid: 2ef0c76b7b5a59a46a2c754da6dfc696, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: 25c44ea59f740e54483c669ad07fb870, type: 2}
-    weight: 1
+    weight: 0.2
   - node: {fileID: 11400000, guid: b00aff0a0b4082d499dddf16c2b1f983, type: 2}
+    weight: 0.2
+  - node: {fileID: 11400000, guid: f5167f5fb4bf9a44ca99b476b50b9c20, type: 2}
     weight: 1
-  - node: {fileID: 11400000, guid: 0f88dafb2c2a83147b9ffe31517a21c0, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: e66991012d8e7c7439c4f8f5a7d6dd2d, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 64d30c429da92dd44b1f7b669cdc6e77, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: cb1b97460a0b3c0499f6941e18de02be, type: 2}
-    weight: 1
-  - node: {fileID: 11400000, guid: 0c25b79fc63080748a5881cc24b15ed4, type: 2}
+  - node: {fileID: 11400000, guid: 98a66f322377ccb4c9a90bf5883dac18, type: 2}
     weight: 1
 --- !u!64 &2027604079
 MeshCollider:

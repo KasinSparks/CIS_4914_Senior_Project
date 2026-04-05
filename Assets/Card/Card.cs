@@ -99,7 +99,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField]
     private AudioClip direct_hit_audio;
 
-    public readonly float HIT_SFX_TIME = 0.2f;
+    public static readonly float HIT_SFX_TIME = 0.2f;
 
     private void Awake()
     {
