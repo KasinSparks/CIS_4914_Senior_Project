@@ -4,6 +4,14 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 
+[Serializable]
+public struct PathNodeChances
+{
+    public PathNodeData node;
+    [Range(0.0f, 1.0f)]
+    public float        weight;
+}
+
 /**
  * @brief A node for the PathSystem
  */
@@ -12,10 +20,18 @@ using System;
 public class PathNode : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
+    [Tooltip("Don't assign to this unless you want to override the node_types.")]
     private PathNodeData data;
 
     [SerializeField]
     private string[] next_nodes_guids; /// GUIDs for the next nodes
+    
+    // TODO(KASIN): Don't need this to be serialized, but want it in the inspector
+    [SerializeField]
+    private PathNodeChances[] node_types; /// Node types that can be randomly chosen from
+
+    private PathNodeChances[] normalized_node_types;
+
 
     private bool is_selectable;
 
@@ -69,7 +85,19 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
             PlayerStats.player_data.AddToNodesTraversed(1);
             PlayerStats.Save();
             SaveSystem.SavePlayerPathNodeState(this.data.GetSceneName());
-            SceneManager.LoadScene(this.data.GetSceneName());
+
+            string next_scene = this.data.GetSceneName();
+            if (next_scene.Equals("Gameplay"))
+            {
+                Debug.Log("Loading " +
+                    Enum.GetName(typeof(CreatedOpponents), this.data.next_opponent.opponent) +
+                    " Opponent with difficulty: " +
+                    this.data.next_opponent.difficulty
+                );
+                SaveSystem.SaveNextOpponentData(this.data.next_opponent);
+            }
+
+            SceneManager.LoadScene(next_scene);
         }
     }
     
@@ -127,5 +155,54 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     public void SetPathNode(PathNodeData data)
     {
         this.data = data;
+    }
+    
+    /**
+     * @brief Normalize the chances of the nodes being selected. Does a
+     * summation of all chances then computes the normalized value by dividing
+     * the original chance by the total chance.
+     */
+    private void NormalizeChances()
+    {
+        // Normalize percent chance values
+        float total_weight = 0.0f;
+        for (int i = 0; i < this.node_types.Length; ++i)
+        {
+            total_weight += this.node_types[i].weight;
+        }
+
+        this.normalized_node_types = new PathNodeChances[this.node_types.Length];
+        for (int i = 0; i < this.node_types.Length; ++i)
+        {
+            this.normalized_node_types[i].node = this.node_types[i].node;
+            this.normalized_node_types[i].weight =
+                this.node_types[i].weight / total_weight;
+        }
+    }
+
+    /**
+     * @brief Get a random PathNodeData type.
+     * @return Returns a random PathNodeData type based on the normalized weights.
+     * @todo Write a test to verify this produces random nodes that corelate to
+     * the weight given.
+     */
+    public PathNodeData GetRandomPathNode()
+    {
+        this.NormalizeChances();
+
+        float rand = UnityEngine.Random.Range(0.0f, 0.99f);
+        float curr_val = 0.0f;
+        for (int i = 0; i < this.normalized_node_types.Length; ++i)
+        {
+            if (rand >= curr_val && rand < this.normalized_node_types[i].weight + curr_val)
+            {
+                return this.normalized_node_types[i].node;
+            }
+
+            curr_val += this.normalized_node_types[i].weight;
+        }
+        
+        // Should never reach here...
+        return this.normalized_node_types[this.normalized_node_types.Length - 1].node;
     }
 }

@@ -17,6 +17,7 @@ public enum SaveSystemFile
     PlayerStats,
     PlayerScene,  // The current scene the player is in
     VolumeData,
+    NextOpponent,
 }
 
 
@@ -41,6 +42,9 @@ public class SaveSystem
     
     private static readonly string PLAYER_SCENE_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
     private static readonly string PLAYER_VOLUME_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+
+    private static readonly string NEXT_OPPONENT_FOLDER        = "PATH";
+    private static readonly string NEXT_OPPONENT_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, NEXT_OPPONENT_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -71,6 +75,8 @@ public class SaveSystem
                 return "PLAYER_SCENE.json";
             case SaveSystemFile.VolumeData:
                 return "VOLUME_DATA.json";
+            case SaveSystemFile.NextOpponent:
+                return "NEXT_OPPONENT_DATA.json";
 
             default:
                 // TODO(KASIN):
@@ -108,6 +114,8 @@ public class SaveSystem
                 return PLAYER_SCENE_SAVE_LOCATION;
             case SaveSystemFile.VolumeData:
                 return PLAYER_VOLUME_SAVE_LOCATION;
+            case SaveSystemFile.NextOpponent:
+                return NEXT_OPPONENT_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -737,7 +745,6 @@ public class SaveSystem
      * @brief Save the player volume settings to a file
      * @param VolumeData The volume levels set in the menu
      */
-
     public static void SaveVolumeData(VolumeControl.VolumeData volume_data)
     {
         SaveToJsonFile(JsonUtility.ToJson(volume_data), SaveSystemFile.VolumeData);
@@ -772,4 +779,40 @@ public class SaveSystem
         return ret;
     }
 
+    /**
+     * @brief Save the next Opponent play style and type to a file
+     * @param next_opponent The opponent type and attack style
+     */
+    public static void SaveNextOpponentData(NextOpponentData next_opponent)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(next_opponent), SaveSystemFile.NextOpponent);
+    }
+
+    /**
+     * @brief Load the next opponent data 
+     * @return The next opponent data 
+     */
+    public static NextOpponentData LoadNextOpponentData()
+    {
+        NextOpponentData ret = new NextOpponentData();
+        SaveSystemFile file = SaveSystemFile.NextOpponent;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        Debug.Log("Loaded Next Opponent data from file.");
+        return ret;
+    }
 }

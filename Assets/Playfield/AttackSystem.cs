@@ -109,7 +109,7 @@ public class AttackSystem : MonoBehaviour
             card.Attack(opponent_slot.GetCard());
 
             // Wait for the direct hit audio to finish
-            yield return new WaitForSecondsRealtime(card.HIT_SFX_TIME);
+            yield return new WaitForSecondsRealtime(Card.HIT_SFX_TIME);
 
             card.PlaySound(card.GetCardData().attack_audio, time_elapsed);
             time_elapsed = 0.0f;
@@ -233,7 +233,7 @@ public class AttackSystem : MonoBehaviour
                     if (attcked_lhs)
                     {
                         // Delay for the LHS Attack animation to finish
-                        delay = ATTACK_DURATION;
+                        delay = ATTACK_DURATION + Card.HIT_SFX_TIME;
                     }
 
                     offset = i;
@@ -247,7 +247,7 @@ public class AttackSystem : MonoBehaviour
                         playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
                     }
 
-                    prev_delay += delay + ATTACK_DURATION;
+                    prev_delay += delay + ATTACK_DURATION + Card.HIT_SFX_TIME;
                 }
                 else
                 {
@@ -262,7 +262,7 @@ public class AttackSystem : MonoBehaviour
                     StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
                     playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
 
-                    prev_delay += (ATTACK_DURATION * card_ref._GetNumAdditionalAttacks());
+                    prev_delay += ((ATTACK_DURATION + Card.HIT_SFX_TIME) * card_ref._GetNumAdditionalAttacks());
                 }
             }
             else
