@@ -60,7 +60,7 @@ public class UI_PlayerStatInsectOrder : MonoBehaviour
 
 
             prefab.SetImage(card.image);
-            prefab.SetName(card.name);
+            prefab.SetName(card.card_name);
 
             prefab.SetXPosition(offset);
             prefab.AddToYPosition(-64.0f);

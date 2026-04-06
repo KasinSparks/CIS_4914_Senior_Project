@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /**
  *  @brief Used to store the modifier object and the gameobject that displays
@@ -384,6 +385,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // Don't call this externally... Call Attack() instead.
     public void _BaseAttack(Card opponent_card)
     {
+        PlayerStats.player_data.AddToDamageDealt(this.card_data.attack + this.attack_damage_bonus);
         if (opponent_card == null)
         {
             // TODO: this is handled in the Attack function for now.
@@ -423,10 +425,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
+                    PlayerStats.player_data.AddToDamageDealt(this.card_data.attack + this.attack_damage_bonus);
                     this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
                     if(this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
+                        PlayerStats.player_data.AddToOpponentsDefeated(1);
+                        string scene_name = "Reward";
+                        if (!string.IsNullOrEmpty(scene_name))
+                        {
+                            PlayerStats.Save();
+                            SceneManager.LoadScene(scene_name);
+                        }
                     }
                     break;
 
@@ -662,6 +672,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     //    this card after calling this function, it will be NULL.
     public void Death(Card other)
     {
+        if (this.card_ownership == CardOwnership.Opponent)
+        {
+            PlayerStats.player_data.AddToInsectsDefeated(1);
+        }
 
         // Unapply any passives
         List<ModifierTuple> mods = this.GetModifiers(ModifierType.Passive);

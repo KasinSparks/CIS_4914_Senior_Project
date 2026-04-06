@@ -87,6 +87,10 @@ public class PathSystem : MonoBehaviour
             {
                 // Set the current node's next nodes as selectable
                 PathNode node = this.gUIDs.GetGameObject(this.current_node_guid).GetComponent<PathNode>();
+
+                // Move the player marker to the current node
+                this.transform.Find("Player Marker").transform.localPosition = node.transform.localPosition;
+
                 string[] node_guids = node.GetNextNodes();
                 foreach (string ng in node_guids)
                 {
@@ -240,6 +244,10 @@ public class PathSystem : MonoBehaviour
         for (int i = 0; i < this.transform.childCount; ++i)
         {
             Transform node = this.transform.GetChild(i);
+            if (node.name.Equals("Player Marker"))
+            {
+                continue;
+            }
             string node_name = node.gameObject.name;
             node.GetComponent<PathNode>().SaveNode(Path.Combine(PATH_SAVE_LOCATION, node_name + ".json"));
         }
@@ -274,6 +282,10 @@ public class PathSystem : MonoBehaviour
         for (int i = 0; i < this.transform.childCount; ++i)
         {
             Transform node = this.transform.GetChild(i);
+            if (node.name.Equals("Player Marker"))
+            {
+                continue;
+            }
             string node_name = node.gameObject.name;
             node.GetComponent<PathNode>().LoadNode(Path.Combine(PATH_SAVE_LOCATION, node_name + ".json"));
         }

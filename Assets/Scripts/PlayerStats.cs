@@ -69,6 +69,13 @@ public class PlayerData
 
     public void AddCardToDiscoveredList(CardData card)
     {
+        if (card.card_name.Contains("Blessed") ||
+            card.card_name.Contains("Evolved") ||
+            card.card_name.Contains("+"))
+        {
+            return;
+        }
+
         this.cards_discovered.TryAdd(card.card_name, card);
     }
 
@@ -143,7 +150,7 @@ public class PlayerStats
     
     public static void Load()
     {
-        player_data = SaveSystem.LoadPlayerStats();
+        player_data = SaveSystem._LoadPlayerStats();
         player_data.UnpackCardsDiscovered();
         Debug.Log("Loaded Player Stats");
     }
@@ -157,7 +164,7 @@ public class PlayerStats
         }
 
         player_data.PackCardsDiscovered();
-        SaveSystem.SavePlayerStats(player_data);
+        SaveSystem._SavePlayerStats(player_data);
         Debug.Log("Saved Player Stats to file.");
     }
 }

@@ -15,6 +15,7 @@ public enum SaveSystemFile
     OpponentDeck2,  // Example, can change this to the name of the opponent
     WordInfo,
     PlayerStats,
+    PlayerScene,  // The current scene the player is in
 }
 
 
@@ -36,6 +37,8 @@ public class SaveSystem
 
     private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
     private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    
+    private static readonly string PLAYER_SCENE_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     /**
      * @breif Gets the save file name for the given save file type.
@@ -62,6 +65,8 @@ public class SaveSystem
                 return "WORD_INFO.json";
             case SaveSystemFile.PlayerStats:
                 return "PLAYER_STATS.json";
+            case SaveSystemFile.PlayerScene:
+                return "PLAYER_SCENE.json";
 
             default:
                 // TODO(KASIN):
@@ -95,6 +100,9 @@ public class SaveSystem
                 return WORD_INFO_SAVE_LOCATION;
             case SaveSystemFile.PlayerStats:
                 return PLAYER_STATS_SAVE_LOCATION;
+            case SaveSystemFile.PlayerScene:
+                return PLAYER_SCENE_SAVE_LOCATION;
+
 
             default:
                 // TODO(KASIN):
@@ -646,7 +654,7 @@ public class SaveSystem
      * @param player_data The stats for the during the game
      */
 
-    public static void SavePlayerStats(PlayerData player_data)
+    public static void _SavePlayerStats(PlayerData player_data)
     {
         SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
     }
@@ -655,7 +663,7 @@ public class SaveSystem
      * @brief Load the deck of cards from the save file
      * @return The deck of cards
      */
-    public static PlayerData LoadPlayerStats()
+    public static PlayerData _LoadPlayerStats()
     {
         PlayerData ret = new PlayerData();
         SaveSystemFile file = SaveSystemFile.PlayerStats;
@@ -676,6 +684,48 @@ public class SaveSystem
 
         JsonUtility.FromJsonOverwrite(line, ret);
         return ret;
+    }
+
+    /** 
+     * @breif Will determine what scene to load from the start menu 
+     * @param scene_name The name of the scene the player was last in
+     */
+    public static void SavePlayerPathNodeState(string scene_name)
+    {
+        PlayerPathNodeState s = new PlayerPathNodeState();
+        s.curr_scene = scene_name;
+        SaveToJsonFile(JsonUtility.ToJson(s), SaveSystemFile.PlayerScene);
+    }
+
+    private class PlayerPathNodeState
+    {
+        public string curr_scene;
+    }
+
+    public static string LoadPlayerPathNodeState()
+    {
+        SaveSystemFile file = SaveSystemFile.PlayerScene;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default Scene 
+            return "Path";
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        PlayerPathNodeState s = new PlayerPathNodeState();
+
+        // TODO(KASIN): Error checking
+        JsonUtility.FromJsonOverwrite(line, s);
+        Debug.Log(s);
+        return s.curr_scene;
     }
 
 }
