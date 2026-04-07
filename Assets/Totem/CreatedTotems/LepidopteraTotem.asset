@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LepidopteraTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 4
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 5271050236847771676, guid: 9af838341b327e34492f57aecd8c564b, type: 3}

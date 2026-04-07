@@ -250,6 +250,7 @@ public class Reward : MonoBehaviour
         
         Destroy(this.totem_prefab);
         this.InstantiateTotemPrefab(slot);
+        this.totem_prefab.transform.localScale = new Vector3(.5f, .5f, .5f);
         this.totem_prefab.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -264,11 +265,9 @@ public class Reward : MonoBehaviour
         modifier_img.Initialize();
         this.totem_prefab.transform.GetComponent<Totem>().SetModifier(this.selected_modifier);
         this.totem_prefab.transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = modifier_img.image;
-        this.totem_prefab.transform.GetChild(0).rotation = Quaternion.Euler(
-             0,
-             180,
-             this.totem_prefab.transform.rotation.x
-        );
+        this.totem_prefab.transform.GetChild(0).SetPositionAndRotation(
+            new Vector3(this.totem_prefab.transform.position.x, 0.01f, this.totem_prefab.transform.position.z),
+            Quaternion.Euler(0, 180, this.totem_prefab.transform.rotation.x));
 
         this.totem_prefab.transform.GetChild(1).gameObject.SetActive(false);
     }

@@ -25,14 +25,7 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         reward = null;
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
         modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
-        
-        // sets position of totem above the table
-        this.transform.SetPositionAndRotation(
-            new Vector3(this.transform.position.x,
-            this.transform.position.y + 0.5f * this.transform.localScale.x,
-            this.transform.position.z),
-            Quaternion.Euler(0, 0, 0)
-        );
+
 
         if (this.totem_data == null)
         {
@@ -50,13 +43,6 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             return;
         }
 
-        // sets position/rotation of modifier to be flush with totem
-        this.transform.GetChild(0).position = new Vector3(
-            this.transform.position.x,
-            this.transform.position.y,
-            this.transform.GetChild(0).transform.position.z - 0.5f * this.transform.localScale.x
-        );
-  
     }
 
     public CardModifier GetModifier()
