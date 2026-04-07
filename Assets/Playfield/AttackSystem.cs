@@ -188,22 +188,18 @@ public class AttackSystem : MonoBehaviour
                         // Will update the bit flag outside the range for the player.
                         // Thus, the RHS animation will determine when the gamestate
                         // may continue.
-                        target_card_ref = target_card_slot_ref.GetCard();
-                        if (target_card_ref != null)
+                        // This is so it does not trigger the gamestate to
+                        // change before the RHS animation has a chance to
+                        // run
+                        offset += 4;
+                        if (owner == CardOwnership.Opponent)
                         {
-                            // This is so it does not trigger the gamestate to
-                            // change before the RHS animation has a chance to
-                            // run
-                            offset += 4;
-                            if (owner == CardOwnership.Opponent)
-                            {
-                                offset += aas_opponent_offset;
-                            }
-
-                            StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
-                            playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
-                            attcked_lhs = true;
+                            offset += aas_opponent_offset;
                         }
+
+                        StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
+                        playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
+                        attcked_lhs = true;
                     }
 
 
