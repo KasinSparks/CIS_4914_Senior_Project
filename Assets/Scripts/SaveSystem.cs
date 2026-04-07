@@ -15,6 +15,9 @@ public enum SaveSystemFile
     OpponentDeck2,  // Example, can change this to the name of the opponent
     WordInfo,
     PlayerStats,
+    PlayerScene,  // The current scene the player is in
+    VolumeData,
+    NextOpponent,
 }
 
 
@@ -36,6 +39,12 @@ public class SaveSystem
 
     private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
     private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    
+    private static readonly string PLAYER_SCENE_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    private static readonly string PLAYER_VOLUME_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+
+    private static readonly string NEXT_OPPONENT_FOLDER        = "PATH";
+    private static readonly string NEXT_OPPONENT_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, NEXT_OPPONENT_FOLDER);
 
     /**
      * @brief Gets the save file name for the given save file type.
@@ -62,6 +71,12 @@ public class SaveSystem
                 return "WORD_INFO.json";
             case SaveSystemFile.PlayerStats:
                 return "PLAYER_STATS.json";
+            case SaveSystemFile.PlayerScene:
+                return "PLAYER_SCENE.json";
+            case SaveSystemFile.VolumeData:
+                return "VOLUME_DATA.json";
+            case SaveSystemFile.NextOpponent:
+                return "NEXT_OPPONENT_DATA.json";
 
             default:
                 // TODO(KASIN):
@@ -95,6 +110,12 @@ public class SaveSystem
                 return WORD_INFO_SAVE_LOCATION;
             case SaveSystemFile.PlayerStats:
                 return PLAYER_STATS_SAVE_LOCATION;
+            case SaveSystemFile.PlayerScene:
+                return PLAYER_SCENE_SAVE_LOCATION;
+            case SaveSystemFile.VolumeData:
+                return PLAYER_VOLUME_SAVE_LOCATION;
+            case SaveSystemFile.NextOpponent:
+                return NEXT_OPPONENT_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -646,7 +667,7 @@ public class SaveSystem
      * @param player_data The stats for the during the game
      */
 
-    public static void SavePlayerStats(PlayerData player_data)
+    public static void _SavePlayerStats(PlayerData player_data)
     {
         SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
     }
@@ -655,7 +676,7 @@ public class SaveSystem
      * @brief Load the deck of cards from the save file
      * @return The deck of cards
      */
-    public static PlayerData LoadPlayerStats()
+    public static PlayerData _LoadPlayerStats()
     {
         PlayerData ret = new PlayerData();
         SaveSystemFile file = SaveSystemFile.PlayerStats;
@@ -678,4 +699,120 @@ public class SaveSystem
         return ret;
     }
 
+    /** 
+     * @breif Will determine what scene to load from the start menu 
+     * @param scene_name The name of the scene the player was last in
+     */
+    public static void SavePlayerPathNodeState(string scene_name)
+    {
+        PlayerPathNodeState s = new PlayerPathNodeState();
+        s.curr_scene = scene_name;
+        SaveToJsonFile(JsonUtility.ToJson(s), SaveSystemFile.PlayerScene);
+    }
+
+    private class PlayerPathNodeState
+    {
+        public string curr_scene;
+    }
+
+    public static string LoadPlayerPathNodeState()
+    {
+        SaveSystemFile file = SaveSystemFile.PlayerScene;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default Scene 
+            return "Path";
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        PlayerPathNodeState s = new PlayerPathNodeState();
+
+        // TODO(KASIN): Error checking
+        JsonUtility.FromJsonOverwrite(line, s);
+        Debug.Log(s);
+        return s.curr_scene;
+    }
+
+    /**
+     * @brief Save the player volume settings to a file
+     * @param VolumeData The volume levels set in the menu
+     */
+    public static void SaveVolumeData(VolumeControl.VolumeData volume_data)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(volume_data), SaveSystemFile.VolumeData);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static VolumeControl.VolumeData LoadVolumeData()
+    {
+        VolumeControl.VolumeData ret = new VolumeControl.VolumeData();
+        SaveSystemFile file = SaveSystemFile.VolumeData;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            Debug.Log("Failed to load Volume Data from file: " + GetFullPath(file));
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        Debug.Log("Loaded Volume Data from file.");
+        return ret;
+    }
+
+    /**
+     * @brief Save the next Opponent play style and type to a file
+     * @param next_opponent The opponent type and attack style
+     */
+    public static void SaveNextOpponentData(NextOpponentData next_opponent)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(next_opponent), SaveSystemFile.NextOpponent);
+    }
+
+    /**
+     * @brief Load the next opponent data 
+     * @return The next opponent data 
+     */
+    public static NextOpponentData LoadNextOpponentData()
+    {
+        NextOpponentData ret = new NextOpponentData();
+        SaveSystemFile file = SaveSystemFile.NextOpponent;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return ret;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, ret);
+        Debug.Log("Loaded Next Opponent data from file.");
+        return ret;
+    }
 }

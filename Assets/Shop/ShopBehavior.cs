@@ -136,6 +136,7 @@ public class ShopBehavior : MonoBehaviour
         pairSlot2.ResetCardSlot();
         c2.SetSlot(pairSlot1);
         Debug.Log("Purchased " + c2.card_name);
+        PlayerStats.player_data.AddCardToDiscoveredList(data1); // Add the card to the player's discovered card list
         StartCoroutine(FloatToHand(c1.transform));
         c2.transform.position += new Vector3(0, -1000, 0);
         pairSlot1.transform.position += new Vector3(0, -1000, 0); //move off screen
@@ -187,6 +188,8 @@ public class ShopBehavior : MonoBehaviour
 
     public void ExitScene()
     {
+        PlayerStats.Save();
+        SaveSystem.SavePlayerPathNodeState(nextSceneName);
         SceneManager.LoadScene(nextSceneName);
     }
 

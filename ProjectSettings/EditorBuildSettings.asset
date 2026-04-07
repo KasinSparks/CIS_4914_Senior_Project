@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Campfire.unity
     guid: 193cbb3c1d7d55f4692b6aa8d812a2fd
+  - enabled: 1
+    path: Assets/Scenes/Reward.unity
+    guid: 5e2e4eff2c6063b4e83b93583632af3d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

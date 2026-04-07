@@ -187,10 +187,14 @@ public class Reward : MonoBehaviour
 
         // add selected card to deck file
         SaveSystem.AddCardToDeckSave(this.selected_card.GetCardData(), SaveSystemFile.PlayerDeck);
+        PlayerStats.player_data.AddCardToDiscoveredList(this.selected_card.GetCardData());
+
+        PlayerStats.Save();
 
         // load path scene
         if (!string.IsNullOrEmpty(this.scene_name))
         {
+            SaveSystem.SavePlayerPathNodeState(this.scene_name);
             SceneManager.LoadScene(this.scene_name);
         }
     }

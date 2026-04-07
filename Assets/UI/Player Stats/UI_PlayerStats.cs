@@ -14,10 +14,14 @@ public class UI_PlayerStats : MonoBehaviour
         panel.SetActive(false);
     }
 
+    void Awake()
+    {
+        PlayerStats.Load();        
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame
