@@ -263,6 +263,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         EnsureModifierUI();
         // Remove the UI pop-ups for the modifiers
+        if (this.modifierInfoCanvas == null)
+        {
+            return;
+        }
+
         for (int i = 0; i < this.modifierInfoCanvas.transform.childCount; ++i)
         {
             Transform obj = this.modifierInfoCanvas.transform.GetChild(i);

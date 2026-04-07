@@ -44,7 +44,10 @@ public class PlayerTotem : MonoBehaviour
      */
     public void AttachModifier(Card card)
     {
-        if (card.GetOrder() != this.selected_order) return;
+        if (card.GetOrder() != this.selected_order || card.GetOrder().Equals(CardOrder.Other))
+        {
+            return;
+        }
 
         card.AttachModifier(this.selected_modifier);
     }
