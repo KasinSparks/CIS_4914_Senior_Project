@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SiphonapteraTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 7
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 7190543567210495529, guid: f7d2d1f05a8a7a1498b04b7800620cdd, type: 3}

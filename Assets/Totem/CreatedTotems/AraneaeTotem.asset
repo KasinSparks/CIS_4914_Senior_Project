@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AraneaeTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 5
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 4643012344534372931, guid: bbd772b936b1a2643bb24d6809830e55, type: 3}

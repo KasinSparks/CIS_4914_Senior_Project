@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: OrthopteraTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 8
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 551929343375743438, guid: 1b9ab73c77a4dd247a17ef5b4fb97623, type: 3}

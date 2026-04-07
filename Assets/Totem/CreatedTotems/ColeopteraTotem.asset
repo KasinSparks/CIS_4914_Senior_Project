@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ColeopteraTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 0
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 2050067552748433014, guid: be8272fbca9f4a44daac8fc29dc0420a, type: 3}

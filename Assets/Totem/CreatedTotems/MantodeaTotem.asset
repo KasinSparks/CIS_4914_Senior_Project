@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MantodeaTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 3
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 5018454980036155056, guid: 8e2019fa7a258db4fb7535e68c7b9e55, type: 3}

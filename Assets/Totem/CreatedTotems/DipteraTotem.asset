@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DipteraTotem
   m_EditorClassIdentifier: Assembly-CSharp::TotemData
   order: 1
-  totem_model: {fileID: 6039528554998454339, guid: cd34373fda7e7f342b601ab86dfc8918, type: 3}
+  totem_model: {fileID: 2530210819067667364, guid: c075378372860da41b6eb003dbaf343c, type: 3}
