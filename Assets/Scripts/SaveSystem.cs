@@ -47,7 +47,7 @@ public class SaveSystem
     private static readonly string NEXT_OPPONENT_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, NEXT_OPPONENT_FOLDER);
 
     /**
-     * @breif Gets the save file name for the given save file type.
+     * @brief Gets the save file name for the given save file type.
      * @param The save file type.
      * @return The actual save file name.
      */

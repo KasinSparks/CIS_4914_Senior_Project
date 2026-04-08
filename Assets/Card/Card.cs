@@ -432,6 +432,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     Debug.Log("Attacked the Opponent directly!");
                     PlayerStats.player_data.AddToDamageDealt(this.card_data.attack + this.attack_damage_bonus);
                     this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.player_hp_text.text = this.game_state.player_hp_system.hp.ToString();
                     if(this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
@@ -448,6 +449,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
                     this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.opponent_hp_text.text = this.game_state.opponent_hp_system.hp.ToString();
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");

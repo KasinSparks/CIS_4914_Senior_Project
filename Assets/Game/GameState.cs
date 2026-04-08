@@ -13,6 +13,9 @@ public class GameState : MonoBehaviour
     public HPSystem player_hp_system;
     public HPSystem opponent_hp_system;
 
+    public TMPro.TextMeshProUGUI player_hp_text;
+    public TMPro.TextMeshProUGUI opponent_hp_text;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
