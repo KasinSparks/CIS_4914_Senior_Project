@@ -263,6 +263,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         EnsureModifierUI();
         // Remove the UI pop-ups for the modifiers
+        if (this.modifierInfoCanvas == null)
+        {
+            return;
+        }
+
         for (int i = 0; i < this.modifierInfoCanvas.transform.childCount; ++i)
         {
             Transform obj = this.modifierInfoCanvas.transform.GetChild(i);
@@ -1062,7 +1067,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             (this.card_data.attack + this.attack_damage_bonus).ToString());
 
         // Card Cost Text set
-        this.SetCardTextField("card_cost_text", this.GetNektarCost().ToString());
+        int nektar_cost = (this.GetNektarCost() > 0 ? this.GetNektarCost() : 0);
+        this.SetCardTextField("card_cost_text", nektar_cost.ToString());
     }
 
     public CardOwnership GetOwnership()
