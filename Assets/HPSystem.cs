@@ -1,21 +1,12 @@
-using UnityEngine;
-
-public class HPSystem : MonoBehaviour
+public class HPSystem
 {
     public int hp;
     public bool is_defeated;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public HPSystem(int hp)
     {
-        this.hp = 10;
+        this.hp = hp;
         this.is_defeated = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void DirectHit(int damage)
