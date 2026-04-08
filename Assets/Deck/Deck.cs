@@ -13,6 +13,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public GameState gameState;
     public Hand hand;
+    public TMPro.TextMeshPro deck_size; ////to show player show many cards are left in deck
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +48,11 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Copy the starting cards to the queue
         this.Shuffle();
         //DrawAllCards();
+        
+        if (deck_size != null)
+        {
+            deck_size.text = card_queue.Count.ToString(); //write size of deck to text
+        }
     }
 
     // Update is called once per frame
@@ -86,6 +92,10 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
         // card this turn.
         gameState.UpdateTurnState(TurnStates.PlayerTurn);
+        if (deck_size != null)
+        {
+            deck_size.text = card_queue.Count.ToString(); //write size of deck to text
+        }
     }
 
     /**
