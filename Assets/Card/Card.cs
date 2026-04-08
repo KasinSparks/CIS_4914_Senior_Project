@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -446,6 +447,28 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
+                        string scene_name = "GameOver";
+                        if (!string.IsNullOrEmpty(scene_name))
+                        {
+                            PlayerStats.Save();
+
+                            SceneManager.LoadScene(scene_name);
+                            DirectoryInfo dir = new DirectoryInfo("SAVES");
+                            foreach (DirectoryInfo subDir in dir.GetDirectories())
+                            {
+                                if (subDir.Name != "WORDS" && subDir.Name != "PLAYER" && subDir.Name != "DECKS")
+                                {
+                                    Directory.Delete(Path.Combine(dir.Name, subDir.Name), true);
+                                }
+                                else if (subDir.Name == "PLAYER")
+                                {
+                                    File.Delete(Path.Combine(dir.Name, subDir.Name)+"/PLAYER_SCENE.json");
+                                }
+                            }
+                            //Directory.Delete("SAVES", true);
+                            
+                            
+                        }
                     }
                     break;
             }

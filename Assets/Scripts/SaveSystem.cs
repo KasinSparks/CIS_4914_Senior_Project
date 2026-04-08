@@ -143,7 +143,7 @@ public class SaveSystem
      * @param The save file type.
      * @return The entire Directory Path including the file.
      */
-    private static string GetFullPath(SaveSystemFile file)
+    public static string GetFullPath(SaveSystemFile file)
     {
         return Path.Combine(_GetSaveFileLocation(file), _GetSaveFileName(file));
     }
