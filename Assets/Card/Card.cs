@@ -429,6 +429,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             switch (this.card_ownership)
             {
+                // NOTE(KASIN): Gabriel, The player_hp_system and opponent_hp_system seem to be flipped here. 
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
                     PlayerStats.player_data.AddToDamageDealt(this.card_data.attack + this.attack_damage_bonus);
@@ -441,6 +442,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                         string scene_name = "Reward";
                         if (!string.IsNullOrEmpty(scene_name))
                         {
+                            SaveSystem.SavePlayerHP(this.game_state.opponent_hp_system.hp);
                             PlayerStats.Save();
                             SceneManager.LoadScene(scene_name);
                         }

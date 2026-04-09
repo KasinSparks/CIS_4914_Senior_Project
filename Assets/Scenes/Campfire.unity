@@ -1305,8 +1305,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1022.3, y: -628}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 884.7, y: -628}
+  m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &682431304
 MonoBehaviour:
@@ -2357,6 +2357,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 658286133}
   exitButton: {fileID: 1991132684}
   healButton: {fileID: 682431302}
+  healText: {fileID: 555927090}
   selectedUpgradeCard: {fileID: 0}
 --- !u!224 &1575155626 stripped
 RectTransform:

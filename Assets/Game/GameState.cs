@@ -23,8 +23,26 @@ public class GameState : MonoBehaviour
         isPlayerDead = false;
         this.UpdateTurnState(TurnStates.PlayerDrawCard);
 
-        this.player_hp_system = gameObject.AddComponent<HPSystem>();
-        this.opponent_hp_system = gameObject.AddComponent<HPSystem>();
+        this.player_hp_system = new HPSystem(10);
+        this.opponent_hp_system = new HPSystem(10);
+
+
+        // NOTE(KASIN): See NOTE in Card.cs::Attack() about the opponent and player swapped
+        Debug.Log("Loading player HP...");
+        int player_hp = SaveSystem.LoadPlayerHP();
+        if (player_hp > 0)
+        {
+            this.opponent_hp_system.hp = player_hp;
+        }
+
+        if (opponent_hp_text != null)
+        {
+            opponent_hp_text.text = this.opponent_hp_system.hp.ToString();
+        }
+        if (player_hp_text != null)
+        {
+            player_hp_text.text = this.player_hp_system.hp.ToString();
+        }
     }
 
     // Update is called once per frame

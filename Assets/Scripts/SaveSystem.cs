@@ -18,6 +18,7 @@ public enum SaveSystemFile
     PlayerScene,  // The current scene the player is in
     VolumeData,
     NextOpponent,
+    PlayerHP
 }
 
 
@@ -40,8 +41,9 @@ public class SaveSystem
     private static readonly string PLAYER_STATS_FOLDER        = "PLAYER";
     private static readonly string PLAYER_STATS_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
     
-    private static readonly string PLAYER_SCENE_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    private static readonly string PLAYER_SCENE_SAVE_LOCATION  = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
     private static readonly string PLAYER_VOLUME_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
+    private static readonly string PLAYER_HP_SAVE_LOCATION     = Path.Combine(SAVES_FOLDER, PLAYER_STATS_FOLDER);
 
     private static readonly string NEXT_OPPONENT_FOLDER        = "PATH";
     private static readonly string NEXT_OPPONENT_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, NEXT_OPPONENT_FOLDER);
@@ -77,6 +79,8 @@ public class SaveSystem
                 return "VOLUME_DATA.json";
             case SaveSystemFile.NextOpponent:
                 return "NEXT_OPPONENT_DATA.json";
+            case SaveSystemFile.PlayerHP:
+                return "PLAYER_HP.json";
 
             default:
                 // TODO(KASIN):
@@ -116,6 +120,8 @@ public class SaveSystem
                 return PLAYER_VOLUME_SAVE_LOCATION;
             case SaveSystemFile.NextOpponent:
                 return NEXT_OPPONENT_SAVE_LOCATION;
+            case SaveSystemFile.PlayerHP:
+                return PLAYER_HP_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -814,5 +820,54 @@ public class SaveSystem
         JsonUtility.FromJsonOverwrite(line, ret);
         Debug.Log("Loaded Next Opponent data from file.");
         return ret;
+    }
+    
+    // JsonUtility.ToJson wont write out only an int, so need a wrapper class
+    // to hold the save data
+    private class HPSaveData
+    {
+        public int hp;
+
+        public HPSaveData(int hp)
+        {
+            this.hp = hp;
+        }
+    }
+
+    /**
+     * @brief Saves the Player HP data 
+     */
+    public static void SavePlayerHP(int hp)
+    {
+        HPSaveData save_data = new HPSaveData(hp); 
+        SaveToJsonFile(JsonUtility.ToJson(save_data), SaveSystemFile.PlayerHP); 
+    }
+
+    /**
+     * @brief Load the Player HP data 
+     * @return The Player's HP value that was saved, or -1 on error
+     */
+    public static int LoadPlayerHP()
+    {
+        HPSaveData save_data = new HPSaveData(0); 
+        SaveSystemFile file = SaveSystemFile.PlayerHP;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            // Return default stats
+            return -1;
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, save_data);
+        Debug.Log("Loaded Player HP data from file.");
+        return save_data.hp;
     }
 }
