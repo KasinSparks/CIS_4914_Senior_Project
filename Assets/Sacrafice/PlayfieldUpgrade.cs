@@ -16,11 +16,13 @@ public class PlayfieldUpgrade : MonoBehaviour
     public GameObject exitButton;
 
     public GameObject healButton;
+    public TMPro.TextMeshProUGUI healText;
 
 
     private bool upgradePerformed = false; //ensures only one upgrade
     private CardData upgradedCardData; //stores the upgraded card
     public Card selectedUpgradeCard; 
+    private int hp;
 
     void Start()
     {
@@ -34,6 +36,8 @@ public class PlayfieldUpgrade : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Campfire")
         {
             exitButton.SetActive(false); //you cant straight up exit, either upgrade or heal
+            hp = SaveSystem.LoadPlayerHP();
+            healText.text = "Heal " + hp.ToString() + "HP -> " + (hp + 10).ToString() + "HP";
         }
     }
 
@@ -146,7 +150,8 @@ public class PlayfieldUpgrade : MonoBehaviour
         upgradeButton.SetActive(false);
         healButton.SetActive(false);
         exitButton.SetActive(true);
-        //TODO once Gabriel finishes health system
+        hp += 10;
+        SaveSystem.SavePlayerHP(hp);
     }
 
     public void ExitScene()
