@@ -23,7 +23,7 @@ MonoBehaviour:
   nektar_cost: 2
   nektar_given_when_scarificed: 1
   image: {fileID: 2800000, guid: 64df1b091213dc9418c4a2aef78db2df, type: 3}
-  card_rarity: 1
+  card_rarity: 2
   starting_modifiers:
   - {fileID: 11400000, guid: dc184778c7675d94a999295f033b13ad, type: 2}
   - {fileID: 11400000, guid: 0045a470fff16b6449747c190ab5daa4, type: 2}
