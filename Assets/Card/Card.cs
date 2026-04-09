@@ -454,9 +454,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
+                        this.game_state.SetIsPlayerDead(true);
+
                         string scene_name = "GameOver";
                         if (!string.IsNullOrEmpty(scene_name))
                         {
+                            
                             PlayerStats.Save();
 
                             SceneManager.LoadScene(scene_name);

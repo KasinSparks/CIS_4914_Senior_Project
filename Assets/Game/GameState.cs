@@ -12,6 +12,7 @@ public class GameState : MonoBehaviour
 
     public HPSystem player_hp_system;
     public HPSystem opponent_hp_system;
+    private bool isPlayerDead;
 
     public TMPro.TextMeshProUGUI player_hp_text;
     public TMPro.TextMeshProUGUI opponent_hp_text;
@@ -19,6 +20,7 @@ public class GameState : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        isPlayerDead = false;
         this.UpdateTurnState(TurnStates.PlayerDrawCard);
 
         this.player_hp_system = gameObject.AddComponent<HPSystem>();
@@ -126,5 +128,14 @@ public class GameState : MonoBehaviour
     public TurnStates GetCurrentState()
     {
         return this.current_turn_state;
+    }
+
+    public bool GetIsPlayerDead()
+    {
+        return this.isPlayerDead;
+    }
+    public void SetIsPlayerDead(bool isPlayerDead)
+    {
+        this.isPlayerDead = isPlayerDead;
     }
 }
