@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flea Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::QueenModifier
   modifier_name: Flea Multiplier
-  description: Adds a flee to your hand each turn, while this card is alive.
+  description: Adds a flea to your hand each turn, while this card is alive.
   image: {fileID: 2800000, guid: 26e632a9eea6f4d418c1d9fa7627dad2, type: 3}
   modifier_type: 9
   modifier_state: 0
