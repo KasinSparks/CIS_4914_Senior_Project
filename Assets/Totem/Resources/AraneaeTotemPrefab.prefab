@@ -69,6 +69,10 @@ PrefabInstance:
       value: AraneaeTotemPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
+      propertyPath: order
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
       propertyPath: totem_data
       value: 
       objectReference: {fileID: 11400000, guid: ba541256710ef664d86e372c4f28129b, type: 2}

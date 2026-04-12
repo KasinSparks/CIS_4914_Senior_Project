@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,12 +23,13 @@ struct ModifierTuple
     public GameObject   modifer_image_prefab { get; }
 }
 
-// NOTE(Kasin): See https://docs.unity3d.com/Packages/com.unity.ugui@1.0/api/UnityEngine.EventSystems.IPointerDownHandler.html
-//              for documentation regarding the Input EventSystem and PointerHandlers.
 
-// NOTE(Kasin): Scene must have an EventSystem object, and the camera object must have
-//              a Phisics RaycRaycaster entity attached to it for the Input system to work.
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+    // NOTE(Kasin): See https://docs.unity3d.com/Packages/com.unity.ugui@1.0/api/UnityEngine.EventSystems.IPointerDownHandler.html
+    //              for documentation regarding the Input EventSystem and PointerHandlers.
+
+    // NOTE(Kasin): Scene must have an EventSystem object, and the camera object must have
+    //              a Phisics RaycRaycaster entity attached to it for the Input system to work.
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public enum CardContext //needed for upgrades since gameplay loop needs gamestate which doesnt exist in upgrades
         {
@@ -438,13 +440,48 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
                         PlayerStats.player_data.AddToOpponentsDefeated(1);
-                        string scene_name = "Reward";
-                        if (!string.IsNullOrEmpty(scene_name))
+                        string scene_name;
+
+                        var (curr_node, end_node) = SaveSystem.LoadPathSystemSaveData();
+                        if (curr_node.Equals(end_node))
                         {
-                            SaveSystem.SavePlayerHP(this.game_state.opponent_hp_system.hp);
-                            PlayerStats.Save();
-                            SceneManager.LoadScene(scene_name);
+                            scene_name = "GameWin";
+                            if (!string.IsNullOrEmpty(scene_name))
+                            {
+
+                                PlayerStats.Save();
+
+                                SceneManager.LoadScene(scene_name);
+                                DirectoryInfo dir = new DirectoryInfo("SAVES");
+                                foreach (DirectoryInfo subDir in dir.GetDirectories())
+                                {
+                                    if (subDir.Name != "WORDS" && subDir.Name != "PLAYER" && subDir.Name != "DECKS")
+                                    {
+                                        Directory.Delete(Path.Combine(dir.Name, subDir.Name), true);
+                                    }
+                                    else if (subDir.Name == "PLAYER")
+                                    {
+                                        File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_SCENE.json");
+                                        File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
+                                    }
+                                }
+                                //Directory.Delete("SAVES", true);
+
+
+                            }
+                        } else
+                        {
+                            scene_name = "Reward";
+                            if (!string.IsNullOrEmpty(scene_name))
+                            {
+                                SaveSystem.SavePlayerHP(this.game_state.opponent_hp_system.hp);
+                                PlayerStats.Save();
+                                SceneManager.LoadScene(scene_name);
+                            }
                         }
+                        
+
+
                     }
                     break;
 
@@ -455,6 +492,32 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     if (this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
+                        this.game_state.SetIsPlayerDead(true);
+
+                        string scene_name = "GameOver";
+                        if (!string.IsNullOrEmpty(scene_name))
+                        {
+                            
+                            PlayerStats.Save();
+
+                            SceneManager.LoadScene(scene_name);
+                            DirectoryInfo dir = new DirectoryInfo("SAVES");
+                            foreach (DirectoryInfo subDir in dir.GetDirectories())
+                            {
+                                if (subDir.Name != "WORDS" && subDir.Name != "PLAYER" && subDir.Name != "DECKS")
+                                {
+                                    Directory.Delete(Path.Combine(dir.Name, subDir.Name), true);
+                                }
+                                else if (subDir.Name == "PLAYER")
+                                {
+                                    File.Delete(Path.Combine(dir.Name, subDir.Name)+"/PLAYER_SCENE.json");
+                                    File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
+                                }
+                            }
+                            //Directory.Delete("SAVES", true);
+                            
+                            
+                        }
                     }
                     break;
             }

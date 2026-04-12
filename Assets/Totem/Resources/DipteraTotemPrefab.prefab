@@ -65,6 +65,10 @@ PrefabInstance:
       value: DipteraTotemPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
+      propertyPath: order
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
       propertyPath: totem_data
       value: 
       objectReference: {fileID: 11400000, guid: ad09242615d7e5d488e149fa83997d7d, type: 2}

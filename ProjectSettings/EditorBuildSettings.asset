@@ -8,12 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartScreen.unity
     guid: 61c0f1239e8dc5b4ea904275ec0ce6af
-  - enabled: 0
-    path: Assets/Scenes/PlayfieldDemo.unity
-    guid: 79ca1bdf4ae2eaf409abb471a5e95667
+  - enabled: 1
+    path: Assets/Scenes/GameWin.unity
+    guid: 345c8041ecef2144f90f7c9abdcfa5bb
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 83c21b55d692c2643b3358d946645d47
   - enabled: 1
     path: Assets/Scenes/Gameplay.unity
     guid: 8166553f57f84f445a9635bd428a236b
+  - enabled: 1
+    path: Assets/Scenes/Reward.unity
+    guid: 5e2e4eff2c6063b4e83b93583632af3d
   - enabled: 1
     path: Assets/Scenes/Path.unity
     guid: 54bec5813375b20418bf15bfca5ead30
@@ -27,8 +33,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Campfire.unity
     guid: 193cbb3c1d7d55f4692b6aa8d812a2fd
   - enabled: 1
-    path: Assets/Scenes/Reward.unity
-    guid: 5e2e4eff2c6063b4e83b93583632af3d
+    path: Assets/Scenes/Credits.unity
+    guid: 9f5c342454754104f8dd9c8d44fbc2df
+  - enabled: 0
+    path: Assets/Scenes/PlayfieldDemo.unity
+    guid: 79ca1bdf4ae2eaf409abb471a5e95667
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

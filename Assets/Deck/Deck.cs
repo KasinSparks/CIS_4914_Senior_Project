@@ -60,7 +60,10 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     void OnDestroy()
     {
-        SaveSystem.SaveDeck(this.cards.ToArray(), SaveSystemFile.PlayerDeck);
+        if (!this.gameState.GetIsPlayerDead())
+        {
+            SaveSystem.SaveDeck(this.cards.ToArray(), SaveSystemFile.PlayerDeck);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData) {}

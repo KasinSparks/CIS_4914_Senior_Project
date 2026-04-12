@@ -11,7 +11,7 @@ public class LoadGameScene : MonoBehaviour
         // Load the player stats from file
         PlayerStats.Load();
         
-        if (scene_name != null && !scene_name.Equals("StartScreen"))
+        if (scene_name != null && !scene_name.Equals("StartScreen") && !scene_name.Equals("Credits"))
         {
             // Load the scene in the save file
             scene_name = SaveSystem.LoadPlayerPathNodeState();
