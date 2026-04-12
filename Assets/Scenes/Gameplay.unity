@@ -7877,6 +7877,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   - {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}
+  - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
   deck_size: {fileID: 1444484699}
@@ -9107,8 +9108,6 @@ MonoBehaviour:
   attack_sys: {fileID: 1032196872}
   opponent: {fileID: 406524356}
   playfield: {fileID: 1460760515}
-  player_hp_system: {fileID: 0}
-  opponent_hp_system: {fileID: 0}
   player_hp_text: {fileID: 1217292647}
   opponent_hp_text: {fileID: 1846707598}
 --- !u!4 &2081642590
