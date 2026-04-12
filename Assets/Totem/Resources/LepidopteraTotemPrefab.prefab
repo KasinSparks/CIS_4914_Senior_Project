@@ -65,9 +65,13 @@ PrefabInstance:
       value: LepidopteraTotemPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
+      propertyPath: order
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
       propertyPath: totem_data
       value: 
-      objectReference: {fileID: 11400000, guid: b9c35e9752496f34e8e69d1583e7c71b, type: 2}
+      objectReference: {fileID: 11400000, guid: 83686ed96f53b0e4687b2d2f06f887ba, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

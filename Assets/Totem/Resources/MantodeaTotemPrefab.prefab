@@ -65,6 +65,10 @@ PrefabInstance:
       value: MantodeaTotemPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
+      propertyPath: order
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7488001382349701285, guid: 8c3539002beac54448ee3927fba1bbbd, type: 3}
       propertyPath: totem_data
       value: 
       objectReference: {fileID: 11400000, guid: 4468096029a11614ca583f566ead98a7, type: 2}

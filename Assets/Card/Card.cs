@@ -462,6 +462,7 @@ struct ModifierTuple
                                     else if (subDir.Name == "PLAYER")
                                     {
                                         File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_SCENE.json");
+                                        File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
                                     }
                                 }
                                 //Directory.Delete("SAVES", true);
@@ -510,6 +511,7 @@ struct ModifierTuple
                                 else if (subDir.Name == "PLAYER")
                                 {
                                     File.Delete(Path.Combine(dir.Name, subDir.Name)+"/PLAYER_SCENE.json");
+                                    File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
                                 }
                             }
                             //Directory.Delete("SAVES", true);

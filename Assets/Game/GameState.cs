@@ -17,14 +17,17 @@ public class GameState : MonoBehaviour
     public TMPro.TextMeshProUGUI player_hp_text;
     public TMPro.TextMeshProUGUI opponent_hp_text;
 
+    public int player_hp_total = 10;
+    public int opponent_hp_total = 1000;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isPlayerDead = false;
         this.UpdateTurnState(TurnStates.PlayerDrawCard);
 
-        this.player_hp_system = new HPSystem(10);
-        this.opponent_hp_system = new HPSystem(10);
+        this.player_hp_system = new HPSystem(player_hp_total);
+        this.opponent_hp_system = new HPSystem(opponent_hp_total);
 
 
         // NOTE(KASIN): See NOTE in Card.cs::Attack() about the opponent and player swapped
@@ -156,4 +159,14 @@ public class GameState : MonoBehaviour
     {
         this.isPlayerDead = isPlayerDead;
     }
+
+    //public void GetOpponentHPTotal()
+    //{
+    //    return this.opponent_hp_total;
+    //}
+
+    //public void SetOpponentHPTotal(int opponent_hp_total)
+    //{
+    //    this.opponent_hp_total = opponent_hp_total;
+    //}
 }
