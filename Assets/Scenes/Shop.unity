@@ -2986,7 +2986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "In the shop you can trade your cards. \n\nYou can only trade cards of
+  m_text: "In the shop, you can trade your cards. \n\nYou can only trade cards of
     the same order. \n\nOnce you click on a card in your hand, all available trades
     will be highlighted in green. Simply place your card in the slot to the right
     of the card you want, and it will be added to your deck in subsequent encounters."

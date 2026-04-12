@@ -2899,7 +2899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'In the campfire you can either upgrade one of your cards or heal.
+  m_text: 'In the campfire, you can either upgrade one of your cards or heal.
 
 
     Upgrading

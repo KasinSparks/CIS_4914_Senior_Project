@@ -10870,7 +10870,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Sacrifice time lets you sacrifice a card to another, allowing it to absorb
-    the powers of the sacrificed card.
+    the modifiers of the sacrificed card.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15104,8 +15104,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: In the shop node you will be able to trade you cards for other cards. This
-    is a good way to strengthen your deck.
+  m_text: In the shop node, you will be able to trade your cards for other cards.
+    This is a good way to strengthen your deck.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24151,7 +24151,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: In the world map you can choose which nodes you want to visit. Your goal
+  m_text: In the world map, you can choose which nodes you want to visit. Your goal
     is to make it to the final node at the end of the map. There are various branching
     paths that will lock you into their route, so plan your path carefully.
   m_isRightToLeft: 0

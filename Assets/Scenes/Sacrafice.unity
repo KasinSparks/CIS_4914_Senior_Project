@@ -452,7 +452,7 @@ MonoBehaviour:
 
 
     For example, combining a
-    1 attack, 4 health beetle with a duplicate of the same card will result in a
+    1 attack, 4 health beetle with a duplicate of the same card will result in an
     "evolved beetle" that has 2 attack and 8 health '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1929,7 +1929,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'A "blessed" sacrifice requires 2 different bugs (Even if they are similar,
     say a fly and a horse fly, this will count as different). The modifiers of the
-    right card will be added to the modifiers of the right card.
+    right card will be added to the modifiers of the left card.
 
 
     For example,
@@ -3595,7 +3595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'In sacrifice time you can choose to sacrifice one of your cards to increase
+  m_text: 'In sacrifice time, you can choose to sacrifice one of your cards to increase
     the strength of another.
 
 
