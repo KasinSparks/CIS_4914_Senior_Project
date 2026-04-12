@@ -18,8 +18,8 @@ public class GameState : MonoBehaviour
     public TMPro.TextMeshProUGUI player_hp_text;
     public TMPro.TextMeshProUGUI opponent_hp_text;
 
-    public int player_hp_total = 10;
-    public int opponent_hp_total = 1000;
+    public int player_hp_total = 1000;
+    public int opponent_hp_total = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,16 +37,16 @@ public class GameState : MonoBehaviour
         int player_hp = SaveSystem.LoadPlayerHP();
         if (player_hp > 0)
         {
-            this.opponent_hp_system.hp = player_hp;
+            this.player_hp_system.hp = player_hp;
         }
 
-        if (opponent_hp_text != null)
-        {
-            opponent_hp_text.text = this.opponent_hp_system.hp.ToString();
-        }
         if (player_hp_text != null)
         {
             player_hp_text.text = this.player_hp_system.hp.ToString();
+        }
+        if (opponent_hp_text != null)
+        {
+            opponent_hp_text.text = this.opponent_hp_system.hp.ToString();
         }
     }
 

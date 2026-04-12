@@ -5767,7 +5767,7 @@ GameObject:
   - component: {fileID: 1217292648}
   - component: {fileID: 1217292647}
   m_Layer: 5
-  m_Name: HPText player
+  m_Name: HPText Opponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7973,7 +7973,7 @@ GameObject:
   - component: {fileID: 1846707599}
   - component: {fileID: 1846707598}
   m_Layer: 5
-  m_Name: HPText enemy
+  m_Name: HPText Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9108,8 +9108,10 @@ MonoBehaviour:
   attack_sys: {fileID: 1032196872}
   opponent: {fileID: 406524356}
   playfield: {fileID: 1460760515}
-  player_hp_text: {fileID: 1217292647}
-  opponent_hp_text: {fileID: 1846707598}
+  player_hp_text: {fileID: 1846707598}
+  opponent_hp_text: {fileID: 1217292647}
+  player_hp_total: 1000
+  opponent_hp_total: 10
 --- !u!4 &2081642590
 Transform:
   m_ObjectHideFlags: 0
