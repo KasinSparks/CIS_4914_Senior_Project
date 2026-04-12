@@ -13,6 +13,7 @@ public class GameState : MonoBehaviour
     public HPSystem player_hp_system;
     public HPSystem opponent_hp_system;
     private bool isPlayerDead;
+    private bool isOpponentDead;
 
     public TMPro.TextMeshProUGUI player_hp_text;
     public TMPro.TextMeshProUGUI opponent_hp_text;
@@ -24,6 +25,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         isPlayerDead = false;
+        isOpponentDead = false;
         this.UpdateTurnState(TurnStates.PlayerDrawCard);
 
         this.player_hp_system = new HPSystem(player_hp_total);
@@ -158,6 +160,15 @@ public class GameState : MonoBehaviour
     public void SetIsPlayerDead(bool isPlayerDead)
     {
         this.isPlayerDead = isPlayerDead;
+    }
+
+    public bool GetIsOpponentDead()
+    {
+        return this.isOpponentDead;
+    }
+    public void SetIsOpponentDead(bool isOpponentDead)
+    {
+        this.isOpponentDead = isOpponentDead;
     }
 
     //public void GetOpponentHPTotal()
