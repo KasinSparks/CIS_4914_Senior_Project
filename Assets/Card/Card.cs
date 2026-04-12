@@ -478,6 +478,7 @@ struct ModifierTuple
                             {
                                 SaveSystem.SavePlayerHP(this.game_state.player_hp_system.hp);
                                 PlayerStats.Save();
+                                SaveSystem.SavePlayerPathNodeState("Path");
                                 SceneManager.LoadScene(scene_name);
                             }
                         }
