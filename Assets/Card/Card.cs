@@ -446,16 +446,17 @@ struct ModifierTuple
                         if (curr_node.Equals(end_node))
                         {
                             scene_name = "GameWin";
+                            this.game_state.SetIsOpponentDead(true);
                             if (!string.IsNullOrEmpty(scene_name))
                             {
 
                                 PlayerStats.Save();
 
-                                SceneManager.LoadScene(scene_name);
+                                
                                 DirectoryInfo dir = new DirectoryInfo("SAVES");
                                 foreach (DirectoryInfo subDir in dir.GetDirectories())
                                 {
-                                    if (subDir.Name != "WORDS" && subDir.Name != "PLAYER" && subDir.Name != "DECKS")
+                                    if (subDir.Name != "WORDS" && subDir.Name != "PLAYER")
                                     {
                                         Directory.Delete(Path.Combine(dir.Name, subDir.Name), true);
                                     }
@@ -465,6 +466,7 @@ struct ModifierTuple
                                         File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
                                     }
                                 }
+                                SceneManager.LoadScene(scene_name);
                                 //Directory.Delete("SAVES", true);
 
 
@@ -500,11 +502,11 @@ struct ModifierTuple
                             
                             PlayerStats.Save();
 
-                            SceneManager.LoadScene(scene_name);
+                            
                             DirectoryInfo dir = new DirectoryInfo("SAVES");
                             foreach (DirectoryInfo subDir in dir.GetDirectories())
                             {
-                                if (subDir.Name != "WORDS" && subDir.Name != "PLAYER" && subDir.Name != "DECKS")
+                                if (subDir.Name != "WORDS" && subDir.Name != "PLAYER")
                                 {
                                     Directory.Delete(Path.Combine(dir.Name, subDir.Name), true);
                                 }
@@ -515,8 +517,9 @@ struct ModifierTuple
                                 }
                             }
                             //Directory.Delete("SAVES", true);
-                            
-                            
+                            SceneManager.LoadScene(scene_name);
+
+
                         }
                     }
                     break;
