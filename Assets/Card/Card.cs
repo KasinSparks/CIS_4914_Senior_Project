@@ -434,9 +434,9 @@ struct ModifierTuple
                 case CardOwnership.Player:
                     Debug.Log("Attacked the Opponent directly!");
                     PlayerStats.player_data.AddToDamageDealt(this.card_data.attack + this.attack_damage_bonus);
-                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
-                    this.game_state.player_hp_text.text = this.game_state.player_hp_system.hp.ToString();
-                    if(this.game_state.player_hp_system.is_defeated == true)
+                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.opponent_hp_text.text = this.game_state.opponent_hp_system.hp.ToString();
+                    if(this.game_state.opponent_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Opponent is defeated!");
                         PlayerStats.player_data.AddToOpponentsDefeated(1);
@@ -474,7 +474,7 @@ struct ModifierTuple
                             scene_name = "Reward";
                             if (!string.IsNullOrEmpty(scene_name))
                             {
-                                SaveSystem.SavePlayerHP(this.game_state.opponent_hp_system.hp);
+                                SaveSystem.SavePlayerHP(this.game_state.player_hp_system.hp);
                                 PlayerStats.Save();
                                 SceneManager.LoadScene(scene_name);
                             }
@@ -487,9 +487,9 @@ struct ModifierTuple
 
                 case CardOwnership.Opponent:
                     Debug.Log("Attacked the Player directly!");
-                    this.game_state.opponent_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
-                    this.game_state.opponent_hp_text.text = this.game_state.opponent_hp_system.hp.ToString();
-                    if (this.game_state.opponent_hp_system.is_defeated == true)
+                    this.game_state.player_hp_system.DirectHit(this.card_data.attack + this.attack_damage_bonus);
+                    this.game_state.player_hp_text.text = this.game_state.player_hp_system.hp.ToString();
+                    if (this.game_state.player_hp_system.is_defeated == true)
                     {
                         UnityEngine.Debug.Log("Player is defeated!");
                         this.game_state.SetIsPlayerDead(true);
