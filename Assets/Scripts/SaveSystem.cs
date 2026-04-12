@@ -18,7 +18,8 @@ public enum SaveSystemFile
     PlayerScene,  // The current scene the player is in
     VolumeData,
     NextOpponent,
-    PlayerHP
+    PlayerHP,
+    PathSystem
 }
 
 
@@ -47,6 +48,12 @@ public class SaveSystem
 
     private static readonly string NEXT_OPPONENT_FOLDER        = "PATH";
     private static readonly string NEXT_OPPONENT_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, NEXT_OPPONENT_FOLDER);
+
+    private static readonly string PLAYER_SYSTEM_FOLDER = "PLAYER_SYSTEM";
+    private static readonly string PLAYER_SYSTEM_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PLAYER_SYSTEM_FOLDER);
+
+    private static readonly string PATH_SYSTEM_FOLDER = "PATH_SYSTEM";
+    private static readonly string PATH_SYSTEM_SAVE_LOCATION = Path.Combine(SAVES_FOLDER, PATH_SYSTEM_FOLDER);
 
     /**
      * @brief Gets the save file name for the given save file type.
@@ -81,6 +88,8 @@ public class SaveSystem
                 return "NEXT_OPPONENT_DATA.json";
             case SaveSystemFile.PlayerHP:
                 return "PLAYER_HP.json";
+            case SaveSystemFile.PathSystem:
+                return "PathSystemSave.json";
 
             default:
                 // TODO(KASIN):
@@ -122,6 +131,8 @@ public class SaveSystem
                 return NEXT_OPPONENT_SAVE_LOCATION;
             case SaveSystemFile.PlayerHP:
                 return PLAYER_HP_SAVE_LOCATION;
+            case SaveSystemFile.PathSystem:
+                return PATH_SYSTEM_SAVE_LOCATION;
 
             default:
                 // TODO(KASIN):
@@ -869,5 +880,43 @@ public class SaveSystem
         JsonUtility.FromJsonOverwrite(line, save_data);
         Debug.Log("Loaded Player HP data from file.");
         return save_data.hp;
+    }
+
+    private class PathSystemSaveData
+    {
+        public string end_node_guid;
+        public string current_node_guid;
+
+        public PathSystemSaveData()
+        {
+            end_node_guid = string.Empty;
+            current_node_guid = string.Empty;
+        }
+
+    }
+
+    public static (string current_node_guid, string end_node_guid) LoadPathSystemSaveData()
+    {
+        PathSystemSaveData path_data = new PathSystemSaveData();
+        SaveSystemFile file = SaveSystemFile.PathSystem;
+        StreamReader reader = null;
+        try
+        {
+            _CheckForFolderStructure(file);
+            reader = new StreamReader(GetFullPath(file));
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            Debug.Log("Failed to load path Data from file");
+            return (path_data.current_node_guid, path_data.end_node_guid);
+        }
+
+        string line = reader.ReadLine();
+        reader.Close();
+
+        JsonUtility.FromJsonOverwrite(line, path_data);
+        Debug.Log("Loaded path data from file.");
+
+        return (path_data.current_node_guid, path_data.end_node_guid);
     }
 }
