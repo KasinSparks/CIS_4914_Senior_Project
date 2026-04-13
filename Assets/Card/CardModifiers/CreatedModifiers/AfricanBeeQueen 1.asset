@@ -17,4 +17,5 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: ef9e8b0a01742664290da0cfb48b12cc, type: 3}
   modifier_type: 9
   modifier_state: 0
-  spwan_card: {fileID: 11400000, guid: 866d0828faac56c4696335e6a53aae0c, type: 2}
+  defered_for_spawn_card: 0
+  spawn_card: {fileID: 11400000, guid: 866d0828faac56c4696335e6a53aae0c, type: 2}

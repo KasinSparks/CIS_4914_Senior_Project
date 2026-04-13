@@ -47,4 +47,61 @@ public class PathNodeData : ScriptableObject{
     {
         return this.image;
     }
+
+    private class PathNodeSaveData
+    {
+        public string scene_name;
+
+        /* Next opponent data */
+        public CreatedOpponents opponent;
+        public OpponentAttackStyle opponent_attack_style;
+        public int difficulty = 0;
+
+        public string image_resource_path;
+
+        public PathNodeSaveData(PathNodeData data)
+        {
+            this.scene_name = data.scene_name;
+            if (data.next_opponent != null)
+            {
+                this.opponent = data.next_opponent.opponent;
+                this.opponent_attack_style = data.next_opponent.opponent_attack_style;
+                this.difficulty = data.next_opponent.difficulty;
+            }
+            this.image_resource_path = data.image.name;
+        }
+
+        public static PathNodeData FromJson(string json)
+        {
+            PathNodeData ret = ScriptableObject.CreateInstance<PathNodeData>();
+
+            PathNodeSaveData data = JsonUtility.FromJson<PathNodeSaveData>(json);
+
+            ret.scene_name = data.scene_name;
+            ret.next_opponent = new NextOpponentData();
+            if (data.difficulty <= 0)
+            {
+                ret.next_opponent = null;
+            }
+            else
+            {
+                ret.next_opponent.opponent = data.opponent;
+                ret.next_opponent.opponent_attack_style = data.opponent_attack_style;
+                ret.next_opponent.difficulty = data.difficulty;
+            }
+            ret.image = Resources.Load<Texture2D>("Images/" + data.image_resource_path);
+
+            return ret;
+        }
+    }
+    
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(new PathNodeSaveData(this), true);
+    }
+
+    public static PathNodeData FromJson(string json)
+    {
+        return PathNodeSaveData.FromJson(json);
+    }
 }

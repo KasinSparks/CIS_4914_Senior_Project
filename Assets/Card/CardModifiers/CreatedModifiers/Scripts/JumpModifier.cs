@@ -61,4 +61,12 @@ public class JumpModifier : CardModifier
     {
         this.modifier_state = ModifierState.ReadyToApply;
     }
+
+    public CardModifier _FromJson(string json)
+    {
+        CardModifierSaveData raw_save_data =
+            JsonUtility.FromJson<CardModifierSaveData>(json);
+        base.LoadBaseValuesFromSaveData(raw_save_data);
+        return this;
+    }
 }

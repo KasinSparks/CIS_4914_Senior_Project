@@ -85,4 +85,45 @@ public class FlutterModifier : CardModifier
     {
         this.modifier_state = ModifierState.ReadyToApply;
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public string spawn_card_json;
+
+        public ModifierSaveData(FlutterModifier modifier) : base(modifier)
+        {
+            if (modifier.leave_behind_card == null)
+            {
+                this.spawn_card_json = null;
+            }
+            else
+            {
+                this.spawn_card_json = modifier.leave_behind_card.ToJSON();
+            }
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        if (raw_save_data.spawn_card_json != null &&
+            raw_save_data.spawn_card_json != "")
+        {
+            this.leave_behind_card = CardData.FromJson(raw_save_data.spawn_card_json);
+        }
+
+        return ScriptableObject.Instantiate(this);
+    }
 }

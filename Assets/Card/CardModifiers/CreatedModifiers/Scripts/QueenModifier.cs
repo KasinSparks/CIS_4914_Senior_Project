@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(menuName = "Card/Modifier/Queen")]
 public class QueenModifier : CardModifier
 {
-    public CardData spwan_card;
+    public CardData spawn_card;
 
     private Hand hand;
     private Opponent opponent_ref;
@@ -25,7 +25,7 @@ public class QueenModifier : CardModifier
             this.opponent_ref = GameObject.Find("Opponent").GetComponent<Opponent>();
         }
 
-        SetDisplayDescription(this.description.Replace("XXX", spwan_card.card_name));
+        SetDisplayDescription(this.description.Replace("XXX", spawn_card.card_name));
     }
 
     override public void ApplyModifier(Card card, Card other)
@@ -35,7 +35,7 @@ public class QueenModifier : CardModifier
             case CardOwnership.Player:
                 // NOTE: The hand AddCard function handles the instantiation of
                 //    the GameObject.
-                this.hand.AddCard(this.spwan_card, card.GetOwnership());
+                this.hand.AddCard(this.spawn_card, card.GetOwnership());
                 break;
 
             case CardOwnership.Opponent:
@@ -43,7 +43,7 @@ public class QueenModifier : CardModifier
                 // hand.
                 Card card_prefab = Resources.Load<Card>("Card");
                 Card new_card = Instantiate(card_prefab, opponent_ref.gameObject.transform);
-                new_card.SetCardData(this.spwan_card);
+                new_card.SetCardData(this.spawn_card);
                 new_card.gameObject.SetActive(false);
                 new_card.SetState(CardState.InHand);
                 new_card.SetOwnership(CardOwnership.Opponent);
@@ -70,5 +70,42 @@ public class QueenModifier : CardModifier
     override public void SetData(CardModifier other)
     {
         base.SetData(other);
+    }
+    
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public string spawn_card_json;
+
+        public ModifierSaveData(QueenModifier modifier) : base(modifier)
+        {
+            if (!modifier.defered_for_spawn_card)
+            {
+                this.spawn_card_json = modifier.spawn_card.ToJSON();
+            }
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        if (raw_save_data.spawn_card_json != null &&
+            raw_save_data.spawn_card_json != "")
+        {
+            this.spawn_card = CardData.FromJson(raw_save_data.spawn_card_json);
+        }
+
+        return ScriptableObject.Instantiate(this);
     }
 }

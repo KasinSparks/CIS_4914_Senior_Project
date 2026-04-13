@@ -41,4 +41,13 @@ public class StrengthInNumberModifier : CardModifier
     {
         base.SetData(other);
     }
+
+    public CardModifier _FromJson(string json)
+    {
+        CardModifierSaveData raw_save_data =
+            JsonUtility.FromJson<CardModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+
+        return ScriptableObject.Instantiate(this);
+    }
 }
