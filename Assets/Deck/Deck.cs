@@ -191,4 +191,53 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         return this.cards;
     }
 
+    private class DeckSaveData
+    {
+        public string[] cards;
+
+        public DeckSaveData(CardData[] cards)
+        {
+            this.cards = new string[cards.Length];
+            for(int i = 0; i <  this.cards.Length; ++i)
+            {
+                this.cards[i] = cards[i].ToJSON();
+            }
+        }
+
+        public static DeckSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<DeckSaveData>(json);
+        }
+    }
+
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(new DeckSaveData(this.cards.ToArray()), true); 
+    }
+
+    public void OverrideFromJson(string json)
+    {
+        DeckSaveData save_data = DeckSaveData.FromJson(json);
+        foreach (string card in save_data.cards)
+        {
+            this.AddCard(CardData.FromJson(card));
+        }
+    }
+
+    public static string ToJson(CardData[] cards)
+    {
+        return JsonUtility.ToJson(new DeckSaveData(cards), true); 
+    }
+
+    public static CardData[] FromJson(string json)
+    {
+        DeckSaveData save_data = DeckSaveData.FromJson(json);
+        CardData[] ret = new CardData[save_data.cards.Length]; 
+        for (int i = 0; i < ret.Length; ++i)
+        {
+            ret[i] = CardData.FromJson(save_data.cards[i]);
+        }
+
+        return ret;
+    }
 }

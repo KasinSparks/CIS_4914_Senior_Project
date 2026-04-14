@@ -21,6 +21,60 @@ public class PlayerData
     private Dictionary<string, CardData> cards_discovered =
         new Dictionary<string, CardData>();
 
+    public class PlayerSaveData
+    {
+        public int player_damage_dealt;
+        public int insects_defeated;
+        public int opponents_defeated;
+        public int nodes_traversed;
+        public string[] card_names;
+        public string[] cards_discovered;
+
+        public PlayerSaveData(PlayerData data)
+        {
+            this.player_damage_dealt = data.player_damage_dealt;
+            this.insects_defeated    = data.insects_defeated;
+            this.opponents_defeated  = data.opponents_defeated;
+            this.nodes_traversed     = data.nodes_traversed;
+
+            this.card_names = data._card_names.ToArray();
+            this.cards_discovered = new string[data._card_data.Count];
+            for (int i = 0; i < this.cards_discovered.Length; ++i)
+            {
+                this.cards_discovered[i] = data._card_data[i].ToJSON();
+            }
+        }
+
+        public static PlayerSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<PlayerSaveData>(json);
+        }
+    }
+
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(new PlayerSaveData(this), true);
+    }
+
+    public static PlayerData FromJson(string json)
+    {
+        PlayerSaveData save_data = JsonUtility.FromJson<PlayerSaveData>(json);
+
+        PlayerData ret = new PlayerData();
+        ret.player_damage_dealt = save_data.player_damage_dealt;
+        ret.insects_defeated    = save_data.insects_defeated;
+        ret.opponents_defeated  = save_data.opponents_defeated;
+        ret.nodes_traversed     = save_data.nodes_traversed;
+
+        for (int i = 0; i < save_data.card_names.Length; ++i)
+        {
+            ret.cards_discovered[save_data.card_names[i]] =
+                CardData.FromJson(save_data.cards_discovered[i]);
+        }
+
+        return ret;
+    }
+
     public void AddToDamageDealt(int amount)
     {
         this.player_damage_dealt += amount;
@@ -151,7 +205,6 @@ public class PlayerStats
     public static void Load()
     {
         player_data = SaveSystem._LoadPlayerStats();
-        player_data.UnpackCardsDiscovered();
         Debug.Log("Loaded Player Stats");
     }
 

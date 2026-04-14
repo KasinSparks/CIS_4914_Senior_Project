@@ -45,4 +45,37 @@ public class ChemicalSprayEffect: CardModifier
     {
         base.SetData(other);
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public int damage;
+        public int num_of_turns;
+
+        public ModifierSaveData(ChemicalSprayEffect modifier) : base(modifier)
+        {
+            this.damage       = modifier.damage;
+            this.num_of_turns = modifier.num_of_turns;
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        this.damage       = raw_save_data.damage;
+        this.num_of_turns = raw_save_data.num_of_turns;
+
+        return ScriptableObject.Instantiate(this);
+    }
 }

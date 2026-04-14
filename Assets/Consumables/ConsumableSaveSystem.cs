@@ -10,7 +10,7 @@ public class ConsumableSaveSystem : MonoBehaviour
     void Start()
     {
         // If the save file does not exists, load the default data
-        ScriptableObject[] consumables = SaveSystem.LoadConsumablesFromSaveFile(SaveSystemFile.PlayerConsumables);
+        ScriptableObject[] consumables = SaveSystem.LoadConsumablesFromSaveFile();
         if (consumables == null)
         {
             return;
@@ -59,16 +59,16 @@ public class ConsumableSaveSystem : MonoBehaviour
     {
         // Get the current consumables
         // This will allow the count for the newlines in the file to be accurate
-        List<ScriptableObject> curr_consumables = new List<ScriptableObject>();
+        List<IConsumableSavable> curr_consumables = new List<IConsumableSavable>();
         foreach (ConsumableButton button in buttons)
         {
             if (button.GetConsumableAssigned() != null)
             {
-                curr_consumables.Add(button.GetConsumableAssigned());
+                curr_consumables.Add((IConsumableSavable) button.GetConsumableAssigned());
             }
         }
 
-        SaveSystem.SaveConsumablesToFile(curr_consumables.ToArray(), SaveSystemFile.PlayerConsumables);
+        SaveSystem.SaveConsumablesToFile(curr_consumables.ToArray());
     }
 
 

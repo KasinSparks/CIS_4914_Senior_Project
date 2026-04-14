@@ -110,6 +110,40 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         this.is_selectable = isSelectable;
     }
 
+    private class SaveData
+    {
+        public string data;
+        public string[] next_nodes_guid;
+
+
+        public SaveData(PathNode data)
+        {
+            this.data = data.data.ToJson();
+            this.next_nodes_guid = data.next_nodes_guids;
+        }
+
+        public static SaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<SaveData>(json);
+        }
+    }
+    
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(new SaveData(this), true);
+    }
+
+    public void FromJson(string json)
+    {
+        SaveData save_data = SaveData.FromJson(json);
+        this.data = PathNodeData.FromJson(save_data.data);
+        this.next_nodes_guids = new string[save_data.next_nodes_guid.Length];
+        for (int i = 0; i < this.next_nodes_guids.Length; ++i)
+        {
+            this.next_nodes_guids[i] = save_data.next_nodes_guid[i];
+        }
+    }
+
     /**
      * @brief Save the node state to a JSON file.
      * @param The JSON file to store this data.
@@ -117,8 +151,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     public void SaveNode(string file_name)
     {
         //string json_data_node = JsonUtility.ToJson(data);
-        string json_node = JsonUtility.ToJson(this);
-        Debug.Log(json_node);
+        string json_node = this.ToJson();
         StreamWriter writer = new StreamWriter(file_name);
         writer.Write(json_node);
         writer.Flush();
@@ -133,7 +166,8 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     {
         StreamReader reader = new StreamReader(file_name);
         string json_str = reader.ReadToEnd();
-        JsonUtility.FromJsonOverwrite(json_str, this);
+        //JsonUtility.FromJsonOverwrite(json_str, this);
+        this.FromJson(json_str);
         reader.Close();
         this.UpdateImage();
     }
