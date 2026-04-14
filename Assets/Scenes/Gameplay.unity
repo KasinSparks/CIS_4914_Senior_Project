@@ -7873,11 +7873,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Deck
   owner: 1
   starting_cards:
-  - {fileID: 11400000, guid: 39e6e3a8d0dd1d249b5c0f2e5705a916, type: 2}
+  - {fileID: 11400000, guid: c2c59e4f9322a49468d58e43cf3d3b70, type: 2}
   - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
   - {fileID: 11400000, guid: 9fabf681e1fe9544db7dadab2e2007d8, type: 2}
   - {fileID: 11400000, guid: 58d1a39442437c54293068b5bd46d58a, type: 2}
-  - {fileID: 11400000, guid: ec0dbbd72f1c8ca45b3a6f12d5a9fa60, type: 2}
+  - {fileID: 11400000, guid: c9528b940a1906d49822f84c5967cc0e, type: 2}
   gameState: {fileID: 2081642589}
   hand: {fileID: 976764611}
   deck_size: {fileID: 1444484699}
