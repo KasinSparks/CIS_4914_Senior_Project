@@ -255,10 +255,27 @@ public class AttackSystem : MonoBehaviour
                     {
                         offset += aas_opponent_offset;
                     }
-                    StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
-                    playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
 
-                    prev_delay += ((ATTACK_DURATION + Card.HIT_SFX_TIME) * card_ref._GetNumAdditionalAttacks());
+                    if (!(card_ref.GetCardData().order.Equals(CardOrder.Other)))
+                    {
+                        StartCoroutine(this.AttackAnimation(card_ref, target_card_slot_ref, offset, prev_delay));
+                        playfield.AddLaneToAttackedList(target_card_slot_ref, curr_target);
+
+                        prev_delay += ((ATTACK_DURATION + Card.HIT_SFX_TIME) * card_ref._GetNumAdditionalAttacks());
+                    }
+                    else
+                    {
+                        // Update state
+                        switch (owner)
+                        {
+                            case CardOwnership.Player:
+                                this.attack_animation_status |= (1 << i);
+                                break;
+                            case CardOwnership.Opponent:
+                                this.attack_animation_status |= (1 << (i + aas_opponent_offset));
+                                break;
+                        }
+                    }
                 }
             }
             else
