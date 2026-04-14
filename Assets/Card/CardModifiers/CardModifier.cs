@@ -163,7 +163,7 @@ public abstract class CardModifier : ScriptableObject, ICardModifierEvents
                 return ((DodgeCardModifier)mod)._FromJson(json);
             case "ExplodeOnDeathModifier":
                 return ((ExplodeOnDeathModifier)mod)._FromJson(json);
-            case "Flutter":
+            case "FlutterModifier":
                 return ((FlutterModifier)mod)._FromJson(json);
             case "HealOnAttackModifier":
                 return ((HealOnAttackModifier)mod)._FromJson(json);
