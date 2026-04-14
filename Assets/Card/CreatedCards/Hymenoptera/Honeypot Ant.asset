@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f066a045b6d724f45955142013293129, type: 2}
   - {fileID: 11400000, guid: c3f104ca42d7d6e44862bd34ccfa2241, type: 2}
   order: 2
-  hp: 1
+  hp: 2
   attack: 1
   nektar_cost: 0
   nektar_given_when_scarificed: 2
