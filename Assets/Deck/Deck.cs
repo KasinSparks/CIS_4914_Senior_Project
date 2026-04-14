@@ -15,7 +15,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Hand hand;
     public TMPro.TextMeshPro deck_size; ////to show player show many cards are left in deck
 
-    static public bool should_save_on_destroy = true;
+    static public bool should_save_on_destroy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,6 +55,7 @@ public class Deck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             deck_size.text = card_queue.Count.ToString(); //write size of deck to text
         }
+        should_save_on_destroy = true;
     }
 
     // Update is called once per frame
