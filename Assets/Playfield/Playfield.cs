@@ -353,7 +353,7 @@ public class Playfield : MonoBehaviour
             }
 
             this.SetSacrificeButtonActive(false);
-            this.game_state.UpdateTurnState(this.GetTurnStatePriorToSacrifice());
+            //this.game_state.UpdateTurnState(this.GetTurnStatePriorToSacrifice()); this line makes it so every other card can be played for free
         }
 
     }
