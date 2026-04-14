@@ -353,6 +353,7 @@ public class Playfield : MonoBehaviour
             }
 
             this.SetSacrificeButtonActive(false);
+            this.game_state.UpdateTurnState(this.GetTurnStatePriorToSacrifice());
         }
 
     }
