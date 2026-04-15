@@ -198,38 +198,14 @@ public class SaveSystem
             fs.Close();
         }
     }
-    /**
-     * @brief Save the deck of cards to a file
-     * @param cards The cards that compose the deck
-     * @param file The deck save file
-     */
-
-    public static void SaveDeck(CardData[] cards, SaveSystemFile file)
-    {
-        // TODO(KASIN): For now, each line will represent a different card
-        //    However, this may need to be changed later.
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < cards.Length; ++i)
-        {
-            string json_string = JsonUtility.ToJson(cards[i]);
-            sb.Append(json_string);
-            if (i < cards.Length - 1)
-            {
-                sb.Append("\n");
-            }
-        }
-        SaveToJsonFile(sb.ToString(), file);
-    }
 
     /**
-     * @brief Load the deck of cards from the save file
-     * @return The deck of cards
+     * @brief Load the JSON string from a file
+     * @param file The file type
+     * @return The JSON string
      */
-    public static CardData[] LoadDeck(SaveSystemFile file)
+    private static string LoadJsonFile(SaveSystemFile file)
     {
-        List<CardData> cards = new List<CardData>();
-
-        // TODO(KASIN): See if this throws an execption if file does not exist...
         StreamReader reader = null;
         try
         {
@@ -241,18 +217,34 @@ public class SaveSystem
             return null;
         }
 
-        string line = reader.ReadLine();
-        while (line != null)
-        {
-            cards.Add(ScriptableObject.CreateInstance<CardData>());
-            JsonUtility.FromJsonOverwrite(line, cards[cards.Count - 1]);
-            cards[cards.Count - 1].name = cards[cards.Count - 1].card_name;
-            line = reader.ReadLine();
-        }
-
+        string json = reader.ReadToEnd();
         reader.Close();
+        return json;
+    }
 
-        return cards.ToArray();
+    /**
+     * @brief Save the deck of cards to a file
+     * @param cards The cards that compose the deck
+     * @param file The deck save file
+     */
+
+    public static void SaveDeck(CardData[] cards, SaveSystemFile file)
+    {
+        SaveToJsonFile(Deck.ToJson(cards), file);
+    }
+
+    /**
+     * @brief Load the deck of cards from the save file
+     * @return The deck of cards
+     */
+    public static CardData[] LoadDeck(SaveSystemFile file)
+    {
+        string json = LoadJsonFile(file);
+        if (json != null)
+        {
+            return Deck.FromJson(json);
+        }
+        return null;
     }
     
     /**
@@ -330,64 +322,49 @@ public class SaveSystem
         File.Delete(GetFullPath(file));
     }
 
-    /**
-     * @brief Adds the consumable data to the end of the file.
-     * @param consumable The consumable object.
-     * @param file The Consumable SaveSystemFile type.
-     * @param add_newline Set to True if this should this add a newline at the end.
-     */
-    public static void AppendConsumableToSaveFile(ScriptableObject consumable, SaveSystemFile file, bool add_newline = true)
+    private class ConsumableSaveData
     {
-        string json_string = JsonUtility.ToJson(consumable);
-        StringBuilder sb = new StringBuilder();
-        sb.Append(consumable.GetType().ToString());
-        sb.Append(" : ");
-        sb.Append(json_string);
-        if (add_newline)
+        public string[] consumable_type;
+        public string[] consumables;
+
+        public ConsumableSaveData(IConsumableSavable[] consumables)
         {
-            sb.Append("\n");
+            this.consumable_type = new string[consumables.Length];
+            this.consumables = new string[consumables.Length];
+            for(int i = 0; i < consumables.Length; ++i)
+            {
+                this.consumable_type[i] = consumables[i].GetType().ToString();
+                this.consumables[i] = consumables[i].ToJson(); 
+            } 
         }
-        SaveToJsonFile(sb.ToString(), file, FileMode.Append);
+
+        public static ConsumableSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ConsumableSaveData>(json);
+        }
     }
-    
+
     /**
      * @brief Loads all the consumable data from the save file.
      * @param file The SaveSystemFile type for the consumable.
      * @return The consumables as a object with type information inside.
      */
-    public static ScriptableObject[] LoadConsumablesFromSaveFile(SaveSystemFile file)
+    public static ScriptableObject[] LoadConsumablesFromSaveFile()
     {
         List<ScriptableObject> consumables = new List<ScriptableObject>();
 
-        StreamReader reader = null;
-        try
-        {
-            _CheckForFolderStructure(file);
-            reader = new StreamReader(GetFullPath(file));
-        }
-        catch (System.IO.FileNotFoundException)
+        string json = LoadJsonFile(SaveSystemFile.PlayerConsumables);
+        if (json == null)
         {
             return null;
         }
 
-        string line = reader.ReadLine();
-        while (line != null)
+        ConsumableSaveData save_data = ConsumableSaveData.FromJson(json);
+        for (int i = 0; i < save_data.consumables.Length; ++i)
         {
-            ScriptableObject obj = null;
-            if (line != null && line != "")
-            {
-                string[] parts = line.Split(" : ");
-                // LHS has the original class type information
-                obj = ScriptableObject.CreateInstance(parts[0]);
-                // RHS will be the scriptable object data
-                JsonUtility.FromJsonOverwrite(parts[1], obj);
-                consumables.Add(obj);
-            }
-
-            line = reader.ReadLine();
+            consumables.Add(ScriptableObject.CreateInstance(save_data.consumable_type[i]));
+            consumables[i] = ((IConsumableSavable)consumables[i]).FromJson(save_data.consumables[i]).consumable;
         }
-
-        reader.Close();
 
         return consumables.ToArray();
     }
@@ -399,23 +376,10 @@ public class SaveSystem
      * @param consumables The array of consumables that will be saved
      * @param file The SaveSystemFile type for the consumables.
      */
-    public static void SaveConsumablesToFile(ScriptableObject[] consumables, SaveSystemFile file)
+    public static void SaveConsumablesToFile(IConsumableSavable[] consumables)
     {
-        // Clear existing save file
-        SaveSystem.DeleteSaveFile(file);
-        File.Create(GetFullPath(file)).Close();
-        
-        // Write the new data to the save file
-        bool add_newline = true;
-        for (int i = 0; i < consumables.Length; ++i)
-        {
-            if (i == consumables.Length - 1)
-            {
-                add_newline = false;
-            }
-
-            AppendConsumableToSaveFile(consumables[i], file, add_newline);
-        }
+        SaveToJsonFile(JsonUtility.ToJson(new ConsumableSaveData(consumables), true),
+            SaveSystemFile.PlayerConsumables);
     }
 
     public static void SaveTotemOrders(CardOrder[] orders, SaveSystemFile file)
@@ -475,62 +439,74 @@ public class SaveSystem
         SaveTotemOrders(new_orders, file);
     }
 
+    private class TotemModifierSaveData
+    {
+        public string[] modifiers;
+
+        public TotemModifierSaveData(CardModifier[] modifiers)
+        {
+            this.modifiers = new string[modifiers.Length];
+            for (int i = 0; i < modifiers.Length; ++i)
+            {
+                this.modifiers[i] = modifiers[i].ToJson();
+            }
+        }
+
+        public static CardModifier[] FromJson(string json)
+        {
+            if (json == null || json == "")
+            {
+                return null;
+            } 
+
+            TotemModifierSaveData save_data = JsonUtility.FromJson<TotemModifierSaveData>(json);
+
+            CardModifier[] modifiers = new CardModifier[save_data.modifiers.Length];
+
+            for (int i = 0; i <  save_data.modifiers.Length; ++i)
+            {
+                modifiers[i] = CardModifier.FromJson(save_data.modifiers[i]);
+            }
+
+            return modifiers;
+        }
+    }
+
     public static void SaveTotemModifiers(CardModifier[] modifiers, SaveSystemFile file)
     {
-        StringBuilder sb = new StringBuilder();
         StringBuilder sb_name = new StringBuilder();
         for (int i = 0; i < modifiers.Length; ++i)
         {
-            string json_string = JsonUtility.ToJson(modifiers[i]);
-            sb.Append(json_string);
-
             sb_name.Append(modifiers[i].GetName());
 
             if (i < modifiers.Length - 1)
             {
-                sb.Append("\n");
                 sb_name.Append("\n");
             }
         }
-        SaveToJsonFile(sb.ToString(), file);
+
+        SaveToJsonFile(
+            JsonUtility.ToJson(new TotemModifierSaveData(modifiers), true),
+            file
+        );
         SaveToJsonFile(sb_name.ToString(), SaveSystemFile.TotemModifierNames);
     }
 
     public static CardModifier[] LoadTotemModifiers(SaveSystemFile file)
     {
-        List<CardModifier> modifiers = new List<CardModifier>();
-        List<string> modifier_names = new List<string>();
-
-        StreamReader reader = null;
-        StreamReader reader_name = null;
-        try
-        {
-            _CheckForFolderStructure(file);
-            reader = new StreamReader(GetFullPath(file));
-            reader_name = new StreamReader(GetFullPath(SaveSystemFile.TotemModifierNames));
-        }
-        catch (System.IO.FileNotFoundException)
+        string json = LoadJsonFile(file);
+        CardModifier[] modifiers = TotemModifierSaveData.FromJson(json);
+        if (modifiers == null)
         {
             return null;
         }
 
-        string line = reader.ReadLine();
-        string line_name = reader_name.ReadLine();
-
-        while (line != null)
+        foreach (CardModifier modifier in modifiers)
         {
-            CardModifier mod = LoadTotemModifiersHelper(line_name);
-            modifiers.Add(mod);
-            JsonUtility.FromJsonOverwrite(line, modifiers[modifiers.Count - 1]);
-            modifiers[modifiers.Count - 1].name = modifiers[modifiers.Count - 1].GetName();
-
-            line = reader.ReadLine();
-            line_name = reader_name.ReadLine();
+            modifier.name = modifier.GetName();
         }
-        reader.Close();
-        reader_name.Close();
 
-        return modifiers.ToArray();
+        return modifiers;
     }
 
     private static CardModifier LoadTotemModifiersHelper(string name)
@@ -619,21 +595,29 @@ public class SaveSystem
         SaveTotemModifiers(new_modifiers, file);
     }
 
-    public static void SaveWordInfo(WordInfo[] words)
+    public class WordInfoSave
     {
-        // TODO(KASIN): For now, each line will represent a different word.
-        //    However, this may need to be changed later.
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < words.Length; ++i)
+        public string[] words_json;
+
+        public WordInfoSave(WordInfo[] words)
         {
-            string json_string = JsonUtility.ToJson(words[i]);
-            sb.Append(json_string);
-            if (i < words.Length - 1)
+            this.words_json = new string[words.Length];
+            for (int i = 0; i < this.words_json.Length; ++i)
             {
-                sb.Append("\n");
+                this.words_json[i] = words[i].ToJson();
             }
         }
-        SaveToJsonFile(sb.ToString(), SaveSystemFile.WordInfo);
+
+        public static WordInfoSave FromJson(string json)
+        {
+            return JsonUtility.FromJson<WordInfoSave>(json);
+        }
+    }
+
+    public static void SaveWordInfo(WordInfo[] words)
+    {
+        SaveToJsonFile(JsonUtility.ToJson(new WordInfoSave(words), true),
+            SaveSystemFile.WordInfo);
     }
 
     /**
@@ -642,31 +626,16 @@ public class SaveSystem
      */
     public static WordInfo[] LoadWords()
     {
-        List<WordInfo> words = new List<WordInfo>();
+        string json = LoadJsonFile(SaveSystemFile.WordInfo);
+        WordInfoSave save_data = WordInfoSave.FromJson(json);
 
-        // TODO(KASIN): See if this throws an execption if file does not exist...
-        StreamReader reader = null;
-        try
+        WordInfo[] ret = new WordInfo[save_data.words_json.Length];
+        for (int i = 0; i <  ret.Length; ++i)
         {
-            _CheckForFolderStructure(SaveSystemFile.WordInfo);
-            reader = new StreamReader(GetFullPath(SaveSystemFile.WordInfo));
-        }
-        catch (System.IO.FileNotFoundException)
-        {
-            return null;
+            ret[i] = WordInfo.FromJson(save_data.words_json[i]);
         }
 
-        string line = reader.ReadLine();
-        while (line != null)
-        {
-            words.Add(ScriptableObject.CreateInstance<WordInfo>());
-            JsonUtility.FromJsonOverwrite(line, words[words.Count - 1]);
-            line = reader.ReadLine();
-        }
-
-        reader.Close();
-
-        return words.ToArray();
+        return ret;
     }
 
     /**
@@ -683,37 +652,25 @@ public class SaveSystem
      * @brief Save the player stats to a file
      * @param player_data The stats for the during the game
      */
-
     public static void _SavePlayerStats(PlayerData player_data)
     {
-        SaveToJsonFile(JsonUtility.ToJson(player_data), SaveSystemFile.PlayerStats);
+        SaveToJsonFile(player_data.ToJson(), SaveSystemFile.PlayerStats);
     }
 
     /**
-     * @brief Load the deck of cards from the save file
-     * @return The deck of cards
+     * @brief Load the player stats to a file
+     * @return Default player stats if file does not exist, otherwise, the
+     * player's stats.
      */
     public static PlayerData _LoadPlayerStats()
     {
-        PlayerData ret = new PlayerData();
-        SaveSystemFile file = SaveSystemFile.PlayerStats;
-        StreamReader reader = null;
-        try
+        string json = LoadJsonFile(SaveSystemFile.PlayerStats);
+        if (json == null)
         {
-            _CheckForFolderStructure(file);
-            reader = new StreamReader(GetFullPath(file));
-        }
-        catch (System.IO.FileNotFoundException)
-        {
-            // Return default stats
-            return ret;
+            return new PlayerData();
         }
 
-        string line = reader.ReadLine();
-        reader.Close();
-
-        JsonUtility.FromJsonOverwrite(line, ret);
-        return ret;
+        return PlayerData.FromJson(json);
     }
 
     /** 

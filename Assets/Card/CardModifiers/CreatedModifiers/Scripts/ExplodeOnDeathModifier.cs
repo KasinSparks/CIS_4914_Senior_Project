@@ -36,4 +36,34 @@ public class ExplodeOnDeathModifier : CardModifier
     {
         base.SetData(other);
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public int damage_on_death;
+
+        public ModifierSaveData(ExplodeOnDeathModifier modifier) : base(modifier)
+        {
+            this.damage_on_death = modifier.damage_on_death;
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        this.damage_on_death = raw_save_data.damage_on_death;
+
+        return ScriptableObject.Instantiate(this);
+    }
 }

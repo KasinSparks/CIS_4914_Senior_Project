@@ -40,4 +40,34 @@ public class ArmoredCardModifier : CardModifier
         base.SetData(other);
         this.damage_reduction = other.damage_reduction;
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public int damage_reduction;
+
+        public ModifierSaveData(ArmoredCardModifier modifier) : base(modifier)
+        {
+            this.damage_reduction = modifier.damage_reduction;
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        this.damage_reduction = raw_save_data.damage_reduction;
+
+        return ScriptableObject.Instantiate(this);
+    }
 }

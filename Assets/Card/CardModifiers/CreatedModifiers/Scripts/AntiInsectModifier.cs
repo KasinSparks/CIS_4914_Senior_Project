@@ -46,4 +46,34 @@ public class AntiInsectModifier : CardModifier
         base.SetData(other);
         this.addtional_damage = other.addtional_damage;
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public int additional_damage;
+
+        public ModifierSaveData(AntiInsectModifier modifier) : base(modifier)
+        {
+            this.additional_damage = modifier.addtional_damage;
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        this.addtional_damage = raw_save_data.additional_damage;
+
+        return ScriptableObject.Instantiate(this);
+    }
 }

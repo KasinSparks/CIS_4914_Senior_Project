@@ -56,4 +56,34 @@ public class NektarReductionModifier : CardModifier
         base.SetData(other);
         this.nektar_reduction = other.nektar_reduction;
     }
+
+    public class ModifierSaveData : CardModifierSaveData
+    {
+        public int nektar_reduction;
+
+        public ModifierSaveData(NektarReductionModifier modifier) : base(modifier)
+        {
+            this.nektar_reduction = modifier.nektar_reduction;
+        }
+
+        public override CardModifierSaveData FromJson(string json)
+        {
+            return JsonUtility.FromJson<ModifierSaveData>(json);
+        }
+    }
+
+    public override string ToJson()
+    {
+        return JsonUtility.ToJson(new ModifierSaveData(this), true);
+    }
+
+    public CardModifier _FromJson(string json)
+    {
+        ModifierSaveData raw_save_data =
+            JsonUtility.FromJson<ModifierSaveData>(json);
+        this.LoadBaseValuesFromSaveData(raw_save_data);
+        this.nektar_reduction = raw_save_data.nektar_reduction;
+
+        return ScriptableObject.Instantiate(this);
+    }
 }
