@@ -447,13 +447,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You can evolve a card when it is combined with a duplicate card. The card
-    will have both its attack and health doubled.
+  m_text: 'You can evolve a card when it is combined with a duplicate. The card will
+    have both its attack and health doubled.
 
 
-    For example, combining a
-    1 attack, 4 health beetle with a duplicate of the same card will result in an
-    "evolved beetle" that has 2 attack and 8 health '
+    For example, combining a 1-attack,
+    4-health beetle with a duplicate will result in an "evolved beetle" that has
+    2-attack and 8-health.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7838,14 +7838,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'A "blessed" sacrifice requires 2 different bugs (Even if they are similar,
-    say a fly and a horse fly, this will count as different). The modifiers of the
-    right card will be added to the modifiers of the left card.
+  m_text: 'A "blessed" sacrifice requires 2 different bugs (even if they are similar,
+    say a fly and a horse fly, this will count as two different bugs). The modifiers
+    of the right card will be added to the modifiers of the left card.
 
 
-    For example,
-    if the left card is a beetle with "armored" and the right is a fly with "dodge"
-    the result will be a "blessed beetle" with armored and dodge as its modifiers.'
+    For
+    example, if the left card is a beetle with "armored" and the right is a fly with
+    "dodge", the result will be a "blessed beetle" with "armored" and "dodge" as
+    its modifiers.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8667,6 +8668,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3770526130115429656, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
       propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6368473227611919900, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6596749196565048642, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
@@ -9960,8 +9965,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You cannot use card that was involved in a sacrifice as material in a later
-    sacrifice.
+  m_text: You cannot use a card that was involved in a sacrifice as material in a
+    later sacrifice.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10920,12 +10925,13 @@ MonoBehaviour:
     the strength of another.
 
 
-    The card on the right will be sacrificed to the
-    card on the left, removing it from your deck.
+    The card on the right will be sacrificed to strengthen
+    the card on the left, removing it from your deck.
 
 
-    There are 2 types of sacrifice,
-    depending on wether the cards in the sacrifice are duplicates or not:'
+    There are 2 types of
+    sacrifices, depending on whether the cards in the sacrifice are duplicates or
+    not:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
