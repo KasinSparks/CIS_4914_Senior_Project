@@ -8,6 +8,11 @@ public class LoadGameScene : MonoBehaviour
 
     public void Load(string scene_name)
     {
+        LoadScene(scene_name);
+    }
+
+    public static void LoadScene(string scene_name)
+    {
         // Load the player stats from file
         PlayerStats.Load();
         

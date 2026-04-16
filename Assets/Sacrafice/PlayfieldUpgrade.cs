@@ -161,6 +161,13 @@ public class PlayfieldUpgrade : MonoBehaviour
         SceneManager.LoadScene(nextSceneName);
     }
 
+    public void PlaySoundThenExitScene(ButtonSFX button_sfx)
+    {
+        PlayerStats.Save();
+        SaveSystem.SavePlayerPathNodeState(nextSceneName);
+        button_sfx.PlayButtonSFXThenLoadSceneDirect(nextSceneName);
+    }
+
     //merge modifiers from two cards avoiding duplicates
     private List<CardModifier> MergeModifiers(CardData d1, CardData d2)
     {

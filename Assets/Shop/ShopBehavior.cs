@@ -192,6 +192,12 @@ public class ShopBehavior : MonoBehaviour
         SaveSystem.SavePlayerPathNodeState(nextSceneName);
         SceneManager.LoadScene(nextSceneName);
     }
+    public void PlaySoundThenExitScene(ButtonSFX button_sfx)
+    {
+        PlayerStats.Save();
+        SaveSystem.SavePlayerPathNodeState(nextSceneName);
+        button_sfx.PlayButtonSFXThenLoadSceneDirect(nextSceneName);
+    }
 
     private void SaveUpgradedCard(Card oldCard, Card newCard)
     {

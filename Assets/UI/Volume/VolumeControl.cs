@@ -9,6 +9,7 @@ public class VolumeControl : MonoBehaviour
     public class VolumeData
     {
         public float master_volume;
+        public float ui_volume;
         public float sfx_volume;
         public float background_volume;
         public float music_volume;
@@ -18,6 +19,8 @@ public class VolumeControl : MonoBehaviour
     private AudioMixer mixer;
     [SerializeField]
     private Slider master_volume_slider;
+    [SerializeField]
+    private Slider ui_volume_slider;
     [SerializeField]
     private Slider sfx_volume_slider;
     [SerializeField]
@@ -33,6 +36,7 @@ public class VolumeControl : MonoBehaviour
     private void UpdateMixer()
     {
         this.mixer.SetFloat("MasterVolume",     this.volume_data.master_volume);
+        this.mixer.SetFloat("UIVolume",         this.volume_data.ui_volume);
         this.mixer.SetFloat("SFXVolume",        this.volume_data.sfx_volume);
         this.mixer.SetFloat("BackgroundVolume", this.volume_data.background_volume);
         this.mixer.SetFloat("MusicVolume",      this.volume_data.music_volume);
@@ -46,6 +50,7 @@ public class VolumeControl : MonoBehaviour
     public void UpdateVolume()
     {
         this.volume_data.master_volume     = this.master_volume_slider.value;
+        this.volume_data.ui_volume         = this.ui_volume_slider.value;
         this.volume_data.sfx_volume        = this.sfx_volume_slider.value;
         this.volume_data.background_volume = this.background_volume_slider.value;
         this.volume_data.music_volume      = this.music_volume_slider.value;
@@ -58,6 +63,7 @@ public class VolumeControl : MonoBehaviour
     private void UpdateSliders()
     {
         this.master_volume_slider.value     = this.volume_data.master_volume;
+        this.ui_volume_slider.value         = this.volume_data.ui_volume;
         this.sfx_volume_slider.value        = this.volume_data.sfx_volume;
         this.background_volume_slider.value = this.volume_data.background_volume;
         this.music_volume_slider.value      = this.volume_data.music_volume;
