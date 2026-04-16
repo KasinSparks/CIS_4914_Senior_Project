@@ -2944,6 +2944,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Stats
       objectReference: {fileID: 0}
+    - target: {fileID: 5455771699351323241, guid: a50fb02793844cc4a9f1dcc29c559339, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6524165491244161843, guid: a50fb02793844cc4a9f1dcc29c559339, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4177,6 +4181,10 @@ PrefabInstance:
     - target: {fileID: 42821625372774196, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
       propertyPath: m_Name
       value: Pause Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 42821625372774196, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3770526130115429656, guid: eefeecb1b0f4b3345b0112a442e51db5, type: 3}
       propertyPath: m_RenderMode

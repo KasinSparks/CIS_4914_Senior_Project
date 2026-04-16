@@ -297,6 +297,10 @@ struct ModifierTuple
         //Debug.Log("Mouse Click.");
         if (context == CardContext.Upgrade)
         { //raise logic is seperate because it does not use hand and such like the normal playfield
+            if (card_state == CardState.OnPlayfield)
+            {
+                return;
+            }
             if (currentlyRaisedCard != null && currentlyRaisedCard != this && currentlyRaisedCard.card_state != CardState.OnPlayfield)
             { //if raise card inst this (no double click infinitely raising card) and not already on playfield (only raise or lower cards in hand)
                 currentlyRaisedCard.LowerCard();
