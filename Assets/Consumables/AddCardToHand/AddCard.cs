@@ -20,6 +20,7 @@ public class AddCardToHandConsumable : ScriptableObject, IConsumableSavable //in
         public string item_name;
         public string image_resource_path;
         public string card_to_add;
+        public string card_to_add2;
 
         public SaveData(AddCardToHandConsumable consumable)
         {
@@ -27,6 +28,7 @@ public class AddCardToHandConsumable : ScriptableObject, IConsumableSavable //in
             this.item_name = consumable.itemName;
             this.image_resource_path = consumable.icon.name;
             this.card_to_add = consumable.cardToAdd.ToJSON();
+            this.card_to_add2 = consumable.cardToAdd2.ToJSON();
         }
 
         public static SaveData FromJson(string json)
@@ -51,6 +53,7 @@ public class AddCardToHandConsumable : ScriptableObject, IConsumableSavable //in
         obj.icon = Resources.Load<Sprite>("Images/" + save_data.image_resource_path);
         obj.itemName = save_data.item_name;
         obj.cardToAdd = CardData.FromJson(save_data.card_to_add);
+        obj.cardToAdd2 = CardData.FromJson(save_data.card_to_add2);
         consumable.consumable = obj;
 
         return consumable;
