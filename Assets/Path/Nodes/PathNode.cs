@@ -24,11 +24,15 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     private PathNodeData data;
 
     [SerializeField]
+    private BackgroundSound.Sounds sound_type;
+
+    [SerializeField]
     private string[] next_nodes_guids; /// GUIDs for the next nodes
     
     // TODO(KASIN): Don't need this to be serialized, but want it in the inspector
     [SerializeField]
     private PathNodeChances[] node_types; /// Node types that can be randomly chosen from
+
 
     private PathNodeChances[] normalized_node_types;
 
@@ -84,7 +88,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
             path_sys_ref.SavePath();
             PlayerStats.player_data.AddToNodesTraversed(1);
             PlayerStats.Save();
-            SaveSystem.SavePlayerPathNodeState(this.data.GetSceneName());
+            SaveSystem.SavePlayerPathNodeState(this.data.GetSceneName(), this.sound_type);
 
             string next_scene = this.data.GetSceneName();
             if (next_scene.Equals("Gameplay"))
@@ -97,6 +101,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
                 SaveSystem.SaveNextOpponentData(this.data.next_opponent);
             }
 
+            BackgroundSound.Play(this.sound_type);
             SceneManager.LoadScene(next_scene);
         }
     }
@@ -114,12 +119,14 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
     {
         public string data;
         public string[] next_nodes_guid;
+        public BackgroundSound.Sounds sound_type;
 
 
         public SaveData(PathNode data)
         {
             this.data = data.data.ToJson();
             this.next_nodes_guid = data.next_nodes_guids;
+            this.sound_type = data.sound_type;
         }
 
         public static SaveData FromJson(string json)
@@ -142,6 +149,7 @@ public class PathNode : MonoBehaviour, IPointerClickHandler
         {
             this.next_nodes_guids[i] = save_data.next_nodes_guid[i];
         }
+        this.sound_type = save_data.sound_type;
     }
 
     /**

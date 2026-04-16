@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class VolumeControl : MonoBehaviour
 {
+    // NOTE: Use Audio Mixer in Unity Editor to set default volume values
     [Serializable]
     public class VolumeData
     {
@@ -43,17 +44,53 @@ public class VolumeControl : MonoBehaviour
     }
 
     /**
+     * @brief Updates the volume data from the mixer's current values 
+     */
+    private void UpdateVolumeDataFromMixer()
+    {
+        this.mixer.GetFloat("MasterVolume",     out this.volume_data.master_volume);
+        this.mixer.GetFloat("UIVolume",         out this.volume_data.ui_volume);
+        this.mixer.GetFloat("SFXVolume",        out this.volume_data.sfx_volume);
+        this.mixer.GetFloat("BackgroundVolume", out this.volume_data.background_volume);
+        this.mixer.GetFloat("MusicVolume",      out this.volume_data.music_volume);
+    }
+
+    /**
      * @brief Updates the volumes of the mixer with the current values given
      * by the sliders. Also, store new volume levels
-     * @todo Can separate this into discrete functions
      */
     public void UpdateVolume()
     {
-        this.volume_data.master_volume     = this.master_volume_slider.value;
-        this.volume_data.ui_volume         = this.ui_volume_slider.value;
-        this.volume_data.sfx_volume        = this.sfx_volume_slider.value;
+        this.UpdateMasterVolume();
+        this.UpdateUIVolume();
+        this.UpdateSFXVolume();
+        this.UpdateBackgroundVolume();
+        this.UpdateMusicVolume();
+    }
+
+    public void UpdateMasterVolume()
+    {
+        this.volume_data.master_volume = this.master_volume_slider.value;
+        this.UpdateMixer();
+    }
+    public void UpdateUIVolume()
+    {
+        this.volume_data.ui_volume = this.ui_volume_slider.value;
+        this.UpdateMixer();
+    }
+    public void UpdateSFXVolume()
+    {
+        this.volume_data.sfx_volume = this.sfx_volume_slider.value;
+        this.UpdateMixer();
+    }
+    public void UpdateBackgroundVolume()
+    {
         this.volume_data.background_volume = this.background_volume_slider.value;
-        this.volume_data.music_volume      = this.music_volume_slider.value;
+        this.UpdateMixer();
+    }
+    public void UpdateMusicVolume()
+    {
+        this.volume_data.music_volume = this.music_volume_slider.value;
         this.UpdateMixer();
     }
     
@@ -83,12 +120,22 @@ public class VolumeControl : MonoBehaviour
     public void Load()
     {
         this.volume_data = SaveSystem.LoadVolumeData();
-        UpdateMixer();
+        if (this.volume_data == null)
+        {
+            this.volume_data = new VolumeData();
+            this.UpdateVolumeDataFromMixer();
+        }
+        else
+        {
+            UpdateMixer();
+        }
+
         UpdateSliders();
     }
 
     public void Save()
     {
+        this.UpdateVolume();
         SaveSystem.SaveVolumeData(this.volume_data);
     }
 }

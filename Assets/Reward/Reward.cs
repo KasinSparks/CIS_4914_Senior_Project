@@ -195,6 +195,7 @@ public class Reward : MonoBehaviour
         if (!string.IsNullOrEmpty(this.scene_name))
         {
             SaveSystem.SavePlayerPathNodeState(this.scene_name);
+            BackgroundSound.Play(BackgroundSound.Sounds.Path);
             SceneManager.LoadScene(this.scene_name);
         }
     }

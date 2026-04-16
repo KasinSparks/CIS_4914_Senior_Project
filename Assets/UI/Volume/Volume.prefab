@@ -229,7 +229,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8228041438997975480}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5865065297440184319}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.8414965
+  m_Size: 0.84149647
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -884,6 +884,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1413100866210584871}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateSFXVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 7710733776302346131, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1025,6 +1029,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1413100866210584871}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateBackgroundVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 7710733776302346131, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1166,6 +1174,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1413100866210584871}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateMasterVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 7710733776302346131, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1304,6 +1316,10 @@ PrefabInstance:
       value: Music Volume
       objectReference: {fileID: 0}
     - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1311,6 +1327,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1413100866210584871}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateMusicVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 7710733776302346131, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1449,6 +1469,10 @@ PrefabInstance:
       value: UI Volume
       objectReference: {fileID: 0}
     - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1456,6 +1480,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1413100866210584871}
+    - target: {fileID: 7393363104062877408, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateUIVolume
+      objectReference: {fileID: 0}
     - target: {fileID: 7710733776302346131, guid: 12ba296b67cfe4b4e914f4de9138ffb7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

@@ -8836,7 +8836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a45d635dcea644cbd9323671b0d538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
-  button_sfx_source: {fileID: 0}
+  button_sfx_source: {fileID: 1494774470}
 --- !u!1001 &1518420963
 PrefabInstance:
   m_ObjectHideFlags: 0

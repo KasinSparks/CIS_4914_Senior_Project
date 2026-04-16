@@ -189,6 +189,8 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         // once reward totem clicked, load path
         if (!string.IsNullOrEmpty(this.scene_name))
         {
+            SaveSystem.SavePlayerPathNodeState(this.scene_name);
+            BackgroundSound.Play(BackgroundSound.Sounds.Path);
             SceneManager.LoadScene(this.scene_name);
         }
     }

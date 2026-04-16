@@ -1476,6 +1476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (3)
   node_types:
@@ -1642,6 +1643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (27)
   - TestNode (21)
@@ -4213,6 +4215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids: []
   node_types:
   - node: {fileID: 11400000, guid: 2df044ee472fc81469fcef02553a0701, type: 2}
@@ -4386,6 +4389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (28)
   node_types:
@@ -5521,6 +5525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 11400000, guid: c9c301ac1e957cd4b8919191125876b9, type: 2}
+  sound_type: 1
   next_nodes_guids:
   - TestNode
   - TestNode (4)
@@ -5872,6 +5877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (21)
   node_types:
@@ -6286,6 +6292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (6)
   node_types:
@@ -8181,6 +8188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (20)
   - TestNode (29)
@@ -8389,6 +8397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (19)
   node_types:
@@ -12429,6 +12438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (17)
   node_types:
@@ -12569,6 +12579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (25)
   node_types:
@@ -13637,6 +13648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (24)
   node_types:
@@ -13841,6 +13853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (18)
   node_types:
@@ -16410,6 +16423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (24)
   node_types:
@@ -17220,6 +17234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (7)
   node_types:
@@ -17681,6 +17696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (23)
   node_types:
@@ -18007,6 +18023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (9)
   - TestNode (10)
@@ -18774,6 +18791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (14)
   node_types:
@@ -20453,6 +20471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (16)
   node_types:
@@ -20655,6 +20674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (19)
   - TestNode (20)
@@ -21569,6 +21589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 2
   next_nodes_guids:
   - TestNode (30)
   node_types:
@@ -21694,6 +21715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (1)
   - TestNode (2)
@@ -22612,6 +22634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (7)
   node_types:
@@ -22939,6 +22962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (15)
   - TestNode (26)
@@ -26004,6 +26028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (13)
   node_types:
@@ -26206,6 +26231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (25)
   node_types:
@@ -26441,6 +26467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (25)
   node_types:
@@ -29657,6 +29684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (3)
   node_types:
@@ -29957,6 +29985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 3
   next_nodes_guids:
   - TestNode (22)
   node_types:
@@ -32241,6 +32270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (5)
   node_types:
@@ -33342,6 +33372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathNode
   data: {fileID: 0}
+  sound_type: 1
   next_nodes_guids:
   - TestNode (12)
   node_types:

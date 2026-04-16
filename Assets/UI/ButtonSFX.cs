@@ -17,7 +17,7 @@ public class ButtonSFX : MonoBehaviour
         float clip_legnth = this.button_sfx_source.clip.length;
 
         yield return new WaitForSeconds(clip_legnth);
-
+        
         // Switch scenes
         LoadGameScene.LoadScene(scene_name);
     }

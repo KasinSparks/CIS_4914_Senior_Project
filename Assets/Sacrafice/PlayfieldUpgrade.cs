@@ -165,6 +165,7 @@ public class PlayfieldUpgrade : MonoBehaviour
     {
         PlayerStats.Save();
         SaveSystem.SavePlayerPathNodeState(nextSceneName);
+        BackgroundSound.Play(BackgroundSound.Sounds.Path);
         button_sfx.PlayButtonSFXThenLoadSceneDirect(nextSceneName);
     }
 
