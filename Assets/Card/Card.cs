@@ -373,7 +373,8 @@ struct ModifierTuple
                 // Check to see if the player is trying to sacrifice this card.
                 if (game_state.current_turn_state == TurnStates.PlayerSacrifice &&
                     this.card_ownership == CardOwnership.Player &&
-                    !this.is_being_sacrificed)
+                    !this.is_being_sacrificed &&
+                    !playfield.HasSacrificeRequirementBeenMet())
                 {
                     // Add this card to the sacrifice list
                     this.playfield_ref.AddSacrificeCard(this);
