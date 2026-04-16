@@ -15297,7 +15297,7 @@ MonoBehaviour:
   playfield: {fileID: 1460760515}
   player_hp_text: {fileID: 1846707598}
   opponent_hp_text: {fileID: 1217292647}
-  player_hp_total: 1000
+  player_hp_total: 100
   opponent_hp_total: 10
 --- !u!4 &2081642590
 Transform:
