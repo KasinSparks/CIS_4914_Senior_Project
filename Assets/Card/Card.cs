@@ -226,12 +226,14 @@ struct ModifierTuple
             modifier_info_widget_data.SetDescription(mods[i].modifier.GetDisplayDescription());
             modifier_info_widget_data.SetImage(mods[i].modifier.GetImage());
 
+            float pauseButtonSpacing = 200;
+
             Vector2 widget_size = modifier_info_widget_data.GetRectSize();
             modifier_info_widget.transform.SetPositionAndRotation(
                 new Vector3(
                     modifierInfoUIWidget.transform.position.x,
                     modifierInfoUIWidget.transform.position.y
-                        - (widget_size.y * (i + 1) + (16 * (i + 1))),
+                        - (widget_size.y * (i + 1) + (16 * (i + 1)) + pauseButtonSpacing),
                     modifierInfoUIWidget.transform.position.z
                 ),
                 modifierInfoUIWidget.transform.rotation
