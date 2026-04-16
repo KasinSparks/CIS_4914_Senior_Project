@@ -6,9 +6,13 @@ public class ConsumableSaveSystem : MonoBehaviour
     [SerializeField]
     ConsumableButton[] buttons;
 
+    public static bool should_save_to_file;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        should_save_to_file = true;
+
         // If the save file does not exists, load the default data
         ScriptableObject[] consumables = SaveSystem.LoadConsumablesFromSaveFile();
         if (consumables == null)
@@ -68,7 +72,10 @@ public class ConsumableSaveSystem : MonoBehaviour
             }
         }
 
-        SaveSystem.SaveConsumablesToFile(curr_consumables.ToArray());
+        if (should_save_to_file)
+        {
+            SaveSystem.SaveConsumablesToFile(curr_consumables.ToArray());
+        }
     }
 
 

@@ -15,6 +15,8 @@ public class DevInstakill : MonoBehaviour
         if (keyboard != null && keyboard.wKey.isPressed && keyboard.iKey.isPressed && keyboard.nKey.isPressed) //hold down die to skip to reward
         {
             Deck.should_save_on_destroy = false;
+            ConsumableSaveSystem.should_save_to_file = false;
+
             PlayerStats.Save();
             DirectoryInfo dir = new DirectoryInfo("SAVES");
             foreach (DirectoryInfo subDir in dir.GetDirectories())

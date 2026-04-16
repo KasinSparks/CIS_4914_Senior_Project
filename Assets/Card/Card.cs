@@ -452,7 +452,7 @@ struct ModifierTuple
                             {
 
                                 PlayerStats.Save();
-
+                                ConsumableSaveSystem.should_save_to_file = false;
                                 
                                 DirectoryInfo dir = new DirectoryInfo("SAVES");
                                 foreach (DirectoryInfo subDir in dir.GetDirectories())
@@ -504,7 +504,8 @@ struct ModifierTuple
                             
                             PlayerStats.Save();
 
-                            
+                            ConsumableSaveSystem.should_save_to_file = false;
+
                             DirectoryInfo dir = new DirectoryInfo("SAVES");
                             foreach (DirectoryInfo subDir in dir.GetDirectories())
                             {
