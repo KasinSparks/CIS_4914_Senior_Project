@@ -354,8 +354,12 @@ struct ModifierTuple
                     Debug.Log("You are currently placing a card that requires sacrifice. To cancel, click on the Cancel Sacrifice Button.");
                     return;
                 }
-        
-                this.player_hand.SetSelectedCard(this.card_ownership, this);
+                
+                if (game_state.current_turn_state == TurnStates.PlayerTurn ||
+                    game_state.current_turn_state == TurnStates.PlayerDrawCard)
+                {
+                    this.player_hand.SetSelectedCard(this.card_ownership, this);
+                }
                 break;
 
             case CardState.OnPlayfield:
