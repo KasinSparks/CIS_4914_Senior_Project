@@ -47,6 +47,22 @@ public class PlayfieldUpgrade : MonoBehaviour
         { //can only upgrade once
             return;
         }
+        if (SceneManager.GetActiveScene().name == "Sacrafice") //prevent upgraded cards from ever being placed in slot
+        {
+            if (card.GetCardData().card_name.Contains("Evolved") || card.GetCardData().card_name.Contains("Blessed"))
+            {
+                Debug.Log("Upgraded cards cannot be upgraded again");
+                return;
+            }
+        }
+        else if (SceneManager.GetActiveScene().name == "Campfire")
+        {
+            if (card.GetCardData().card_name.Contains("+"))
+            {
+                Debug.Log("Upgraded cards cannot be upgraded again");
+                return;
+            }
+        }
         slot.SetIsCardPlaced(true);
         slot.SetCard(card);
         card.transform.SetParent(this.transform);
@@ -82,11 +98,6 @@ public class PlayfieldUpgrade : MonoBehaviour
             Card c2 = slot2.GetCard();
             CardData data1 = c1.GetCardData();
             CardData data2 = c2.GetCardData();
-            if (data1.card_name.Contains("Blessed") || data1.card_name.Contains("Evolved") || data2.card_name.Contains("Blessed") || data2.card_name.Contains("Evolved"))
-            {
-                Debug.Log("Upgraded cards cannot be upgraded again");
-                return;
-            }
             CardData newData = Instantiate(data1); //will write to this data and then apply to first card
             if (data1.card_name == data2.card_name) //if they are same card double the stats
             {
@@ -123,11 +134,6 @@ public class PlayfieldUpgrade : MonoBehaviour
             }
             Card c1 = slot1.GetCard();
             CardData data1 = c1.GetCardData();
-            if (data1.card_name.Contains("+"))
-            {
-                Debug.Log("Upgraded cards cannot be upgraded again");
-                return;
-            }
             CardData newData = Instantiate(data1); //will write to this data and then apply to first card
             CardData oldData = c1.GetCardData();
             newData.attack += 2;
