@@ -6,11 +6,15 @@ public class AddCardToHandConsumable : ScriptableObject, IConsumableSavable //in
     public string itemName;
     public Sprite icon;
     public CardData cardToAdd; //assign card, can be used for basic card like ant or flower card once added
+    public CardData cardToAdd2;
+    public CardData cardToAdd3;
 
     public void Use(Hand playerHand)
     {
         playerHand.AddCard(cardToAdd, CardOwnership.Player);
-        Debug.Log("Added to hand: " + cardToAdd.card_name);
+        playerHand.AddCard(cardToAdd2, CardOwnership.Player);
+        playerHand.AddCard(cardToAdd3, CardOwnership.Player);
+        Debug.Log("Added ant swarm");
     }
     private class SaveData
     {
