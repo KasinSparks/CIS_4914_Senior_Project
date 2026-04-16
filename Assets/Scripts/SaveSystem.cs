@@ -677,42 +677,42 @@ public class SaveSystem
      * @breif Will determine what scene to load from the start menu 
      * @param scene_name The name of the scene the player was last in
      */
-    public static void SavePlayerPathNodeState(string scene_name)
+    public static void SavePlayerPathNodeState(string scene_name, BackgroundSound.Sounds sound_type = BackgroundSound.Sounds.Path)
     {
-        PlayerPathNodeState s = new PlayerPathNodeState();
-        s.curr_scene = scene_name;
+        PlayerPathNodeState s = new PlayerPathNodeState(scene_name, sound_type);
         SaveToJsonFile(JsonUtility.ToJson(s), SaveSystemFile.PlayerScene);
     }
 
-    private class PlayerPathNodeState
+    public class PlayerPathNodeState
     {
         public string curr_scene;
+        public BackgroundSound.Sounds curr_background_sound_type;
+
+        public PlayerPathNodeState(string curr_scene, BackgroundSound.Sounds curr_background_sound_type = BackgroundSound.Sounds.None)
+        {
+            this.curr_scene = curr_scene;
+            this.curr_background_sound_type = curr_background_sound_type;
+        }
+
+        public void Save()
+        {
+            SaveToJsonFile(JsonUtility.ToJson(this), SaveSystemFile.PlayerScene);
+        }
+
+        public static PlayerPathNodeState Load(string json)
+        {
+            return JsonUtility.FromJson<PlayerPathNodeState>(json);
+        }
     }
 
-    public static string LoadPlayerPathNodeState()
+    public static PlayerPathNodeState LoadPlayerPathNodeState()
     {
-        SaveSystemFile file = SaveSystemFile.PlayerScene;
-        StreamReader reader = null;
-        try
+        string json = LoadJsonFile(SaveSystemFile.PlayerScene);
+        if (json == null || json.Equals(""))
         {
-            _CheckForFolderStructure(file);
-            reader = new StreamReader(GetFullPath(file));
+            return null;
         }
-        catch (System.IO.FileNotFoundException)
-        {
-            // Return default Scene 
-            return "Path";
-        }
-
-        string line = reader.ReadLine();
-        reader.Close();
-
-        PlayerPathNodeState s = new PlayerPathNodeState();
-
-        // TODO(KASIN): Error checking
-        JsonUtility.FromJsonOverwrite(line, s);
-        Debug.Log(s);
-        return s.curr_scene;
+        return PlayerPathNodeState.Load(json);
     }
 
     /**
@@ -730,7 +730,6 @@ public class SaveSystem
      */
     public static VolumeControl.VolumeData LoadVolumeData()
     {
-        VolumeControl.VolumeData ret = new VolumeControl.VolumeData();
         SaveSystemFile file = SaveSystemFile.VolumeData;
         StreamReader reader = null;
         try
@@ -742,12 +741,13 @@ public class SaveSystem
         {
             // Return default stats
             Debug.Log("Failed to load Volume Data from file: " + GetFullPath(file));
-            return ret;
+            return null;
         }
 
         string line = reader.ReadLine();
         reader.Close();
 
+        VolumeControl.VolumeData ret = new VolumeControl.VolumeData();
         JsonUtility.FromJsonOverwrite(line, ret);
         Debug.Log("Loaded Volume Data from file.");
         return ret;

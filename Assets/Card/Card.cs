@@ -467,6 +467,17 @@ struct ModifierTuple
                                         File.Delete(Path.Combine(dir.Name, subDir.Name) + "/PLAYER_HP.json");
                                     }
                                 }
+                                BackgroundSound.should_be_playing = false;
+                                if (BackgroundSound.is_playing)
+                                {
+                                    BackgroundSound.Pause();
+                                }
+
+                                BackgroundMusic.should_be_playing = true;
+                                if (!BackgroundMusic.is_playing)
+                                {
+                                    BackgroundMusic.Play();
+                                }
                                 SceneManager.LoadScene(scene_name);
                                 //Directory.Delete("SAVES", true);
 
@@ -479,7 +490,7 @@ struct ModifierTuple
                             {
                                 SaveSystem.SavePlayerHP(this.game_state.player_hp_system.hp);
                                 PlayerStats.Save();
-                                SaveSystem.SavePlayerPathNodeState("Path");
+                                SaveSystem.SavePlayerPathNodeState("Path", BackgroundSound.Sounds.Path);
                                 SceneManager.LoadScene(scene_name);
                             }
                         }
@@ -519,6 +530,17 @@ struct ModifierTuple
                                 }
                             }
                             //Directory.Delete("SAVES", true);
+                            BackgroundSound.should_be_playing = false;
+                            if (BackgroundSound.is_playing)
+                            {
+                                BackgroundSound.Pause();
+                            }
+
+                            BackgroundMusic.should_be_playing = true;
+                            if (!BackgroundMusic.is_playing)
+                            {
+                                BackgroundMusic.Play();
+                            }
                             SceneManager.LoadScene(scene_name);
 
 

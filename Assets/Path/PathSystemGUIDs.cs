@@ -31,11 +31,6 @@ public class PathSystemGUIDs : MonoBehaviour
 
             dict.Add(gUIDs[i].name, gUIDs[i]);
         }
-
-        foreach (string s in dict.Keys)
-        {
-            Debug.Log(s + " : " + this.dict[s]);
-        }
     }
     
     /**
