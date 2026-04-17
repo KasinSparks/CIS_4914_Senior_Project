@@ -5503,22 +5503,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Consumables
+  m_text: '<u><b>Consumables</b></u>
 
-    In the upper left corner, there are icons that represent
-    three consumables that you can use. These consumables can only be used once per
-    run and will not be replenished after the battle is over. The skull icon will
-    instakill all cards in the opponent''s row. The heal icon will heal all of your
-    placed cards for 5 (including overhealth). The card icon will add a worker ant
-    and honeypot ant to your hand.
+    In the upper left corner, there are icons
+    that represent three consumables that you can use. These consumables can only
+    be used once per run and will not be replenished after the battle is over. The
+    skull icon will instakill all cards in the opponent''s row. The heal icon will
+    heal all of your placed cards for 5 (including overhealth). The card icon will
+    add a worker ant and honeypot ant to your hand.
 
+
+    <u><b>Totems</b></u>
 
     Totems
-
-    Totems are built from totem
-    orders and totem modifiers, which are offered as rewards at the end of battles.
-    Once you get at least one of each, you can build a totem. These totems will apply
-    the selected modifier to all of your cards of the selected order during the battle.'
+    are built from totem orders and totem modifiers, which are offered as rewards
+    at the end of battles. Once you get at least one of each, you can build a totem.
+    These totems will apply the selected modifier to all of your cards of the selected
+    order during the battle.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10627,29 +10628,30 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Decks
+  m_text: '<u><b>Decks</b></u>
 
-    Draw from either the nectar deck (which provides you with a
-    card with one health, zero attack, and zero cost) or the bug deck (which is the
-    deck you are building). You can only draw once per turn.
-
-
-    Card Sacrifices
-    and Cost
-
-    Some cards requre a certain amount of nectar to play, which is
-    in the lower right corner of each card. In order to place a card that costs nectar,
-    you must sacrifice a number of cards equal to the cost. To do so, place all of
-    the cards you wish to sacrifice in your row, click on the card you want to play,
-    then click on all of the sacrifice cards, and finally place your card.
+    Draw from either the nectar deck (which provides
+    you with a card with one health, zero attack, and zero cost) or the bug deck
+    (which is the deck you are building). You can only draw once per turn.
 
 
-    Playfield
+    <u><b>Card
+    Sacrifices and Cost</b></u>
 
-    The
-    row closest to you is the row you can place cards onto, the middle row is the
-    opponent''s row, and the furtherest row is the opponent''s queue row, which shows
-    which cards the opponent will play next turn.'
+    Some cards requre a certain amount of nectar
+    to play, which is in the lower right corner of each card. In order to place a
+    card that costs nectar, you must sacrifice a number of cards equal to the cost.
+    To do so, place all of the cards you wish to sacrifice in your row, click on
+    the card you want to play, then click on all of the sacrifice cards, and finally
+    place your card.
+
+
+    <u><b>Playfield</b></u>
+
+    The row closest to you is
+    the row you can place cards onto, the middle row is the opponent''s row, and
+    the furtherest row is the opponent''s queue row, which shows which cards the
+    opponent will play next turn.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
