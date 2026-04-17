@@ -24,7 +24,7 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         reward = null;
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
-        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
+        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_TotemModifierInfoRef");
 
 
         if (this.totem_data == null)
@@ -57,7 +57,8 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
      */
     public void SetModifier(CardModifier modifier)
     {
-        this.modifier = modifier;
+        this.modifier = Instantiate(modifier);
+        this.modifier.Initialize();
         this.totem_data.SetModifier(this.modifier);
         this.totem_data.UpdateDisplayDescription();
         
@@ -132,13 +133,15 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
         // Have a UI Pop-up to show the totem details
         modifier_info_widget_data.SetDescription(this.display_description);
-        
+
+        float pauseButtonSpacing = 200;
+
         Vector2 widget_size = modifier_info_widget_data.GetRectSize();
         modifier_info_widget.transform.SetPositionAndRotation(
             new Vector3(
                 modifierInfoUIWidget.transform.position.x,
                 modifierInfoUIWidget.transform.position.y
-                    - (widget_size.y + 16),
+                    - (widget_size.y + 16 + pauseButtonSpacing),
                 modifierInfoUIWidget.transform.position.z
             ),
             modifierInfoUIWidget.transform.rotation
@@ -157,9 +160,9 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             return;
         }
 
-        Transform obj = this.modifierInfoCanvas.transform.GetChild(1);
+        Transform obj = this.modifierInfoCanvas.transform.GetChild(2);
 
-        if (obj != null && !obj.name.Equals("UI_ModifierInfoRef"))
+        if (obj != null && !obj.name.Equals("UI_TotemModifierInfoRef"))
         {
             Destroy(obj.gameObject);
         }        
