@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using Random = UnityEngine.Random;
+using System;
 
 public class Reward : MonoBehaviour
 {
@@ -64,7 +65,26 @@ public class Reward : MonoBehaviour
                 if (saved_modifiers.Length > 0)
                 {
                     Debug.Log("Loaded mod from file.");
-                    foreach (CardModifier m in this.all_modifiers.Except(saved_modifiers.ToList()))
+
+                    // Create a dictionary so we can quickly remove the modifiers
+                    // that we have already picked up
+                    Dictionary<string, CardModifier> possible_modifier_rewards
+                        = new Dictionary<string, CardModifier>();
+                    foreach (CardModifier modifier in this.all_modifiers)
+                    {
+                        possible_modifier_rewards[modifier.modifier_name] = modifier;
+                    }
+
+                    // Remove the modifier we already have
+                    foreach (CardModifier m in saved_modifiers)
+                    {
+                        if (possible_modifier_rewards.ContainsKey(m.modifier_name))
+                        {
+                            possible_modifier_rewards.Remove(m.modifier_name);
+                        }
+                    }
+
+                    foreach (CardModifier m in possible_modifier_rewards.Values)
                     {
                         this.available_reward_modifiers.Add(m);
                     }
@@ -87,9 +107,33 @@ public class Reward : MonoBehaviour
                 if (saved_orders.Length > 0)
                 {
                     Debug.Log("Loaded order from file.");
-                    foreach (CardOrder o in this.all_orders.Except(saved_orders.ToList()))
+                    if (Enum.GetValues(typeof(CardOrder)).Length >= 32)
                     {
-                        this.available_reward_orders.Add(o);
+                        Debug.LogError("Too many CardOrders... Change the data type here.");
+                        throw new System.ArgumentOutOfRangeException("Too many CardOrders to fit in a int");
+                    }
+
+                    int card_orders = 0;
+                    // Could just shift this by the number of card orders if
+                    // all card orders are wanted.
+                    foreach (CardOrder m in this.all_orders)
+                    {
+                        card_orders |= (1 << (int) m);
+                    }
+
+                    foreach (CardOrder o in saved_orders)
+                    {
+                        card_orders &= ~(1 << (int) o);
+                    }
+
+                    for (int k = 0; k < 31; ++k)
+                    {
+                        if ((card_orders & (1 << k)) > 0)
+                        {
+                            // Cursed, but it works
+                            CardOrder temp_order = (CardOrder) k;
+                            this.available_reward_orders.Add(temp_order);
+                        }
                     }
                 // if no saved totems, all orders are set as available rewards
                 } else
