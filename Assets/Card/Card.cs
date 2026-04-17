@@ -500,7 +500,7 @@ struct ModifierTuple
                             {
                                 SaveSystem.SavePlayerHP(this.game_state.player_hp_system.hp);
                                 PlayerStats.Save();
-                                SaveSystem.SavePlayerPathNodeState("Path", BackgroundSound.Sounds.Path);
+                                SaveSystem.SavePlayerPathNodeState("Path", SaveSystem.LoadPlayerPathNodeState().curr_background_sound_type);
                                 SceneManager.LoadScene(scene_name);
                             }
                         }
