@@ -21,6 +21,9 @@ public class GameState : MonoBehaviour
     public int player_hp_total = 1000;
     public int opponent_hp_total = 10;
 
+    [SerializeField] private TMPro.TextMeshProUGUI gamestate_text;
+    private string stringTurnState;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,12 +76,13 @@ public class GameState : MonoBehaviour
     // TODO(KASIN): Make sure the recurrsion in the function is not going to
     //    cause a runtime error or crash.
     public void UpdateTurnState(TurnStates state)
-    {
+    {        
         switch (state)
         {
             case TurnStates.PlayerTurn:
                 {
                     this.current_turn_state = TurnStates.PlayerTurn;
+                    stringTurnState = "Player's Turn";
                     // Perform attacks of player's cards
                     // GameState gets updated in AttackSystem
                 }
@@ -86,6 +90,7 @@ public class GameState : MonoBehaviour
             case TurnStates.PlayerEndTurn:
                 {
                     this.current_turn_state = TurnStates.PlayerEndTurn;
+                    //stringTurnState = "End of Player's Turn";
                     // Perform attacks of player's cards
                     // GameState gets updated in AttackSystem
                     attack_sys.PlayerAttack();
@@ -95,6 +100,7 @@ public class GameState : MonoBehaviour
             case TurnStates.OpponentEndTurn:
                 {
                     this.current_turn_state = TurnStates.OpponentEndTurn;
+                    //stringTurnState = "End of Opponent's Turn";
                     // Perform attacks of opponent's cards
                     // GameState gets updated in AttackSystem
                     attack_sys.OpponentAttack();
@@ -103,10 +109,12 @@ public class GameState : MonoBehaviour
 
             case TurnStates.PlayerDrawCard:
                 {
+                    stringTurnState = "Player Draws";
                     if (this.current_turn_state == TurnStates.PlayerSacrifice)
                     {
                         // Don't reload the on turn start modifiers
                         this.current_turn_state = TurnStates.PlayerDrawCard;
+                        
                         break;
                     }
 
@@ -123,6 +131,7 @@ public class GameState : MonoBehaviour
 
             case TurnStates.OpponentDrawCard:
                 {
+                    //stringTurnState = "Opponent Draws";
                     opponent.DrawCards();
                     this.current_turn_state = TurnStates.OpponentDrawCard;
                     List<Card> opponent_cards = attack_sys.GetCards(CardOwnership.Opponent);
@@ -138,14 +147,28 @@ public class GameState : MonoBehaviour
                 {
                     opponent.Turn();
                     this.current_turn_state = TurnStates.OpponentTurn;
+                    //stringTurnState = "Opponent's Turn";
                     this.UpdateTurnState(TurnStates.OpponentEndTurn);
                 }
                 break;
 
             default:
                 this.current_turn_state = state;
+                Debug.Log(state);
+                if (this.current_turn_state == TurnStates.PlayerSacrifice)
+                {
+                    stringTurnState = "Sacrificing";
+                } else
+                {
+                    stringTurnState = this.current_turn_state.ToString();
+                }
                 break;
         }
+        if (gamestate_text != null)
+        {
+            gamestate_text.text = "Current State: " + stringTurnState;
+        }
+
     }
 
     public TurnStates GetCurrentState()
@@ -170,6 +193,7 @@ public class GameState : MonoBehaviour
     {
         this.isOpponentDead = isOpponentDead;
     }
+
 
     //public void GetOpponentHPTotal()
     //{

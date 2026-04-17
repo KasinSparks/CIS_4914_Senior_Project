@@ -24,7 +24,7 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         reward = null;
         modifierInfoCanvas = GameObject.Find("UI_ModifierDisplay");
-        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_ModifierInfoRef");
+        modifierInfoUIWidget = GameObject.Find("UI_ModifierDisplay/UI_TotemModifierInfoRef");
 
 
         if (this.totem_data == null)
@@ -159,9 +159,9 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             return;
         }
 
-        Transform obj = this.modifierInfoCanvas.transform.GetChild(1);
+        Transform obj = this.modifierInfoCanvas.transform.GetChild(2);
 
-        if (obj != null && !obj.name.Equals("UI_ModifierInfoRef"))
+        if (obj != null && !obj.name.Equals("UI_TotemModifierInfoRef"))
         {
             Destroy(obj.gameObject);
         }        

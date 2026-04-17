@@ -38,7 +38,7 @@ public class NectarDeck : MonoBehaviour, IPointerClickHandler
 
         // Player has drawn a card, unset the DrawCard state so the player can not draw another
         // card this turn.
-        gameState.current_turn_state = TurnStates.PlayerTurn;
+        gameState.UpdateTurnState(TurnStates.PlayerTurn);
     }
 
 }

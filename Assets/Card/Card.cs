@@ -275,7 +275,7 @@ struct ModifierTuple
         for (int i = 0; i < this.modifierInfoCanvas.transform.childCount; ++i)
         {
             Transform obj = this.modifierInfoCanvas.transform.GetChild(i);
-            if (!obj.name.Equals("UI_ModifierInfoRef"))
+            if (!obj.name.Equals("UI_ModifierInfoRef") && !obj.name.Equals("UI_TotemModifierInfoRef"))
             {
                 Destroy(obj.gameObject);
             }
