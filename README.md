@@ -1,6 +1,12 @@
 # CIS_4914_Senior_Project
 A rogue-like deck-building card game that draws inspiration from elements relating to entomology, where the cards are grouped by insect orders (Coleoptera, Lepidoptera, Hymenoptera, etc.). Players are tasked with navigating through a procedurally generated map to upgrade their deck and challenge opponents. Strategy must be employed when considering which paths, cards, and actions to take.
 
+## Playing the Game
+To play Nektar, you can do any of the following:
+* Visit https://kasin-sparks.itch.io/nektar if you want to play it in your browser
+* Download the latest executable from the Releases (https://github.com/KasinSparks/CIS_4914_Senior_Project/releases)
+* Build and run the game yourself by completing the steps in the "Building the Project" section.
+
 ## Building The Project
 ### Requirements:
 * Unity Version 6.3LTS (6000.3.6f1)
