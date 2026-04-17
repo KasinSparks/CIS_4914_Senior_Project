@@ -57,7 +57,8 @@ public class Totem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
      */
     public void SetModifier(CardModifier modifier)
     {
-        this.modifier = modifier;
+        this.modifier = Instantiate(modifier);
+        this.modifier.Initialize();
         this.totem_data.SetModifier(this.modifier);
         this.totem_data.UpdateDisplayDescription();
         
